@@ -45,6 +45,8 @@
 <!-- fullCalendar 2.2.5 -->
 <script src="admin/assets/plugins/moment/moment.min.js"></script>
 <script src="admin/assets/plugins/fullcalendar/main.js"></script>
+<!-- Select2 -->
+<script src="admin/assets/plugins/select2/js/select2.full.min.js"></script>
 <!-- AdminLTE App -->
 <script src="admin/assets/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->

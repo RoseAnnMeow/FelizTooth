@@ -23,7 +23,6 @@ include('config/dbconn.php');
         <div class="modal-body">
             <div class="row">
               <div class="col-md-12">
-                <input type="hidden" name="edit_id" id="edit_id"> 
                 <div class="form-group">
                 <label>Select Dentist</label>
                   <select class="form-control select2bs4" name="select_dentist"required>
@@ -69,24 +68,18 @@ include('config/dbconn.php');
                   </select>
                 </div>
               </div>       
-              <div class="col-sm-6 mb-2">               
-                  <label>Start Time</label> 
-                  <div class="input-group date" id="timepicker" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" name="start_time" data-target="#timepicker"/>
-                      <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                  </div>
+              <div class="col-sm-6">              
+                <div class="form-group">
+                    <label>Start Time</label>
+                    <input type="time" autocomplete="off" name="start_time" class="form-control" required>
                 </div>
-              </div>  
-              <div class="col-sm-6 mb-2">
-                  <label>End Time</label> 
-                  <div class="input-group date" id="timepicker2" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" name="end_time" data-target="#timepicker2"/>
-                      <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                  </div>
+              </div>
+              <div class="col-sm-6">              
+                <div class="form-group">
+                    <label>End Time</label>
+                    <input type="time" autocomplete="off" name="end_time" class="form-control" required>
                 </div>
-              </div>        
+              </div>       
               <div class="col-sm-12">
                 <div class="form-group">
                   <label>Appointment Duration</label>
@@ -150,27 +143,43 @@ include('config/dbconn.php');
         <div class="modal-body">
             <div class="row">
               <div class="col-sm-12">
+                <input type="hidden" name="edit_id" id="edit_id"> 
                 <div class="form-group">
                 <label>Select Dentist</label>
-                  <select class="form-control" style="width: 100%;" id="edit_dentist" name="edit_dentist" required>
+                  <select class="form-control" style="width: 100%;" id="edit_dentist" name="select_dentist" required>
                   <option>--Select Dentist--</option>
                   <?php
-                      
-                      $sql = "SELECT name FROM tbldoctor";
-                      $records = mysqli_query($conn,$sql);  // Use select query here 
-
-                      while($row = mysqli_fetch_array($records))
+                      if(isset($_GET['id']))
                       {
-                          echo "<option id='edit_dentist' name='edit_dentist' value='". $row['name'] ."'>" .$row['name'] ."</option>";  // displaying data in option menu
-                      }	
-                  ?>  
+                        echo $id = $_GET['id'];
+                      } 
+                      $sql = "SELECT * FROM tbldoctor";
+                      $query_run = mysqli_query($conn,$sql);
+                      if(mysqli_num_rows($query_run) > 0)
+                      {
+                        foreach($query_run as $rowhob)
+                        {
+                          ?>
+
+                          <option value="<?php echo $rowhob['id'];?>">
+                            <?php echo $rowhob['name'];?></option>
+                          <?php
+                        }
+                      }
+                      else
+                      {
+                        ?>
+                        <option value="">No Record Found"</option>
+                        <?php
+                      }
+                      ?>     
                   </select>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                   <label>Day</label>
-                  <select class="form-control form-select" id="edit_day" name="edit_day" required >
+                  <select class="form-control form-select" id="edit_day" name="select_day" required>
                     <option selected disabled value="">Choose</option>
                     <option>Monday</option>
                     <option>Tuesday</option>
@@ -181,28 +190,22 @@ include('config/dbconn.php');
                   </select>
                 </div>
               </div>           
-              <div class="col-sm-6 mb-2">               
-                  <label>Start Time</label> 
-                  <div class="input-group date" id="edit_stime" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" name="edit_stime" data-target="#edit_stime"/>
-                      <div class="input-group-append" data-target="#edit_stime" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                  </div>
+              <div class="col-sm-6">              
+                <div class="form-group">
+                    <label>Start Time</label>
+                    <input type="time" autocomplete="off" id="edit_stime" name="start_time" class="form-control" required>
                 </div>
-              </div>  
-              <div class="col-sm-6 mb-2">
-                  <label>End Time</label> 
-                  <div class="input-group date" id="edit_etime" data-target-input="nearest">
-                    <input type="text" class="form-control datetimepicker-input" name="edit_etime" data-target="#edit_etime"/>
-                      <div class="input-group-append" data-target="#edit_etime" data-toggle="datetimepicker">
-                      <div class="input-group-text"><i class="far fa-clock"></i></div>
-                  </div>
+              </div>
+              <div class="col-sm-6">              
+                <div class="form-group">
+                    <label>End Time</label>
+                    <input type="time" autocomplete="off" id="edit_etime" name="end_time" class="form-control" required>
                 </div>
-              </div>   
+              </div>
               <div class="col-sm-12">
                 <div class="form-group">
                   <label>Appointment Duration</label>
-                  <select class="form-control" style="width: 100%;" id="edit_duration" name="edit_duration"required >
+                  <select class="form-control" style="width: 100%;" id="edit_duration" name="select_duration" required >
                     <option selected disabled value="">Choose</option>
                     <option>15 minutes</option>
                     <option>20 minutes</option>
@@ -219,7 +222,7 @@ include('config/dbconn.php');
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="updatedata" class="btn btn-info">Submit</button>
+          <button type="submit" name="update_sched" class="btn btn-info">Submit</button>
         </div>
       </form>
     </div>
@@ -261,12 +264,12 @@ include('config/dbconn.php');
         <section class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Schedule</h1>
+                <h1 class="m-0">Appointment</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                  <li class="breadcrumb-item active">Schedule</li>
+                  <li class="breadcrumb-item active">Appointment</li>
                 </ol>
               </div> <!-- /.col -->
             </div> <!-- /.row -->
@@ -277,57 +280,98 @@ include('config/dbconn.php');
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
           <?php
             include('message.php');
           ?>
             <div class="card card-teal card-outline">
-              <div class="card-header">
-                <h3 class="card-title">Doctor Schedule</h3>
-                <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#AddScheduleModal">
-                <i class="fa fa-plus"></i> &nbsp;&nbsp;Add Schedule</button>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                  <table id="example1" class="table table-bordered table-light table-hover">
-                    <thead>
-                      <tr>
-                        <th>Dentist</th>
-                        <th>Day</th>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Duration</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                        $sql = "SELECT * FROM tblschedule";
-                        $query_run = mysqli_query($conn, $sql);
-                        
-                        while($row = mysqli_fetch_array($query_run)){
-                      ?>
-                        <tr>
-                        <td><?php echo $row['doc_id']; ?></td>
-                        <td><?php echo $row['day']; ?></td>
-                        <td><?php echo date('g:i A',strtotime($row['starttime'])); ?></td>
-                        <td><?php echo date('g:i A',strtotime($row['endtime'])); ?></td>
-                        <td><?php echo $row['duration']; ?></td>
-                        </td>
-                        <td>
-                          <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
-                          <button data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
-                        </td>
-                        </tr>
-                        <?php
-                        }
-                      ?>
-                    </tbody>
-                  </table>
+                <div class="card-header">
+                    <h3 class="card-title">Add Appointment</h3>
                 </div>
-              <!-- /.card-body -->
+                <div class="card-body">                    
+                    <div class="form-group">                       
+                        <label for="select_patient">Select Patient</label>
+                        <select class="form-control select2bs4" name="select_patient" required>
+                        <option selected disabled>Search Patient</option>
+                            <?php
+                                if(isset($_GET['id']))
+                                {
+                                    echo $id = $_GET['id'];
+                                } 
+                                $sql = "SELECT * FROM tblpatient";
+                                $query_run = mysqli_query($conn,$sql);
+                                if(mysqli_num_rows($query_run) > 0)
+                                {
+                                    foreach($query_run as $rowhob)
+                                    {
+                                    ?>
+
+                                    <option value="<?php echo $rowhob['id'];?>">
+                                        <?php echo $rowhob['fname'].' '.$rowhob['lname'];?></option>
+                                    <?php
+                                    }
+                                }
+                                else
+                                {
+                                    ?>
+                                    <option value="">No Record Found"</option>
+                                    <?php
+                                }
+                            ?>                  
+    
+                        </select>
+                    </div>
+                    <div class="form-group">                       
+                        <label for="select_dentist">Select Doctor</label>
+                        <select class="form-control select2bs4" name="select_dentist"required>
+                        <option selected disabled>Search Doctor</option>
+                            <?php
+                                if(isset($_GET['id']))
+                                {
+                                    echo $id = $_GET['id'];
+                                } 
+                                $sql = "SELECT * FROM tbldoctor";
+                                $query_run = mysqli_query($conn,$sql);
+                                if(mysqli_num_rows($query_run) > 0)
+                                {
+                                    foreach($query_run as $rowhob)
+                                    {
+                                    ?>
+
+                                    <option value="<?php echo $rowhob['id'];?>">
+                                        <?php echo $rowhob['name'];?></option>
+                                    <?php
+                                    }
+                                }
+                                else
+                                {
+                                    ?>
+                                    <option value="">No Record Found"</option>
+                                    <?php
+                                }
+                            ?>                  
+    
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputClientCompany">Remarks</label>
+                        <input type="text" id="inputClientCompany" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputProjectLeader">Project Leader</label>
+                        <input type="text" id="inputProjectLeader" class="form-control">
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="#" class="btn btn-secondary">Cancel</a>
+                            <input type="submit" value="Create new Porject" class="btn btn-info float-right">
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->               
             </div>
             <!-- /.card -->
+            </div>
           </div>
           <!-- /.col -->
         </div>

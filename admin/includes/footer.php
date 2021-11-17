@@ -10,11 +10,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="code.php" method="POST">
+                <form action="doctor_action.php" method="POST">
                 <div class="modal-body">Are you sure you want to logout?</div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-info" name="logout_btn">Yes</button>
+                    <button type="submit" class="btn btn-info" name="logout_btn">Logout</button>
                 </div>
                 </form>
             </div>

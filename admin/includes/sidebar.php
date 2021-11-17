@@ -15,7 +15,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="index.php" class="nav-link">
               <i class="fa fa-home nav-icon"></i>
               <p>Dashboard</p>
             </a>
@@ -48,17 +48,23 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
-                  <i class="far fa-list-alt nav-icon"></i>
+                <a href="allappointment.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
                   <p>All</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
-                  <i class="far fa-list-alt nav-icon"></i>
+                <a href="addappointment.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="../tables/jsgrid.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
                   <p>Calendar</p>
                 </a>
-              </li>                  
+              </li>
             </ul>
           </li>
           <li class="nav-item">

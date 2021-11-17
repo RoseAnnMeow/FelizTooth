@@ -37,6 +37,9 @@
   <link rel="stylesheet" href="admin/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- fullCalendar -->
   <link rel="stylesheet" href="admin/assets/plugins/fullcalendar/main.css">
+   <!-- Select2 -->
+ <link rel="stylesheet" href="admin/assets/plugins/select2/css/select2.min.css">
+ <link rel="stylesheet" href="admin/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 </head>
 
 

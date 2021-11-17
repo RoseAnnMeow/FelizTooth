@@ -323,7 +323,7 @@ include('config/dbconn.php');
           ?>
             <div class="card card-teal card-outline">
               <div class="card-header">
-                <h3 class="card-title">Doctor List</h3>
+                <h3 class="card-title">Manage Doctor</h3>
                 <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#AddDoctorModal">
                 <i class="fa fa-plus"></i> &nbsp;&nbsp;Add Doctor</button>
               </div>
