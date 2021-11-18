@@ -9,7 +9,7 @@ include('config/dbconn.php');
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 <!-- Add Modal -->
-<div class="modal fade" id="AddDoctorModal">
+<div class="modal fade" id="AddDoctorModal" >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -332,6 +332,7 @@ include('config/dbconn.php');
                   <table id="example1" class="table table-bordered table-light table-hover">
                     <thead>
                       <tr>
+                        <th class="text-center">#</th>
                         <th width="60">Photo</th>
                         <th>Doctor Name</th>
                         <th>Phone</th>
@@ -342,12 +343,14 @@ include('config/dbconn.php');
                     </thead>
                     <tbody>
                       <?php
+                        $i = 1;
                         $sql = "SELECT * FROM tbldoctor";
                         $query_run = mysqli_query($conn, $sql);
                         
                         while($row = mysqli_fetch_array($query_run)){
                       ?>
                         <tr>
+                        <td class="text-center"><?php echo $i++; ?></td>
                         <td>
                           <?php echo '<img src="'.$row['image'].'" class="img-thumbnail" width="60">'; ?>
                         </td>

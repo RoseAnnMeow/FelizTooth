@@ -19,19 +19,19 @@ include('config/dbconn.php');
         </button>
       </div>
 
-      <form action="schedule_action.php" method="POST">
+      <form action="appointment_action.php" method="POST">
         <div class="modal-body">
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                <label>Select Dentist</label>
-                  <select class="form-control select2bs4" name="select_dentist"required>
+                <label>Select Patient</label>
+                  <select class="form-control select2bs4" name="select_patient"required>
                     <?php
                       if(isset($_GET['id']))
                       {
                         echo $id = $_GET['id'];
                       } 
-                      $sql = "SELECT * FROM tbldoctor";
+                      $sql = "SELECT * FROM tblpatient";
                       $query_run = mysqli_query($conn,$sql);
                       if(mysqli_num_rows($query_run) > 0)
                       {
@@ -40,7 +40,7 @@ include('config/dbconn.php');
                           ?>
 
                           <option value="<?php echo $rowhob['id'];?>">
-                            <?php echo $rowhob['name'];?></option>
+                            <?php echo $rowhob['fname'].' '.$rowhob['lname'];?></option>
                           <?php
                         }
                       }
@@ -56,42 +56,36 @@ include('config/dbconn.php');
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label>Day</label>
-                  <select class="form-control" name="select_day" required >
-                    <option selected disabled value="">--Select Day--</option>
-                    <option>Monday</option>
-                    <option>Tuesday</option>
-                    <option>Wednesday</option>
-                    <option>Thursday</option>
-                    <option>Friday</option>
-                    <option>Saturday</option>
-                  </select>
+                    <label>Appointment Date</label>
+                    <input type="text" autocomplete="off" name="scheddate" class="form-control" id="sched_date" required onkeypress="return false;">
                 </div>
               </div>       
               <div class="col-sm-6">              
                 <div class="form-group">
-                    <label>Start Time</label>
+                    <label>Appointment Start Time</label>
                     <input type="time" autocomplete="off" name="start_time" class="form-control" required>
                 </div>
               </div>
               <div class="col-sm-6">              
                 <div class="form-group">
-                    <label>End Time</label>
+                    <label>Appointment End Time</label>
                     <input type="time" autocomplete="off" name="end_time" class="form-control" required>
                 </div>
               </div>       
               <div class="col-sm-12">
                 <div class="form-group">
-                  <label>Appointment Duration</label>
-                  <select class="form-control" name="select_duration" required >
-                    <option selected disabled value="">--Select Duration--</option>
-                    <option>15 minutes</option>
-                    <option>20 minutes</option>
-                    <option>30 minutes</option>
-                    <option>40 minutes</option>
-                    <option>45 minutes</option>
-                    <option>1 hour</option>
-                  </select>
+                  <label>Reason</label>
+                  <textarea class="form-control" rows="2" name="reason" placeholder="Enter ..."></textarea>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                    <label>Appointment Status</label>
+                    <select class="form-control form-select" name="status" required>
+                        <option>Pending</option>
+                        <option>Confirmed</option>
+                        <option>Cancelled</option>
+                    </select>
                 </div>
               </div>      
             </div>
@@ -100,7 +94,7 @@ include('config/dbconn.php');
       
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" name="insert_time" class="btn btn-info">Submit</button>
+          <button type="submit" name="insert_appointment" class="btn btn-info">Submit</button>
         </div>
       </form>
     </div>
@@ -295,27 +289,44 @@ include('config/dbconn.php');
                   <table id="example1" class="table table-bordered table-light table-hover">
                     <thead>
                       <tr>
-                        <th>Dentist</th>
-                        <th>Day</th>
+                        <th class="text-center">#</th>
+                        <th>Patient Name</th>
+                        <th>Schedule</th>
                         <th>Start Time</th>
                         <th>End Time</th>
-                        <th>Duration</th>
+                        <th>Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                        $sql = "SELECT s.*, d.name AS dname FROM tblschedule s,tbldoctor d WHERE d.id = s.doc_id";
+                        $i = 1;
+                        $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id";
                         $query_run = mysqli_query($conn, $sql);
                         
                         while($row = mysqli_fetch_array($query_run)){
                       ?>
                         <tr>
-                        <td><?php echo $row['dname']; ?></td>
-                        <td><?php echo $row['day']; ?></td>
+                        <td class="text-center"><?php echo $i++; ?></td>
+                        <td><?php echo $row['pname'];?></td>
+                        <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
                         <td><?php echo date('h:i A',strtotime($row['starttime'])); ?></td>
                         <td><?php echo date('h:i A',strtotime($row['endtime'])); ?></td>
-                        <td><?php echo $row['duration']; ?></td>
+                        <td><?php
+                        if($row['status'] == 'Confirmed')
+                        {
+                          echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
+                        }
+                        else if($row['status'] == 'Pending')
+                        {
+                          echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
+                        }
+                        else
+                        {
+                          echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
+                        }
+                        ?>
+                        </td>
                         </td>
                         <td>
                           <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
@@ -345,6 +356,13 @@ include('config/dbconn.php');
 <?php include('includes/scripts.php');?>
 <script>
     $(document).ready(function () {
+
+      $('#sched_date').datepicker({
+        todayHighlight: true,
+        clearBtn: true,
+        autoclose: true,
+        startDate: new Date()
+    });
 
       $(document).on('click', '.viewbtn', function() {       
         var userid = $(this).data('id');

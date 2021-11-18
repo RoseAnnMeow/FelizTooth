@@ -37,13 +37,13 @@ if(isset($_POST['login_btn']))
             
         ];
         
-        $_SESSION['status'] = "Logged in Successfully";
+        //$_SESSION['status'] = "Logged in Successfully";
         header('Location: index.php');
 
     }
     else
     {
-        $_SESSION['status'] = "Incorrect Email or Password";
+        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'><i class='icon fas fa-exclamation-triangle'></i>Incorrect email or password";
         header('Location: login.php');
 
     }

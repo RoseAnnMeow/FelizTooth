@@ -301,6 +301,7 @@ include('config/dbconn.php');
                   <table id="example1" class="table table-bordered table-light table-hover">
                     <thead>
                       <tr>
+                        <th class="text-center">#</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Phone</th>
@@ -311,12 +312,14 @@ include('config/dbconn.php');
                     </thead>
                     <tbody>
                       <?php
+                        $i = 1;
                         $sql = "SELECT * FROM tblpatient";
                         $query_run = mysqli_query($conn, $sql);
                         
                         while($row = mysqli_fetch_array($query_run)){
                       ?>
                         <tr>
+                        <td class="text-center"><?php echo $i++; ?></td>
                         <td><?php echo $row['fname']; ?></td>
                         <td><?php echo $row['lname']; ?></td>
                         <td><?php echo $row['phone']; ?></td>

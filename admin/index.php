@@ -54,7 +54,13 @@ include('config/dbconn.php');
               <div class="info-box-content">
                 <span class="info-box-text">Patients</span>
                 <span class="info-box-number">
-                  20
+                  <?php
+                    $sql = "SELECT id FROM tblpatient ORDER BY id";
+                    $query_run = mysqli_query($conn,$sql);
+
+                    $row = mysqli_num_rows($query_run);
+                    echo $row;
+                  ?>
                 </span>
               </div>
               <!-- /.info-box-content -->

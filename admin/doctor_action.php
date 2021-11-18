@@ -23,7 +23,6 @@
         
         if ($query_run)
         {
-            unlink("../upload/".$del_image);
             $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Patient Deleted Successfully";
             header('Location:doctors.php');
         }

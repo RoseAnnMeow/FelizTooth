@@ -4,7 +4,7 @@ include('includes/header.php');
 include('admin/config/dbconn.php');
 if(isset($_SESSION['auth']))
 {
-    $_SESSION['status'] = "You are already logged in";
+    $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>You are already logged in";
     header('Location: index.php');
     exit(0);
 }
@@ -29,7 +29,7 @@ if(isset($_SESSION['auth']))
       <?php
       include('message.php');
     ?>
-      <div class="card card-outline card-teal">
+      <div class="card card-outline card-primary">
         <div class="card-body register-card-body">
           <form action="patientcode.php" method="post">
             <div class="row">
@@ -115,7 +115,7 @@ if(isset($_SESSION['auth']))
               </div>
             </div>
               <div class="form-group">
-                  <button type="submit" name="register_btn" class="btn btn-block btn-secondary">Register</button>
+                  <button type="submit" name="register_btn" class="btn btn-block btn-primary">Register</button>
               </div>
               <!-- /.col -->
           </form>

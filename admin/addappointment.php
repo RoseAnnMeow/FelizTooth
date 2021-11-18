@@ -280,7 +280,7 @@ include('config/dbconn.php');
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <?php
             include('message.php');
           ?>
@@ -288,83 +288,114 @@ include('config/dbconn.php');
                 <div class="card-header">
                     <h3 class="card-title">Add Appointment</h3>
                 </div>
-                <div class="card-body">                    
-                    <div class="form-group">                       
-                        <label for="select_patient">Select Patient</label>
-                        <select class="form-control select2bs4" name="select_patient" required>
-                        <option selected disabled>Search Patient</option>
-                            <?php
-                                if(isset($_GET['id']))
-                                {
-                                    echo $id = $_GET['id'];
-                                } 
-                                $sql = "SELECT * FROM tblpatient";
-                                $query_run = mysqli_query($conn,$sql);
-                                if(mysqli_num_rows($query_run) > 0)
-                                {
-                                    foreach($query_run as $rowhob)
-                                    {
-                                    ?>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">                       
+                                <label for="select_patient">Patient</label>
+                                <select class="form-control select2bs4" name="select_patient" required>
+                                    <option selected disabled>--Search Patient--</option>
+                                    <?php
+                                        if(isset($_GET['id']))
+                                        {
+                                            echo $id = $_GET['id'];
+                                        } 
+                                        $sql = "SELECT * FROM tblpatient";
+                                        $query_run = mysqli_query($conn,$sql);
+                                        if(mysqli_num_rows($query_run) > 0)
+                                        {
+                                            foreach($query_run as $rowhob)
+                                            {
+                                            ?>
 
-                                    <option value="<?php echo $rowhob['id'];?>">
-                                        <?php echo $rowhob['fname'].' '.$rowhob['lname'];?></option>
+                                            <option value="<?php echo $rowhob['id'];?>">
+                                                <?php echo $rowhob['fname'].' '.$rowhob['lname'];?></option>
+                                            <?php
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                            <option value="">No Record Found"</option>
+                                            <?php
+                                        }
+                                    ?>                  
+            
+                                </select>
+                            </div>
+                        </div>                  
+                        <div class="col-md-6">
+                            <div class="form-group">                       
+                                <label for="select_dentist">Doctor</label>
+                                <select class="form-control select2bs4" name="select_dentist" required>
+                                    <option selected disabled>--Search Doctor--</option>
                                     <?php
-                                    }
-                                }
-                                else
-                                {
-                                    ?>
-                                    <option value="">No Record Found"</option>
-                                    <?php
-                                }
-                            ?>                  
-    
-                        </select>
-                    </div>
-                    <div class="form-group">                       
-                        <label for="select_dentist">Select Doctor</label>
-                        <select class="form-control select2bs4" name="select_dentist"required>
-                        <option selected disabled>Search Doctor</option>
-                            <?php
-                                if(isset($_GET['id']))
-                                {
-                                    echo $id = $_GET['id'];
-                                } 
-                                $sql = "SELECT * FROM tbldoctor";
-                                $query_run = mysqli_query($conn,$sql);
-                                if(mysqli_num_rows($query_run) > 0)
-                                {
-                                    foreach($query_run as $rowhob)
-                                    {
-                                    ?>
+                                        if(isset($_GET['id']))
+                                        {
+                                            echo $id = $_GET['id'];
+                                        } 
+                                        $sql = "SELECT * FROM tbldoctor";
+                                        $query_run = mysqli_query($conn,$sql);
+                                        if(mysqli_num_rows($query_run) > 0)
+                                        {
+                                            foreach($query_run as $rowhob)
+                                            {
+                                            ?>
 
-                                    <option value="<?php echo $rowhob['id'];?>">
-                                        <?php echo $rowhob['name'];?></option>
-                                    <?php
-                                    }
-                                }
-                                else
-                                {
-                                    ?>
-                                    <option value="">No Record Found"</option>
-                                    <?php
-                                }
-                            ?>                  
-    
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputClientCompany">Remarks</label>
-                        <input type="text" id="inputClientCompany" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="inputProjectLeader">Project Leader</label>
-                        <input type="text" id="inputProjectLeader" class="form-control">
-                    </div>
+                                            <option value="<?php echo $rowhob['id'];?>">
+                                                <?php echo $rowhob['name'];?></option>
+                                            <?php
+                                            }
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                            <option value="">No Record Found"</option>
+                                            <?php
+                                        }
+                                    ?>                  
+            
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="text" autocomplete="off" name="birthday" class="form-control" id="date" required onkeypress="return false;">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Available Slots</label>
+                                <select class="form-control form-select" name="gender" required>
+                                    <option selected disabled value="">Choose</option>
+                                    <option>Female</option>
+                                    <option>Male</option>
+                                    <option>Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="inputClientCompany">Remarks</label>
+                                <input type="text" id="inputClientCompany" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Appointment Status</label>
+                                <select class="form-control form-select" name="status" required>
+                                    <option>Pending Confirmation</option>
+                                    <option>Confirmed</option>
+                                    <option>Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>                                                  
                     <div class="row">
                         <div class="col-12">
                             <a href="#" class="btn btn-secondary">Cancel</a>
-                            <input type="submit" value="Create new Porject" class="btn btn-info float-right">
+                            <input type="submit" value="Submit Appointment" class="btn btn-info float-right">
                         </div>
                     </div>
                 </div>
@@ -387,7 +418,13 @@ include('config/dbconn.php');
 <script>
     $(document).ready(function () {
 
-      $(document).on('click', '.viewbtn', function() {       
+    $('#date').datepicker({
+      todayHighlight: true,
+      clearBtn: true,
+      autoclose: true,
+    })
+
+    $(document).on('click', '.viewbtn', function() {       
         var userid = $(this).data('id');
 
         $.ajax({

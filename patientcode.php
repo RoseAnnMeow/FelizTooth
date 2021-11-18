@@ -78,7 +78,7 @@ function sendmail_verify($fname,$email,$verify_token)
 
             if(mysqli_num_rows($checkemail_run) > 0)
             {           
-                $_SESSION['status'] = "<strong>Error!</strong> Email Already Exist";
+                $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'> Email Already Exist";
                 header('Location:register.php');
             }
             else
@@ -89,12 +89,12 @@ function sendmail_verify($fname,$email,$verify_token)
                 if ($patient_query_run)
                 {
                     sendmail_verify("$name","$email","$verify_token");      
-                    $_SESSION['status'] = "We've sent an email to <b>$email</b>. Check your email and click the link to verify.";
+                    $_SESSION['status'] = "<div class='alert alert-info alert-dismissible fade show'>We've sent an email to <b>$email</b>. Check your email and click the link to verify.";
                     header('Location:login.php');
                 }
                 else
                 {
-                    $_SESSION['status'] = "<strong>Error!</strong> Registration Failed";
+                    $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Registration Failed";
                     header('Location:register.php');
                 }
             }           
@@ -102,7 +102,7 @@ function sendmail_verify($fname,$email,$verify_token)
         }
         else
         {
-            $_SESSION['status'] = "<strong> Error: </strong> Password does not match";
+            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'> Password does not match";
             header('Location:register.php');
         }
          
@@ -190,7 +190,7 @@ function sendmail_verify($fname,$email,$verify_token)
 
         if(mysqli_num_rows($checkemail_run) > 0)
         {           
-            $_SESSION['status'] = "Email Already Exist";
+            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Email Already Exist";
             header('Location:patients.php');
         }
         else
@@ -200,12 +200,12 @@ function sendmail_verify($fname,$email,$verify_token)
 
             if ($query_run)
             {
-                $_SESSION['status'] = "Patient Updated Successfully";
+                $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Patient Updated Successfully";
                 header('Location:patients.php');
             }
             else
             {
-                $_SESSION['status'] = "Patient Updated Unsuccessfully";
+                $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Patient Updated Unsuccessfully";
             }
         }
 

@@ -18,27 +18,27 @@ if(isset($_GET['token']))
 
             if($update_query_run)
             {
-                $_SESSION['status'] = "Account has been verified! Please Login";
+                $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Account has been verified! Please Login";
                 header("Location:login.php");
                 exit(0);
             }
             else
             {
-                $_SESSION['status'] = "Verification Failed";
+                $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Verification Failed";
                 header("Location:login.php");
                 exit(0);
             }
         }
         else
         {
-            $_SESSION['status'] = "Email already verified. Please Login";
+            $_SESSION['status'] = "<div class='alert alert-info alert-dismissible fade show'>Email already verified. Please Login";
             header("Location:login.php");
             exit(0);
         }
     }
     else
     {
-        $_SESSION['status'] = "This token does not exist";
+        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>This token does not exist";
         header("Location:login.php");
     }
     
