@@ -4,6 +4,7 @@ include('config/dbconn.php');
 
 if(isset($_POST['login_btn']))
 {
+    $error='';
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -42,14 +43,14 @@ if(isset($_POST['login_btn']))
     }
     else
     {
-        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Incorrect Email or Password";
+        $_SESSION['error'] = "Incorrect Email or Password";
         header('Location: login.php');
 
     }
 }
 else 
 {
-    $_SESSION['status'] = "Access Denied";
+    $_SESSION['error'] = "Access Denied";
     header('Location: patients.php');
 }
 ?>

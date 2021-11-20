@@ -48,7 +48,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="allappointment.php" class="nav-link">
+                <a href="appointment.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All</p>
                 </a>

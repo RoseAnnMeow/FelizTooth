@@ -4,7 +4,7 @@ include('includes/header.php');
 include('admin/config/dbconn.php');
 if(isset($_SESSION['auth']))
 {
-    $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>You are already logged in";
+    $_SESSION['status'] = "You are already logged in";
     header('Location: index.php');
     exit(0);
 }

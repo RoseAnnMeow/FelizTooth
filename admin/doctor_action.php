@@ -8,7 +8,7 @@
         unset($_SESSION['auth']);
         unset($_SESSION['auth_user']);
 
-        $_SESSION['status'] = "Logged out successfully";
+        $_SESSION['success'] = "Logged out successfully";
         header('Location: login.php');
         exit(0);
     }
@@ -23,12 +23,12 @@
         
         if ($query_run)
         {
-            $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Patient Deleted Successfully";
+            $_SESSION['success'] = "Doctor Deleted Successfully";
             header('Location:doctors.php');
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Patient Deleted Unsuccessfully";
+            $_SESSION['error'] = "Doctor Deleted Unsuccessfully";
             header('Location:doctors.php');
         }
     }
@@ -54,7 +54,7 @@
         {
             if(mysqli_num_rows($checkemail_run) > 0)
             {     
-                $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Email Already Exist";
+                $_SESSION['error'] = "Email Already Exist";
                 header('Location:doctors.php');      
             }
             else
@@ -69,12 +69,12 @@
     
                     if(!in_array($file_extension, $allowed_file_format))
                     {
-                        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Upload valiid file. jpg, png";
+                        $_SESSION['error'] = "Upload valiid file. jpg, png";
                         header('Location:doctors.php');
                     }
                     else if (($_FILES["edit_docimage"]["size"] > 2000000))
                     {
-                        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>File size exceeds 2MB";
+                        $_SESSION['error'] = "File size exceeds 2MB";
                         header('Location:doctors.php');
                     }
                     else 
@@ -88,7 +88,7 @@
                         $doctor_profile_image = $destination;
                     }
                 }
-                if($_SESSION['status'] == '')
+                if($_SESSION['error'] == '')
                 {
                     $sql = "UPDATE tbldoctor set name='$fname',address='$address',dob='$dob', gender='$gender', phone='$phone', email='$doc_email', degree='$doc_degree', specialty='$doc_specialty', password='$password', image='$doctor_profile_image' WHERE id='$id' ";
                     $query_run = mysqli_query($conn,$sql);
@@ -99,12 +99,12 @@
                         {
                             
                         }      
-                        $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Doctor Updated Successfully";
+                        $_SESSION['success'] = "Doctor Updated Successfully";
                         header('Location:doctors.php');
                     }
                     else
                     {
-                        $_SESSION['status'] = "<div class='alert alert-danger alert-dismissible fade show'>Doctor Updated Unsuccessfully";
+                        $_SESSION['error'] = "Doctor Updated Unsuccessfully";
                         header('Location:doctors.php');
                     }
                 }               
@@ -113,7 +113,7 @@
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Password does not match";
+            $_SESSION['error'] = "Password does not match";
             header('Location:doctors.php');
         }      
     }
@@ -208,7 +208,7 @@
 
             if(mysqli_num_rows($checkemail_run) > 0)
             {     
-                $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Email Already Exist";
+                $_SESSION['error'] = "Email Already Exist";
                 header('Location:doctors.php');      
             }
             else
@@ -223,12 +223,12 @@
 
                     if(!in_array($file_extension, $allowed_file_format))
                     {
-                        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Upload valid file. jpg, png";
+                        $_SESSION['error'] = "Upload valid file. jpg, png";
                         header('Location:doctors.php');
                     }
                     else if (($_FILES['doc_image']['size'] > 2000000))
                     {
-                        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>File size exceeds 2MB";
+                        $_SESSION['error'] = "File size exceeds 2MB";
                         header('Location:doctors.php');
                     }
                     else
@@ -258,19 +258,19 @@
                     $doctor_profile_image = $path;
                 }
 
-                if($_SESSION['status'] == '')
+                if($_SESSION['error'] == '')
                 {
                     $sql = "INSERT INTO tbldoctor (name,address,dob,gender,phone,email,degree,specialty,image,password)
                     VALUES ('$doc_fname','$doc_address','$doc_dob','$doc_gender','$doc_phone','$doc_email','$doc_degree','$doc_specialty','$doctor_profile_image','$password')";
                     $doctor_query_run = mysqli_query($conn,$sql);
                     if ($doctor_query_run)
                     {     
-                        $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Adding Doctor Successfully";
+                        $_SESSION['success'] = "Adding Doctor Successfully";
                         header('Location:doctors.php');
                     }
                     else
                     {
-                        $_SESSION['status'] = "<div class='alert alert-danger alert-dismissible fade show'>Adding Doctor Failed";
+                        $_SESSION['error'] = "Adding Doctor Failed";
                         header('Location:doctors.php');
                     }
                 }
@@ -279,7 +279,7 @@
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Password does not match";
+            $_SESSION['error'] = "Password does not match";
             header('Location:doctors.php');
         }
 }

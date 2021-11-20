@@ -1,13 +1,6 @@
 <?php
 session_start();
 include('includes/header.php');
-include('authentication.php');
-if(isset($_SESSION['auth']))
-{
-    $_SESSION['status'] = "You are already logged in";
-    header('Location: index.php');
-    exit(0);
-}
 ?>
 
 <body class="hold-transition login-page">
@@ -15,20 +8,6 @@ if(isset($_SESSION['auth']))
         <div class="login-logo">
             <a href="#" class="h4"><b>Feliz Tooth District Clinic</b></a>
         </div>
-        <?php
-        if(isset($_SESSION['auth_status']))
-        {
-            ?>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <?php echo $_SESSION['auth_status'];?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
-            </div> 
-            <?php
-            unset($_SESSION['auth_status']);
-        }
-        ?>
         <?php
         include('message.php');
         ?>

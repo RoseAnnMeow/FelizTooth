@@ -16,34 +16,35 @@
     if(isset($_POST['insert_appointment']))
     {
         $patient_id = $_POST['select_patient'];
+        $doctor_id = $_POST['select_dentist'];
         $schedule = $_POST['scheddate'];
         $s_time = $_POST['start_time'];
         $e_time = $_POST['end_time'];
         $reason = $_POST['reason'];
         $status = $_POST['status'];
 
-        $sql = "INSERT INTO tblappointment (patient_id,schedule,starttime,endtime,reason,status) VALUES ('$patient_id','$schedule','$s_time','$e_time','$reason','$status')";
+        $sql = "INSERT INTO tblappointment (patient_id,doc_id,schedule,starttime,endtime,reason,status) VALUES ('$patient_id','$doctor_id','$schedule','$s_time','$e_time','$reason','$status')";
         $query_run = mysqli_query($conn,$sql);
 
         if($query_run)
         {
-            $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Doctor Schedule Added Successfully";
-            header('Location:allappointment.php');
+            $_SESSION['success'] = "Appointment Added Successfully";
+            header('Location:appointment.php');
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-danger alert-dismissible fade show'>Doctor Schedule Added Unsuccessfully";
-            header('Location:allappointment.php');
+            $_SESSION['error'] = "Appointment Added Unsuccessfully";
+            header('Location:appointment.php');
         }
                 
     }
 
     if(isset($_POST['checking_editbtn']))
     {
-        $s_id = $_POST['sched_id'];
+        $s_id = $_POST['app_id'];
         $result_array = [];
 
-        $sql = "SELECT * FROM tblschedule WHERE id='$s_id' ";
+        $sql = "SELECT * FROM tblappointment WHERE id='$s_id' ";
         $query_run = mysqli_query($conn,$sql);
 
         if(mysqli_num_rows($query_run) > 0)
@@ -60,48 +61,71 @@
         }
     }
 
-    if(isset($_POST['update_sched']))
+    if(isset($_POST['update_appointment']))
     {
         $id = $_POST['edit_id'];
 
-        $doc_id = $_POST['select_dentist'];
-        $day = $_POST['select_day'];
+        $patient_id = $_POST['select_patient'];
+        $doctor_id = $_POST['select_dentist'];
+        $schedule = $_POST['scheddate'];
         $s_time = $_POST['start_time'];
         $e_time = $_POST['end_time'];
-        $duration = $_POST['select_duration'];
+        $reason = $_POST['reason'];
+        $status = $_POST['status'];
 
-        $sql = "UPDATE tblschedule set doc_id='$doc_id',day='$day',starttime='$s_time',endtime='$e_time', duration='$duration' WHERE id='$id' ";
+        $sql = "UPDATE tblappointment set patient_id='$patient_id',doc_id='$doctor_id',schedule='$schedule',starttime='$s_time',endtime='$e_time', reason='$reason',status='$status' WHERE id='$id' ";
         $query_run = mysqli_query($conn,$sql);
 
         if($query_run)
         {
-            $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Doctor Schedule Updated Successfully";
-            header('Location:schedule.php');
+            $_SESSION['success'] = "Appointment Updated Successfully";
+            header('Location:appointment.php');
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Doctor Schedule Updated Unsuccessfully";
-            header('Location:schedule.php');
+            $_SESSION['error'] = "Appointment Updated Unsuccessfully";
+            header('Location:appointment.php');
         }
                 
+    }
+
+    if(isset($_POST['editbtn_status']))
+    {
+        $new_status = $_POST['new_status'];
+        $update_status = $_POST['update_status'];
+        $extract_id = implode(',', $update_status);
+
+        $sql = "UPDATE tblappointment set status='$new_status' WHERE id IN($extract_id) ";
+        $query_run = mysqli_query($conn,$sql);
+
+        if($query_run)
+        {
+            $_SESSION['success'] = "Appointment Status Updated Successfully";
+            header('Location:appointment.php');
+        }
+        else
+        {
+            $_SESSION['error'] = "Appointment Status Updated Unsuccessfully";
+            header('Location:appointment.php');
+        }
     }
 
     if(isset($_POST['deletedata']))
     {  
         $id = $_POST['delete_id'];
         
-        $sql = "DELETE FROM tblschedule WHERE id='$id' ";
+        $sql = "DELETE FROM tblappointment WHERE id='$id' ";
         $query_run = mysqli_query($conn,$sql);
         
         if ($query_run)
         {
-            $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Patient Deleted Successfully";
-            header('Location:schedule.php');
+            $_SESSION['success'] = "Appointment Deleted Successfully";
+            header('Location:appointment.php');
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-danger alert-dismissible fade show'>Patient Deleted Unsuccessfully";
-            header('Location:schedule.php');
+            $_SESSION['error'] = "Appointment Deleted Unsuccessfully";
+            header('Location:appointment.php');
         }
     }
 

@@ -8,7 +8,7 @@
         unset($_SESSION['auth']);
         unset($_SESSION['auth_user']);
 
-        $_SESSION['status'] = "Logged out successfully";
+        $_SESSION['success'] = "Logged out successfully";
         header('Location: login.php');
         exit(0);
     }
@@ -32,7 +32,7 @@
 
             if(mysqli_num_rows($checkemail_run) > 0)
             {           
-                $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Email Already Exist";
+                $_SESSION['error'] = "Email Already Exist";
                 header('Location:patients.php');
             }
             else
@@ -42,12 +42,12 @@
                 $patient_query_run = mysqli_query($conn,$sql);
                 if ($patient_query_run)
                 {      
-                    $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Adding Patient Successfully";
+                    $_SESSION['success'] = "Adding Patient Successfully";
                     header('Location:patients.php');
                 }
                 else
                 {
-                    $_SESSION['status'] = "<div class='alert alert-danger alert-dismissible fade show'>Adding Patient Failed";
+                    $_SESSION['error'] = "Adding Patient Failed";
                     header('Location:patients.php');
                 }
             }           
@@ -55,7 +55,7 @@
         }
         else
         {
-            $_SESSION['status'] = "<strong> Error: </strong> Password does not match";
+            $_SESSION['error'] = "Password does not match";
             header('Location:patients.php');
         }
          
@@ -144,7 +144,7 @@
     
             if(mysqli_num_rows($checkemail_run) > 0)
             {           
-                $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Email Already Exist";
+                $_SESSION['error'] = "Email Already Exist";
                 header('Location:patients.php');
             }
             else
@@ -154,12 +154,12 @@
     
                 if ($query_run)
                 {
-                    $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Patient Updated Successfully";
+                    $_SESSION['success'] = "Patient Updated Successfully";
                     header('Location:patients.php');
                 }
                 else
                 {
-                    $_SESSION['status'] = "<div class='alert alert-danger alert-dismissible fade show'>Patient Updated Unsuccessfully";
+                    $_SESSION['error'] = "Patient Updated Unsuccessfully";
                     header('Location:patients.php');
                 }
             }
@@ -167,7 +167,7 @@
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Password does not match";
+            $_SESSION['error'] = "Password does not match";
             header('Location:patients.php');
         }
 
@@ -184,12 +184,12 @@
         
         if ($query_run)
         {
-            $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Patient Deleted Successfully";
+            $_SESSION['success'] = "Patient Deleted Successfully";
             header('Location:patients.php');
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-danger alert-dismissible fade show'>Patient Deleted Unsuccessfully";
+            $_SESSION['error'] = "Patient Deleted Unsuccessfully";
         }
     }
 

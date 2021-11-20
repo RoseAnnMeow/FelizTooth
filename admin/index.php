@@ -74,7 +74,15 @@ include('config/dbconn.php');
 
               <div class="info-box-content">
                 <span class="info-box-text">Appointments</span>
-                <span class="info-box-number">8</span>
+                <span class="info-box-number">
+                  <?php
+                    $sql = "SELECT id FROM tblappointment ORDER BY id";
+                    $query_run = mysqli_query($conn,$sql);
+
+                    $row = mysqli_num_rows($query_run);
+                    echo $row;
+                  ?>
+                </span>
               </div>
               <!-- /.info-box-content -->
             </div>

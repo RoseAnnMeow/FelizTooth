@@ -43,14 +43,14 @@ if(isset($_POST['login_btn']))
     }
     else
     {
-        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'><i class='icon fas fa-exclamation-triangle'></i>Incorrect email or password";
+        $_SESSION['error'] = "Incorrect email or password";
         header('Location: login.php');
 
     }
 }
 else 
 {
-    $_SESSION['status'] = "Access Denied";
+    $_SESSION['error'] = "Access Denied";
     header('Location: patients.php');
 }
 ?>

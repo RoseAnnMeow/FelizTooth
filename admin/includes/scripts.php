@@ -6,11 +6,11 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <script>
-  window.setTimeout(function() {
-    $(".alert").fadeTo(600, 0).slideUp(600, function(){
-        $(this).remove(); 
-    });
-}, 4000);
+//   window.setTimeout(function() {
+//     $(".alert").fadeTo(600, 0).slideUp(600, function(){
+//         $(this).remove(); 
+//     });
+// }, 4000);
 </script>
 <!-- Bootstrap 4 -->
 <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

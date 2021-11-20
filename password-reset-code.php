@@ -65,20 +65,20 @@ if(isset($_POST['password_reset_link']))
         if($update_token_run)
         {
             send_password_reset($get_name,$get_email,$token);
-            $_SESSION['status'] = "<div class='alert alert-info alert-dismissible fade show'>We emailed you a password reset link";
+            $_SESSION['info'] = "We emailed you a password reset link";
             header("Location:password-reset.php");
             exit(0);
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Something went wrong";
+            $_SESSION['error'] = "Something went wrong";
             header("Location:password-reset.php");
             exit(0);
         }
     }
     else
     {
-        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>No Email Found";
+        $_SESSION['error'] = "No Email Found";
         header("Location:password-reset.php");
         exit(0);
     }
@@ -113,41 +113,41 @@ if(isset($_POST['update_password']))
                         $update_to_new_token = "UPDATE tblpatient SET verify_token='$new_token' WHERE verify_token='$token' LIMIT 1";
                         $update_to_new_token_run = mysqli_query($conn,$update_to_new_token);
                         
-                        $_SESSION['status'] = "<div class='alert alert-success alert-dismissible fade show'>Password has been changed";
+                        $_SESSION['success'] = "Password has been changed";
                         header("Location:login.php");
                         exit(0);
                     }
                     else
                     {
-                        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Did not update password. Something went wrong!";
+                        $_SESSION['error'] = "Did not update password. Something went wrong!";
                         header("Location:password-change.php?token=$token&email=$email");
                         exit(0);
                     }
                 }
                 else
                 {
-                    $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Password and Confirm Password does not match";
+                    $_SESSION['error'] = "Password and Confirm Password does not match";
                     header("Location:password-change.php?token=$token&email=$email");
                     exit(0);
                 }
             }
             else
             {
-                $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Invalid Token";
+                $_SESSION['error'] = "Invalid Token";
                 header("Location:password-change.php?token=$token&email=$email");
                 exit(0);
             }
         }
         else
         {
-            $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>Please Complete All Fields";
+            $_SESSION['error'] = "Please Complete All Fields";
             header("Location:password-change.php?token=$token&email=$email");
             exit(0);
         }
     }
     else
     {
-        $_SESSION['status'] = "<div class='alert alert-warning alert-dismissible fade show'>No Token Available";
+        $_SESSION['error'] = "No Token Available";
         header("Location:password-change.php");
         exit(0);
     }
