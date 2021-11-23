@@ -125,6 +125,20 @@
         }
       });
     });
+    //     $("#selectAll").change(function(){
+  //    var checked = $(this).is(':checked');
+  //    if(checked){
+  //      $('input[name="update_status[]"]').each(function(){
+  //        $(this).prop("checked",true);
+  //      });
+  //    }else{
+  //      $('input[name="update_status[]"]').each(function(){
+  //        $(this).prop("checked",false);
+  //      });
+  //    }
+  //  });
+      // Changing state of CheckAll checkbox 
+      
 
       //Doctor Delete Modal
     $(document).on('click','.deleteDoctorbtn', function(){
@@ -166,4 +180,3 @@
       });
     }
 </script>
-  

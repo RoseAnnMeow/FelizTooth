@@ -268,7 +268,7 @@ include('config/dbconn.php');
 </div>
 
 <!-- delete modal pop up modal -->
-<div class="modal fade" id="DeleteDoctorModal">
+      <div class="modal fade" id="DeleteDoctorModal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -338,6 +338,7 @@ include('config/dbconn.php');
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Doctor Specialty</th>
+                        <th>Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -358,6 +359,16 @@ include('config/dbconn.php');
                         <td><?php echo $row['phone']; ?></td>
                         <td><?php echo $row['email']; ?></td>
                         <td><?php echo $row['specialty']; ?></td>     
+                        <td>
+                          <?php
+                            if($row['status']==1){
+                              echo '<button data-id="'.$row['id'].'" data-status="'.$row['status'].'" class="btn btn-sm btn-primary activatebtn">Active</button>';
+                            }
+                            else{
+                              echo '<button data-id="'.$row['id'].'" data-status="'.$row['status'].'" class="btn btn-sm btn-danger activatebtn">Inactive</button>';
+                            }
+                          ?>
+                        </td>     
                         <td>
                           <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-secondary viewDoctorbtn"><i class="fa fa-eye"></i></button>
                           <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editDoctorbtn"><i class="fas fa-edit"></i></button>
@@ -449,7 +460,37 @@ include('config/dbconn.php');
     $('#DeleteDoctorModal').modal('show');
   });
 
-});
+    $(document).on('click','.activatebtn', function () { 
+      var userid = $(this).data('id');
+      var status = $(this).data('status');
+      var next_status = 'Active';
+      if(status == 1)
+      {
+        next_status = 'Inactive';
+      }
+
+      if(confirm("Are you sure you want to "+next_status+" it?"))
+      {     
+          $.ajax({
+          type: "post",
+          url: "doctor_action.php",
+          data: 
+          {
+          'change_status':true,
+            'user_id':userid,
+            'status':status,
+            'next_status':next_status
+          },
+          success: function (response) {
+            location.reload();
+          }
+        });
+      }    
+    });
+      
+      
+	});
+
 </script>
   
 

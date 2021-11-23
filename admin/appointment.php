@@ -25,8 +25,8 @@ include('config/dbconn.php');
               <div class="col-sm-6">
                 <div class="form-group">
                 <label>Select Patient</label>
-                  <select class="form-control" name="select_patient" required>
-                  <option selected disabled value="">--Select Patient--</option>
+                  <select class="form-control select2 patient" name="select_patient" required>
+                  <option selected disabled value="">Select Patient</option>
                     <?php
                       if(isset($_GET['id']))
                       {
@@ -58,8 +58,8 @@ include('config/dbconn.php');
               <div class="col-sm-6">
                 <div class="form-group">
                   <label>Select Dentist</label>
-                  <select class="form-control" name="select_dentist" required>
-                  <option selected disabled value="">--Select Doctor--</option>
+                  <select class="form-control select2 dentist" name="select_dentist" required>
+                  <option selected disabled value="">Select Doctor</option>
                   <?php
                       if(isset($_GET['id']))
                       {
@@ -88,28 +88,38 @@ include('config/dbconn.php');
                   </select>
                 </div>
               </div>   
-              <div class="col-sm-12">
+              <div class="col-sm-12">              
                 <div class="form-group">
-                    <label>Appointment Date</label>
-                    <input type="text" autocomplete="off" name="scheddate" class="form-control" id="sched_date" required onkeypress="return false;">
+                    <label>Appontment Date</label>
+                    <input type="text" autocomplete="off" name="scheddate" class="form-control" id="scheddate" required onkeypress="return false;">
                 </div>
-              </div>       
+              </div>     
               <div class="col-sm-6">              
                 <div class="form-group">
                     <label>Appointment Start Time</label>
-                    <input type="time" autocomplete="off" name="start_time" class="form-control" required>
+                    <div class="input-group date" id="starttime" data-target-input="nearest">
+                      <input type="text" autocomplete="off" name="start_time" class="form-control datetimepicker-input" required data-target="#starttime"/>
+                      <div class="input-group-append" data-target="#starttime" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+                      </div>
+                    </div>
                 </div>
               </div>
               <div class="col-sm-6">              
                 <div class="form-group">
                     <label>Appointment End Time</label>
-                    <input type="time" autocomplete="off" name="end_time" class="form-control" required>
+                    <div class="input-group date" id="endtime" data-target-input="nearest">
+                      <input type="text" autocomplete="off" name="end_time" class="form-control datetimepicker-input" required data-target="#endtime"/>
+                      <div class="input-group-append" data-target="#endtime" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+                      </div>
+                    </div>
                 </div>
               </div>      
               <div class="col-sm-12">
                 <div class="form-group">
                   <label>Reason</label>
-                  <textarea class="form-control" rows="2" name="reason" placeholder="Enter ..."></textarea>
+                  <textarea class="form-control" rows="2" name="reason" required placeholder="Enter ..."></textarea>
                 </div>
               </div>
               <div class="col-sm-12">
@@ -171,12 +181,11 @@ include('config/dbconn.php');
       <form action="appointment_action.php" method="POST">
         <div class="modal-body">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-md-6">
                 <input type="hidden" name="edit_id" id="edit_id"> 
                 <div class="form-group">
                 <label>Select Patient</label>
-                  <select class="form-control" id="edit_patient" name="select_patient" required>
-                  <option selected disabled value="">--Select Patient--</option>
+                  <select class="form-control select2 patient" id="edit_patient" name="select_patient" required>
                   <?php
                       if(isset($_GET['id']))
                       {
@@ -208,7 +217,7 @@ include('config/dbconn.php');
               <div class="col-sm-6">
                 <div class="form-group">
                   <label>Select Dentist</label>
-                  <select class="form-control"  id="edit_dentist" name="select_dentist" required>
+                  <select class="form-control select2 dentist" id="edit_dentist" name="select_dentist" required>
                   <?php
                       if(isset($_GET['id']))
                       {
@@ -240,25 +249,35 @@ include('config/dbconn.php');
               <div class="col-sm-12">
                 <div class="form-group">
                     <label>Appointment Date</label>
-                    <input type="text" autocomplete="off" id="edit_sched" name="scheddate" class="form-control" required onkeypress="return false;">
+                    <input type="datetime" autocomplete="off" id="edit_sched" name="scheddate" class="form-control" required onkeypress="return false;">
                 </div>
               </div>           
               <div class="col-sm-6">              
                 <div class="form-group">
                     <label>Start Time</label>
-                    <input type="time" autocomplete="off" id="edit_stime" name="start_time" class="form-control" required>
+                    <div class="input-group date" id="edit_stime" data-target-input="nearest">
+                      <input type="text" autocomplete="off" name="start_time" class="form-control datetimepicker-input" required data-target="#edit_stime"/>
+                      <div class="input-group-append" data-target="#edit_stime" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-sm-6">              
                 <div class="form-group">
                     <label>End Time</label>
-                    <input type="time" autocomplete="off" id="edit_etime" name="end_time" class="form-control" required>
+                    <div class="input-group date" id="edit_etime" data-target-input="nearest">
+                      <input type="text" autocomplete="off" name="end_time" class="form-control datetimepicker-input" required data-target="#edit_etime"/>
+                      <div class="input-group-append" data-target="#edit_etime" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="far fa-clock"></i></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                   <label>Reason</label>
-                  <textarea class="form-control" rows="2" id="edit_reason" name="reason" placeholder="Enter ..."></textarea>
+                  <textarea class="form-control" rows="2" id="edit_reason" name="reason" required placeholder="Enter ..."></textarea>
                 </div>
               </div>
               <div class="col-sm-12">
@@ -391,7 +410,7 @@ include('config/dbconn.php');
                               while($row = mysqli_fetch_array($query_run)){
                             ?>
                               <tr>
-                              <td style="width:10px; text-align:center;"><input type="checkbox" name="update_status[]" value="<?php echo $row['id']; ?>"></td>
+                              <td style="width:10px; text-align:center;"><input type="checkbox" class="invCheck" name="update_status[]" value="<?php echo $row['id']; ?>"></td>
                               <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
                               <td><?php echo $row['pname'];?></td>
                               <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
@@ -450,11 +469,20 @@ include('config/dbconn.php');
   var indiList;
     $(document).ready(function () {
 
-      $('#sched_date').datepicker({
-        todayHighlight: true,
-        clearBtn: true,
-        autoclose: true,
+      $('#scheddate').datepicker({
         startDate: new Date()
+      });
+      $('#starttime').datetimepicker({
+          format: 'LT'
+      });
+      $('#endtime').datetimepicker({
+          format: 'LT'
+      });
+      $('#edit_stime').datetimepicker({
+          format: 'LT'
+      });
+      $('#edit_etime').datetimepicker({
+          format: 'LT'
       });
 
       $('#edit_sched').datepicker({
@@ -464,6 +492,18 @@ include('config/dbconn.php');
           startDate: new Date()
       });
 
+      $('.select2').select2()
+
+      $(".patient").select2({
+      placeholder: "Select Patient",
+      allowClear: true
+      });
+
+      $(".dentist").select2({
+      placeholder: "Select Dentist",
+      allowClear: true
+      });
+    
       $(document).on('click', '.viewbtn', function() {       
         var userid = $(this).data('id');
 
@@ -494,10 +534,12 @@ include('config/dbconn.php');
         $.each(response, function (key, value){
           $('#edit_id').val(value['id']);
           $('#edit_patient').val(value['patient_id']);
+          $('#edit_patient').select2().trigger('change');
           $('#edit_dentist').val(value['doc_id']);
+          $('#edit_dentist').select2().trigger('change');
           $('#edit_sched').val(value['schedule']);
-          $('#edit_stime').val(value['starttime']);
-          $('#edit_etime').val(value['endtime']);
+          $('#edit_stime').find("input").val(value['starttime']);    
+          $("#edit_etime").find("input").val(value['endtime']);        
           $('#edit_reason').val(value['reason']);
           $('#edit_status').val(value['status']);
         });
@@ -526,23 +568,36 @@ include('config/dbconn.php');
         }
       });
 
+      $('.invCheck').change(function(){   
+        if($('.invCheck').length == $(".invCheck:checked").length)
+        {
+          $("#selectAll").prop("checked", true);
+        }
+        else
+        {
+          $("#selectAll").prop("checked", false);
+        }
+      });
+      
       $('input[type="checkbox"]').change(function() {
         if($(this).is(':checked')==true)
         {
-          if($('#selected_opt').is(':visible') == false){
-					$('#selected_opt').show('slow')
-				}
+          if($('#selected_opt').is(':visible') == false)
+          {
+					  $('#selected_opt').show('slow')
+				  }
         }
-        else{
-          if($('#selected_opt').is(':visible') == true){
-						$('#selected_opt').hide('slow')
-					}
+        else
+        {
+          if($('#example1').find(':checkbox:checked').length <= 0)
+          {
+            if($('#selected_opt').is(':visible') == true)
+            {
+              $('#selected_opt').hide('slow')
+            }   
+          }                
         }
-				});
-
- 
-
-    
+			});
 
 });
 

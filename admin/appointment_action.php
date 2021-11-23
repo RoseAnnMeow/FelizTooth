@@ -22,8 +22,9 @@
         $e_time = $_POST['end_time'];
         $reason = $_POST['reason'];
         $status = $_POST['status'];
+        $bgcolor = $_POST['color'];
 
-        $sql = "INSERT INTO tblappointment (patient_id,doc_id,schedule,starttime,endtime,reason,status) VALUES ('$patient_id','$doctor_id','$schedule','$s_time','$e_time','$reason','$status')";
+        $sql = "INSERT INTO tblappointment (patient_id,doc_id,schedule,starttime,endtime,reason,status,bgcolor) VALUES ('$patient_id','$doctor_id','$schedule','$s_time','$e_time','$reason','$status','$bgcolor')";
         $query_run = mysqli_query($conn,$sql);
 
         if($query_run)

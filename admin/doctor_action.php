@@ -13,6 +13,37 @@
         exit(0);
     }
 
+    if(isset($_POST['change_status']))
+    {
+        $id = $_POST['user_id'];
+        $status = $_POST['next_status'];
+        $new_status='';
+
+        if($status == "Inactive")
+        {
+            $new_status = 0;
+        }
+        if($status == "Active")
+        {
+            $new_status = 1;
+        }
+
+        $sql = "UPDATE tbldoctor set status='$new_status' WHERE id='$id' ";
+        $query_run = mysqli_query($conn,$sql);
+        
+        if ($query_run)
+        {
+            $_SESSION['success'] = "Doctor Status Change Successfully";
+            header('Location:doctors.php');
+        }
+        else
+        {
+            $_SESSION['error'] = "Doctor Status Change Unsuccessfully";
+            header('Location:doctors.php');
+
+        }
+    }
+
     if(isset($_POST['deletedata']))
     {  
         $id = $_POST['delete_id'];
@@ -282,5 +313,5 @@
             $_SESSION['error'] = "Password does not match";
             header('Location:doctors.php');
         }
-}
-    ?>  
+    }
+?>  

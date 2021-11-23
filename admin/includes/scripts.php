@@ -44,6 +44,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
 <!-- Select2 -->
 <script src="assets/plugins/select2/js/select2.full.min.js"></script>
+<!-- fullCalendar 2.2.5 -->
+<script src="assets/plugins/moment/moment.min.js"></script>
+<script src="assets/plugins/fullcalendar/main.js"></script>
 <!-- AdminLTE App -->
 <script src="assets/dist/js/adminlte.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -53,8 +56,6 @@
 
 <script>
     $(document).ready(function () {
-
-    $('.select2').select2()
 
     $('.select2bs4').select2({
       theme: 'bootstrap4'
@@ -95,13 +96,6 @@
   confirmPassword.onkeyup = validatePassword;
 </script>
 
-
-<script>
-   $(function () {
-
-});
-
-</script>
 <script>
   $(function () {
     $("#example1").DataTable({

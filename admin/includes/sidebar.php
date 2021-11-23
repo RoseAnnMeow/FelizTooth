@@ -60,7 +60,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../tables/jsgrid.html" class="nav-link">
+                <a href="calendar.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Calendar</p>
                 </a>

@@ -306,7 +306,7 @@ include('config/dbconn.php');
                         <th>Last Name</th>
                         <th>Phone</th>
                         <th>Email</th>
-                        <th>Email Verification Status</th>
+                        <th width="25px;">Verification Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
