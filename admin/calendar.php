@@ -18,11 +18,14 @@ include('config/dbconn.php');
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div id="modalBody" class="modal-body"> 
-              <p>Hello</p>
+            <div id="modalBody" class="modal-body">
+              <div class="viewdetails">
+
+              </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-info">Edit Appointment</button>              
             </div>
         </div>
       </div>
@@ -56,57 +59,48 @@ include('config/dbconn.php');
             <div class="sticky-top mb-3">
               <div class="card card-teal card-outline">
                 <div class="card-header">
-                  <h4 class="card-title">Appointment</h4>
+                  <h4 class="card-title">Upcoming Appointments</h4>
                 </div>
                 <div class="card-body">
-                  <!-- Book Appointment -->
-                  <a class="btn btn-success btn-block" data-toggle="modal" href="#addAppointmentModal">
-                      <i class="fa fa-plus-circle"> </i> Request a Appointment
-                  </a>
                   <!-- the events -->
                   <div id="external-events">
-                    <div class="external-event bg-success">Lunch</div>
-                    <div class="external-event bg-warning">Go home</div>
-                    <div class="external-event bg-info">Do homework</div>
-                    <div class="external-event bg-primary">Work on UI design</div>
-                    <div class="external-event bg-danger">Sleep tight</div>
-                    <div class="checkbox">
-                      <label for="drop-remove">
-                        <input type="checkbox" id="drop-remove">
-                        remove after drop
-                      </label>
+                    <div class="col">
+                  <div class="info-box">
+                    <div class="info-box-content">
+                      <h3 class="text-center">
+                        <?php
+                          $sql = "SELECT status FROM tblappointment WHERE status='Confirmed' ";
+                          $query_run = mysqli_query($conn,$sql);
+
+                          $row = mysqli_num_rows($query_run);
+                          echo $row;
+                        ?>
+                      </h3>
+                      <span class="info-box-text text-center text-success">Confirmed</span>                      
                     </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="info-box">
+                    <div class="info-box-content">
+                      <h3 class="text-center">
+                      <?php
+                          $sql = "SELECT status FROM tblappointment WHERE status='Pending' ";
+                          $query_run = mysqli_query($conn,$sql);
+                          
+                          $row = mysqli_num_rows($query_run);
+                          echo $row;
+                        ?>
+                      </h3>
+                      <span class="info-box-text text-center text-success">Pending</span>      
+                    </div>
+                  </div>
+                </div>
                   </div>
                 </div>
                 <!-- /.card-body -->
               </div>
               <!-- /.card -->
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Create Event</h3>
-                </div>
-                <div class="card-body">
-                  <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                    <ul class="fc-color-picker" id="color-chooser">
-                      <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                      <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
-                    </ul>
-                  </div>
-                  <!-- /btn-group -->
-                  <div class="input-group">
-                    <input id="new-event" type="text" class="form-control" placeholder="Event Title">
-
-                    <div class="input-group-append">
-                      <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
-                    </div>
-                    <!-- /btn-group -->
-                  </div>
-                  <!-- /input-group -->
-                </div>
-              </div>
             </div>
           </div>
           <!-- /.col -->
@@ -191,32 +185,36 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
       var events = []
       Object.keys(scheds).map(k=>{
           events.push({
-              id          : scheds[k].id,
+              id             : scheds[k].id,
               title          : scheds[k].pname,
               start          : moment(scheds[k].timestamp).format('YYYY-MM-DD[T]HH:mm'),
-              end             : moment(scheds[k].enddate).format('hh:mm'),
+              end            : moment(scheds[k].enddate).format('hh:mm'),
               backgroundColor: scheds[k].bgcolor, 
-              borderColor: scheds[k].bgcolor 
+              borderColor    :scheds[k].bgcolor 
               });
       })
       successCallback(events)
 
   },
-  eventClick:  function(info) {
-              alert(info.event.id);
+       eventClick:  function(info) {
+         var userid =  info.event.id;        
+
+         $.ajax({
+           type: "post",
+           url: "calendar_action.php",
+           data: {userid:userid},
+           success: function (response) {
+            $('.viewdetails').html(response);
+            $("#AppointmentDetails").modal();
+           }
+         });
         },
-        // eventClick:  function(event, jsEvent, view) {
-        //     $('#modalTitle').html(event.title);
-        //     $('#modalBody').html(event.description);
-        //     $('#eventUrl').attr('href',event.url);
-        //     $('#AppointmentDetails').modal();
-        // },
     
   navLinks: true, // can click day/week names to navigate views
   businessHours: true, // display business hours
   editable: true,
   selectable: true,
-  droppable : true, // this allows things to be dropped onto the calendar !!!
+  droppable : false, // this allows things to be dropped onto the calendar !!!
 });
 
 calendar.render();

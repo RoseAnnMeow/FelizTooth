@@ -132,7 +132,21 @@ include('config/dbconn.php');
                         <option>Cancelled</option>
                     </select>
                 </div>
-              </div>      
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                <label for="color">Color</label>
+                <select name="color" class="form-control" id="color">
+                    <option style="color:#f39c12;" value="#f39c12">Yellow</option>
+                    <option style="color:#00c0ef;" value="#00c0ef"> Aqua</option>
+                    <option style="color:#0073b7;" value="#0073b7"> Blue</option>						  
+                    <option style="color:#00a65a;" value="#00a65a"> Green</option>
+                    <option style="color:#FF8C00;" value="#FF8C00"> Orange</option>
+                    <option style="color:#3c8dbc;" value="#3c8dbc"> Light Blue</option>
+                    <option style="color:#f56954;" value="#f56954"> Red</option>						  
+                  </select>
+                </div>             
+              </div>       
             </div>
           </div>
             
@@ -290,7 +304,22 @@ include('config/dbconn.php');
                         <option>Cancelled</option>
                     </select>
                 </div>
-              </div>      
+              </div>
+              <div class="col-sm-12">
+                <div class="form-group">
+                <label for="color">Color</label>
+                <span class="text-sm">(Optional)</span>
+                <select name="color" class="form-control" id="edit_color">
+                    <option style="color:#f39c12;" value="#f39c12">Yellow</option>
+                    <option style="color:#00c0ef;" value="#00c0ef"> Aqua</option>
+                    <option style="color:#0073b7;" value="#0073b7"> Blue</option>						  
+                    <option style="color:#00a65a;" value="#00a65a"> Green</option>
+                    <option style="color:#FF8C00;" value="#FF8C00"> Orange</option>
+                    <option style="color:#3c8dbc;" value="#3c8dbc"> Light Blue</option>
+                    <option style="color:#f56954;" value="#f56954"> Red</option>							  
+                  </select>
+                </div>             
+              </div>       
             </div>
           </div>
 
@@ -364,29 +393,48 @@ include('config/dbconn.php');
                 <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#AddAppointmentModal">
                 <i class="fa fa-plus"></i> &nbsp;&nbsp;Add Appointment</button>
               </div>
+                <div class="card-body">
+                  <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="all-tab" data-toggle="tab" data-target="#all" role="tab" aria-controls="all" aria-selected="true">All</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="pending-tab" data-toggle="tab" data-target="#pending" role="tab" aria-controls="pending" aria-selected="false">Pending</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="confirmed-tab" data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="false">Confirmed</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="cancelled-tab" data-toggle="tab" data-target="#cancelled" role="tab" aria-controls="cancelled-tab" aria-selected="false">Cancelled</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="treated-tab" data-toggle="tab" data-target="#treated" role="tab" aria-controls="treated-tab" aria-selected="false">Treated</a>
+                    </li>
+                  </ul>
 
-              <div class="card-body">
-                <div class="container-fluid">
-                  <form action="appointment_action.php" method="POST">
-			              <div class="row" id="selected_opt" style="display:none">
-                      <div class="w-100 d-flex">
-                        <div class="col-2">
-                          <label for="" class="controllabel"> With Selected:</label>
-                        </div>
-                        <div class="col-2">
-                          <select id="" name="new_status" class="custom-select select">
-                            <option value="Pending">Pending</option>
-                            <option value="Confirmed">Confirmed</option>
-                            <option value="Cancelled">Cancelled</option>
-                            <option value="Treated">Treated</option>
-                          </select>
-                        </div>
-                          <div class="col">
-                            <button type="submit" class="btn btn-primary" name="editbtn_status" id="">Go</button>
+                  <div class="mt-3">
+                    <div class="tab-content" id="custom-tabs-three-tabContent">
+                      <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                        <form action="appointment_action.php" method="POST">
+                        <div class="row" id="selected_opt" style="display:none">
+                          <div class="w-100 d-flex mb-2">
+                            <div class="col-sm-2">
+                              <label for="" class="controllabel"> With Selected:</label>
+                            </div>
+                            <div class="col-sm-3">
+                              <select id="" name="new_status" class="custom-select select">
+                                <option value="Pending">Pending</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Cancelled">Cancelled</option>
+                                <option value="Treated">Treated</option>
+                              </select>
+                            </div>
+                            <div class="col">
+                              <button type="submit" class="btn btn-primary" name="editbtn_status" id="">Go</button>
+                            </div>
                           </div>
-                      </div>
-                    </div>
-                        <table id="example1" class="table table-bordered table-hover" id="indi-list">
+                        </div>
+                        <table id="alltable" class="table table-bordered table-hover" style="width:100%">
                           <thead>
                             <tr>
                               <th class="text-center">
@@ -397,6 +445,7 @@ include('config/dbconn.php');
                               <th>Day</th>
                               <th>Start Time</th>
                               <th>End Time</th>
+                              <th>Schedule Type</th>
                               <th>Status</th>
                               <th>Action</th>
                             </tr>
@@ -416,6 +465,7 @@ include('config/dbconn.php');
                               <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
                               <td><?php echo date('h:i A',strtotime($row['starttime'])); ?></td>
                               <td><?php echo date('h:i A',strtotime($row['endtime'])); ?></td>
+                              <td><?php echo $row['schedtype'];?></td>
                               <td><?php
                               if($row['status'] == 'Confirmed')
                               {
@@ -446,10 +496,252 @@ include('config/dbconn.php');
                             ?>
                           </tbody>
                         </table>
-                     
+                      </div>
+                      <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                        <table id="pendingtable" class="table table-bordered table-hover" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th class="text-center">#</th>
+                              <th>Patient</th>
+                              <th>Day</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Schedule Type</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                              $i = 1;
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Pending' ";
+                              $query_run = mysqli_query($conn, $sql);
+                              
+                              while($row = mysqli_fetch_array($query_run)){
+                            ?>
+                              <tr>                              
+                              <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
+                              <td><?php echo $row['pname'];?></td>
+                              <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
+                              <td><?php echo date('h:i A',strtotime($row['starttime'])); ?></td>
+                              <td><?php echo date('h:i A',strtotime($row['endtime'])); ?></td>
+                              <td><?php echo $row['schedtype'];?></td>
+                              <td><?php
+                              if($row['status'] == 'Confirmed')
+                              {
+                                echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
+                              }
+                              else if($row['status'] == 'Pending')
+                              {
+                                echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
+                              }
+                              else if($row['status'] == 'Treated')
+                              {
+                                echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                              }
+                              else
+                              {
+                                echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
+                              }
+                              ?>
+                              </td>
+                              </td>
+                              <td>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
+                              </td>
+                              </tr>
+                              <?php
+                              }
+                            ?>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="tab-pane fade" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab">
+                        <table id="confirmedtable" class="table table-bordered table-hover" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th class="text-center">#</th>
+                              <th>Patient</th>
+                              <th>Day</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Schedule Type</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                              $i = 1;
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Confirmed' ";
+                              $query_run = mysqli_query($conn, $sql);
+                              
+                              while($row = mysqli_fetch_array($query_run)){
+                            ?>
+                              <tr>                              
+                              <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
+                              <td><?php echo $row['pname'];?></td>
+                              <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
+                              <td><?php echo date('h:i A',strtotime($row['starttime'])); ?></td>
+                              <td><?php echo date('h:i A',strtotime($row['endtime'])); ?></td>
+                              <td><?php echo $row['schedtype'];?></td>
+                              <td><?php
+                              if($row['status'] == 'Confirmed')
+                              {
+                                echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
+                              }
+                              else if($row['status'] == 'Pending')
+                              {
+                                echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
+                              }
+                              else if($row['status'] == 'Treated')
+                              {
+                                echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                              }
+                              else
+                              {
+                                echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
+                              }
+                              ?>
+                              </td>
+                              </td>
+                              <td>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
+                              </td>
+                              </tr>
+                              <?php
+                              }
+                            ?>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
+                        <table id="cancelledtable" class="table table-bordered table-hover" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th class="text-center">#</th>
+                              <th>Patient</th>
+                              <th>Day</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Schedule Type</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                              $i = 1;
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Cancelled' ";
+                              $query_run = mysqli_query($conn, $sql);
+                              
+                              while($row = mysqli_fetch_array($query_run)){
+                            ?>
+                              <tr>                              
+                              <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
+                              <td><?php echo $row['pname'];?></td>
+                              <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
+                              <td><?php echo date('h:i A',strtotime($row['starttime'])); ?></td>
+                              <td><?php echo date('h:i A',strtotime($row['endtime'])); ?></td>
+                              <td><?php echo $row['schedtype'];?></td>
+                              <td><?php
+                              if($row['status'] == 'Confirmed')
+                              {
+                                echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
+                              }
+                              else if($row['status'] == 'Pending')
+                              {
+                                echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
+                              }
+                              else if($row['status'] == 'Treated')
+                              {
+                                echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                              }
+                              else
+                              {
+                                echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
+                              }
+                              ?>
+                              </td>
+                              </td>
+                              <td>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
+                              </td>
+                              </tr>
+                              <?php
+                              }
+                            ?>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="tab-pane fade" id="treated" role="tabpanel" aria-labelledby="treated-tab">
+                        <table id="treatedtable" class="table table-bordered table-hover" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th class="text-center">#</th>
+                              <th>Patient</th>
+                              <th>Day</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Schedule Type</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                              $i = 1;
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Treated' ";
+                              $query_run = mysqli_query($conn, $sql);
+                              
+                              while($row = mysqli_fetch_array($query_run)){
+                            ?>
+                              <tr>                              
+                              <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
+                              <td><?php echo $row['pname'];?></td>
+                              <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
+                              <td><?php echo date('h:i A',strtotime($row['starttime'])); ?></td>
+                              <td><?php echo date('h:i A',strtotime($row['endtime'])); ?></td>
+                              <td><?php echo $row['schedtype'];?></td>
+                              <td><?php
+                              if($row['status'] == 'Confirmed')
+                              {
+                                echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
+                              }
+                              else if($row['status'] == 'Pending')
+                              {
+                                echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
+                              }
+                              else if($row['status'] == 'Treated')
+                              {
+                                echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                              }
+                              else
+                              {
+                                echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
+                              }
+                              ?>
+                              </td>
+                              </td>
+                              <td>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
+                              </td>
+                              </tr>
+                              <?php
+                              }
+                            ?>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
-                  </form>
                 </div>
+              </div>
+               
+              </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -466,8 +758,47 @@ include('config/dbconn.php');
 
 <?php include('includes/scripts.php');?>
 <script>
-  var indiList;
     $(document).ready(function () {
+
+      var table1 = $('#alltable').DataTable( {
+      responsive: true,
+      "columnDefs": [{ 'orderable': false, 'targets': 0 }],
+      "aaSorting": [[1, 'asc']],
+    } );
+
+    var table2 = $('#pendingtable').DataTable( {
+      responsive: true,
+    } );
+
+    var table3 = $('#confirmedtable').DataTable( {
+      responsive: true,
+    } );
+    var table4 = $('#cancelledtable').DataTable( {
+      responsive: true,
+    } );
+    var table5 = $('#treatedtable').DataTable( {
+      responsive: true,
+    } );
+
+    $('.nav-tabs a').on('shown.bs.tab', function (event) {
+      var tabID = $(event.target).attr('data-target');
+      if( tabID === '#alltable') {
+        table1.columns.adjust().responsive.recalc();
+      }
+      if (tabID === '#pending') {
+        table2.columns.adjust().responsive.recalc();
+      }
+      if( tabID === '#confirmed') {
+        table3.columns.adjust().responsive.recalc();
+      }
+      if( tabID === '#cancelled') {
+        table4.columns.adjust().responsive.recalc();
+      }
+      if( tabID === '#treated') {
+        table5.columns.adjust().responsive.recalc();
+      }
+    } );
+
 
       $('#scheddate').datepicker({
         startDate: new Date()
@@ -503,6 +834,14 @@ include('config/dbconn.php');
       placeholder: "Select Dentist",
       allowClear: true
       });
+
+      const colorBox = document.getElementById('edit_color');
+
+      colorBox.addEventListener('change', (event) => {
+        const color = event.target.value;
+        event.target.style.color = color;
+      }, false);
+      document.getElementById('color').addEventListener('change', function() {  this.style.color = this.value });
     
       $(document).on('click', '.viewbtn', function() {       
         var userid = $(this).data('id');
@@ -542,6 +881,7 @@ include('config/dbconn.php');
           $("#edit_etime").find("input").val(value['endtime']);        
           $('#edit_reason').val(value['reason']);
           $('#edit_status').val(value['status']);
+          $('#edit_color').val(value['bgcolor']);
         });
 
         $('#EditAppointmentModal').modal('show');
@@ -589,7 +929,7 @@ include('config/dbconn.php');
         }
         else
         {
-          if($('#example1').find(':checkbox:checked').length <= 0)
+          if($('#alltable').find(':checkbox:checked').length <= 0)
           {
             if($('#selected_opt').is(':visible') == true)
             {

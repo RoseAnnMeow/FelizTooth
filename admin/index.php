@@ -47,78 +47,87 @@ include('config/dbconn.php');
             ?>
         <!-- Small boxes (Stat box) -->
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user-friends"></i></span>
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3><?php
+                  $sql = "SELECT id FROM tblpatient ORDER BY id";
+                  $query_run = mysqli_query($conn,$sql);
 
-              <div class="info-box-content">
-                <span class="info-box-text">Patients</span>
-                <span class="info-box-number">
-                  <?php
-                    $sql = "SELECT id FROM tblpatient ORDER BY id";
-                    $query_run = mysqli_query($conn,$sql);
+                  $row = mysqli_num_rows($query_run);
+                  echo $row;
+                ?></h3>
 
-                    $row = mysqli_num_rows($query_run);
-                    echo $row;
-                  ?>
-                </span>
+                <p>Patients</p>
               </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-calendar-check"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Appointments</span>
-                <span class="info-box-number">
-                  <?php
-                    $sql = "SELECT id FROM tblappointment ORDER BY id";
-                    $query_run = mysqli_query($conn,$sql);
-
-                    $row = mysqli_num_rows($query_run);
-                    echo $row;
-                  ?>
-                </span>
+              <div class="icon">
+                <i class="fas fa-user-friends"></i>
               </div>
-              <!-- /.info-box-content -->
+              <a href="#" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
             </div>
-            <!-- /.info-box -->
           </div>
-          <!-- /.col -->
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3><?php
+                  $sql = "SELECT id FROM tblappointment ORDER BY id";
+                  $query_run = mysqli_query($conn,$sql);
 
-          <!-- fix for small devices only -->
-          <div class="clearfix hidden-md-up"></div>
+                  $row = mysqli_num_rows($query_run);
+                  echo $row;
+                ?>
+              </h3>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Treatment Plan</span>
-                <span class="info-box-number">6</span>
+                <p>Appointments</p>
               </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <!-- /.col -->
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-prescription"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Prescription</span>
-                <span class="info-box-number">4</span>
+              <div class="icon">
+                <i class="fas fa-calendar-check"></i>
               </div>
-              <!-- /.info-box-content -->
+              <a href="#" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
             </div>
-            <!-- /.info-box -->
           </div>
-          <!-- /.col -->
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
+
+                <p>User Registrations</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <a href="#" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small card -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>65</h3>
+
+                <p>Unique Visitors</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-chart-pie"></i>
+              </div>
+              <a href="#" class="small-box-footer">
+                More info <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          <!-- ./col -->
         </div>
         </div><!-- /.container-fluid -->
     </section>

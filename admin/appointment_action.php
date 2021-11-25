@@ -23,8 +23,9 @@
         $reason = $_POST['reason'];
         $status = $_POST['status'];
         $bgcolor = $_POST['color'];
+        $schedtype = 'Walk-in Schedule';
 
-        $sql = "INSERT INTO tblappointment (patient_id,doc_id,schedule,starttime,endtime,reason,status,bgcolor) VALUES ('$patient_id','$doctor_id','$schedule','$s_time','$e_time','$reason','$status','$bgcolor')";
+        $sql = "INSERT INTO tblappointment (patient_id,doc_id,schedule,starttime,endtime,reason,schedtype,status,bgcolor) VALUES ('$patient_id','$doctor_id','$schedule','$s_time','$e_time','$reason','$schedtype','$status','$bgcolor')";
         $query_run = mysqli_query($conn,$sql);
 
         if($query_run)
@@ -73,8 +74,10 @@
         $e_time = $_POST['end_time'];
         $reason = $_POST['reason'];
         $status = $_POST['status'];
+        $bgcolor = $_POST['color'];
+        $schedtype = 'Walk-in Schedule';
 
-        $sql = "UPDATE tblappointment set patient_id='$patient_id',doc_id='$doctor_id',schedule='$schedule',starttime='$s_time',endtime='$e_time', reason='$reason',status='$status' WHERE id='$id' ";
+        $sql = "UPDATE tblappointment set patient_id='$patient_id',doc_id='$doctor_id',schedule='$schedule',starttime='$s_time',endtime='$e_time', reason='$reason',schedtype='$schedtype',status='$status',bgcolor='$bgcolor' WHERE id='$id' ";
         $query_run = mysqli_query($conn,$sql);
 
         if($query_run)

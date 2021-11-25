@@ -52,6 +52,7 @@
   <link rel="stylesheet" href="assets/plugins/jqvmap/jqvmap.min.css">
   <!--Custom style -->
   <link rel="stylesheet" href="assets/dist/css/custom.css">
+  
 </head>
 
 

@@ -95,9 +95,10 @@
   password.onchange = validatePassword;
   confirmPassword.onkeyup = validatePassword;
 </script>
+  
 
 <script>
-  $(function () {
+ $(document).ready(function () {
     $("#example1").DataTable({
       "responsive": true, "autoWidth": false,
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
