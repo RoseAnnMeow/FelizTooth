@@ -50,6 +50,7 @@ include('includes/header.php');
                 </div>
             </div>
         </div>
-
+    </div>
+</body>
+</html>
 <?php include('includes/scripts.php'); ?>
-<?php include('includes/footer.php'); ?>

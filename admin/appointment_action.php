@@ -75,9 +75,8 @@
         $reason = $_POST['reason'];
         $status = $_POST['status'];
         $bgcolor = $_POST['color'];
-        $schedtype = 'Walk-in Schedule';
 
-        $sql = "UPDATE tblappointment set patient_id='$patient_id',doc_id='$doctor_id',schedule='$schedule',starttime='$s_time',endtime='$e_time', reason='$reason',schedtype='$schedtype',status='$status',bgcolor='$bgcolor' WHERE id='$id' ";
+        $sql = "UPDATE tblappointment set patient_id='$patient_id',doc_id='$doctor_id',schedule='$schedule',starttime='$s_time',endtime='$e_time', reason='$reason',status='$status',bgcolor='$bgcolor' WHERE id='$id' ";
         $query_run = mysqli_query($conn,$sql);
 
         if($query_run)

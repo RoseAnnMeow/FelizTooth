@@ -17,24 +17,24 @@ if(isset($_POST['login_btn']))
         {
             $user_id = $row['id'];
             $user_fname = $row['name'];
-            $user_lname = $row['lname'];
             $user_address = $row['address'];
             $user_dob = $row['dob'];
             $user_gender = $row['gender'];
             $user_phone = $row['phone'];
             $user_email = $row['email'];
+            $user_image = $row['image'];
         }
 
         $_SESSION['auth'] = true;
         $_SESSION['auth_user'] = [
             'user_id'=>$user_id,
             'user_fname'=>$user_fname,
-            'user_lname'=>$user_lname,
             'user_address'=>$user_address,
+            'user_image'=>$user_image,
             'user_dob'=>$user_dob,
             'user_gender'=>$user_gender,
             'user_phone'=>$user_phone,
-            'user_email'=>$user_email
+            'user_email'=>$user_email           
             
         ];
         //$_SESSION['status'] = "Logged in Successfully";

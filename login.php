@@ -67,6 +67,7 @@ if(isset($_SESSION['auth']))
             <!-- /.login-card-body -->
         </div>
     </div>
-
+</div>
+</body>
+</html>
 <?php include('includes/scripts.php'); ?>
-<?php include('includes/footer.php'); ?>

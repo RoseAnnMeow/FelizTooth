@@ -103,7 +103,7 @@ include('config/dbconn.php');
       
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" name="insertpatient" class="btn btn-info">Submit</button>
+          <button type="submit" name="insertpatient" class="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>
@@ -148,7 +148,7 @@ include('config/dbconn.php');
               <div class="col-sm-6 mb-2">
                 <input type="hidden" name="edit_id" id="edit_id"> 
                 <div class="form-group">
-                  <label>Full Name</label>
+                  <label>First Name</label>
                   <span class="text-danger">*</span>
                   <input type="text" name="fname" id="edit_fname" class="form-control" required>
                 </div>
@@ -228,7 +228,7 @@ include('config/dbconn.php');
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="updatedata" class="btn btn-info">Submit</button>
+          <button type="submit" name="updatedata" class="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>
@@ -255,7 +255,7 @@ include('config/dbconn.php');
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" name="deletedata" class="btn btn-info ">Submit</button>
+              <button type="submit" name="deletedata" class="btn btn-primary ">Submit</button>
             </div>
             </form>
           </div>
@@ -290,10 +290,10 @@ include('config/dbconn.php');
           <?php
             include('message.php');
           ?>
-            <div class="card card-teal card-outline">
+            <div class="card card-primary card-outline">
               <div class="card-header">
-                <h3 class="card-title">Manage Patient</h3>
-                <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#AddPatientModal">
+                <h3 class="card-title">Patient List</h3>
+                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#AddPatientModal">
                 <i class="fa fa-plus"></i> &nbsp;&nbsp;Add Patient</button>
               </div>
               <!-- /.card-header -->
@@ -302,9 +302,9 @@ include('config/dbconn.php');
                     <thead>
                       <tr>
                         <th class="text-center">#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Phone</th>
+                        <th>Name</th>
+                        <th>Reg. Date</th>
+                        <th>Mobile No.</th>
                         <th>Email</th>
                         <th width="25px;">Verification Status</th>
                         <th>Action</th>
@@ -320,8 +320,8 @@ include('config/dbconn.php');
                       ?>
                         <tr>
                         <td class="text-center"><?php echo $i++; ?></td>
-                        <td><?php echo $row['fname']; ?></td>
-                        <td><?php echo $row['lname']; ?></td>
+                        <td><?php echo $row['fname'].' '.$row['lname']; ?></td>
+                        <td><?php echo date('d-M-Y',strtotime($row['created_at'])); ?></td>
                         <td><?php echo $row['phone']; ?></td>
                         <td><?php echo $row['email']; ?></td>
                         <td><?php 
@@ -337,7 +337,7 @@ include('config/dbconn.php');
                         </td>
                         <td>
                           <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-secondary viewbtn"><i class="fa fa-eye"></i></button>
-                          <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                          <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
                           <button data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
                         </td>
                         </tr>

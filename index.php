@@ -1,260 +1,219 @@
 <?php
-include('authentication.php');
-include('includes/header.php');
-include('includes/topbar.php');
-include('includes/sidebar.php');
-include('admin/config/dbconn.php');
-?>
+   include('authentication.php');
+   include('includes/header.php');
+   include('includes/topbar.php');
+   include('includes/sidebar.php');
+   include('admin/config/dbconn.php');
+   ?>
 <body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Profile</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">User Profile</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-         <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-3">
-
-            <!-- Profile Image -->
-            <div class="card card-teal card-outline">
-              <div class="card-header">
-                  <h5 class="card-title m-0">Patient Info</h5>
-              </div>
-              <div class="card-body box-profile">
-                <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
-                       src="admin/assets/dist/img/user4-128x128.jpg"
-                       alt="User profile picture">
-                </div>
-                <h3 class="profile-username text-center"><?php echo $_SESSION['auth_user']['user_fname'].' '.$_SESSION['auth_user']['user_lname'];?></h3>
-                <p class="text-muted text-center"><?php echo $_SESSION['auth_user']['user_email'];?></p>
-
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b>Gender</b> <a class="float-right"><?php echo $_SESSION['auth_user']['user_gender'];?></a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Birthdate</b> <a class="float-right"><?php echo $_SESSION['auth_user']['user_dob'];?></a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Phone</b> <a class="float-right"><?php echo $_SESSION['auth_user']['user_phone'];?></a>
-                  </li>
-                  <li class="list-group-item">
-                    <b>Address</b> <a class="float-right"><?php echo $_SESSION['auth_user']['user_address'];?></a>
-                  </li>
-                </ul>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-          <div class="col-md-9">
-            <div class="card">
-              <div class="card-header p-2">
-                <ul class="nav nav-pills">
-                  <li class="nav-item"><a class="nav-link active" href="#appointment" data-toggle="tab">Appointment</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
-                </ul>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div class="tab-content">
-                  <div class="active tab-pane" id="appointment">
-                    <!-- Post -->
-                    <a class="btn btn-success btn-sm" data-toggle="modal" href="#addAppointmentModal">
-                        <i class="fa fa-plus-circle"> </i> Request a Appointment
-                    </a>
-                    <div class="card-body p-0">
-                          <!-- THE CALENDAR -->
-                          <div id="calendar"></div>
-                    </div>
-
-
-
-
+   <div class="wrapper">
+    <div class="content-wrapper">
+      <div class="content-header">
+    
+      </div>
+      <section class="content">
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-md-12">
+                  <?php
+                  include('message.php');
+                  ?>
+                  <div class="callout callout-danger">
+                     <h5 class="text-danger"><i class="icon fas fa-info"></i> Reminder</h5>
+                     <p>Due to COVID-19 pandemic we are strictly by appointment only until further notice.
+                        Please do not schedule an appointment if you have signs or symptoms of COVID-19. 
+                        Wearing a face mask is a must to ensure the safety of Doctors and Patients.
+                     </p>
                   </div>
-                  <!-- /.tab-pane -->
-                  <div class="tab-pane" id="timeline">
-                    <!-- The timeline -->
-                    <div class="timeline timeline-inverse">
-                      <!-- timeline time label -->
-                      <div class="time-label">
-                        <span class="bg-danger">
-                          10 Feb. 2014
-                        </span>
-                      </div>
-                      <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-envelope bg-primary"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 12:05</span>
-
-                          <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                          <div class="timeline-body">
-                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                            quora plaxo ideeli hulu weebly balihoo...
-                          </div>
-                          <div class="timeline-footer">
-                            <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                          </div>
+               </div>
+               <div class="col-md-3">
+                  <!-- Profile Image -->
+                  <div class="card card-primary card-outline">
+                     <div class="card-header">
+                        <h5 class="card-title m-0">Patient Info</h5>
+                     </div>
+                     <div class="card-body box-profile">
+                        <div class="text-center">
+                           <img class="profile-user-img img-fluid img-circle"
+                              src="admin/assets/dist/img/user4-128x128.jpg"
+                              alt="User profile picture">
                         </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-user bg-info"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-
-                          <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
-                          </h3>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-comments bg-warning"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-                          <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                          <div class="timeline-body">
-                            Take me to your leader!
-                            Switzerland is small and neutral!
-                            We are more like Germany, ambitious and misunderstood!
-                          </div>
-                          <div class="timeline-footer">
-                            <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <!-- timeline time label -->
-                      <div class="time-label">
-                        <span class="bg-success">
-                          3 Jan. 2014
-                        </span>
-                      </div>
-                      <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <div>
-                        <i class="fas fa-camera bg-purple"></i>
-
-                        <div class="timeline-item">
-                          <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
-
-                          <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                          <div class="timeline-body">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                            <img src="https://placehold.it/150x100" alt="...">
-                          </div>
-                        </div>
-                      </div>
-                      <!-- END timeline item -->
-                      <div>
-                        <i class="far fa-clock bg-gray"></i>
-                      </div>
-                    </div>
+                        <h3 class="profile-username text-center"><?php echo $_SESSION['auth_user']['user_fname'].' '.$_SESSION['auth_user']['user_lname'];?></h3>
+                        <p class="text-muted text-center"><?php echo $_SESSION['auth_user']['user_email'];?></p>
+                        <ul class="list-group list-group-unbordered mb-3">
+                           <li class="list-group-item">
+                              <b>Gender</b> 
+                              <p class="float-right text-muted m-0"><?php echo $_SESSION['auth_user']['user_gender'];?></p>
+                           </li>
+                           <li class="list-group-item">
+                              <b>Birthdate</b> 
+                              <p class="float-right text-muted m-0"><?php echo $_SESSION['auth_user']['user_dob'];?></p>
+                           </li>
+                           <li class="list-group-item">
+                              <b>Phone</b> 
+                              <p class="float-right text-muted m-0"><?php echo $_SESSION['auth_user']['user_phone'];?></p>
+                           </li>
+                           <li class="list-group-item">
+                              <b>Address</b> 
+                              <p class="float-right text-muted m-0"><?php echo $_SESSION['auth_user']['user_address'];?></p>
+                           </li>
+                        </ul>
+                     </div>    
                   </div>
-                  <!-- /.tab-pane -->
+               </div>
+         
+               <div class="col-md-9">
+                  <div class="card card-primary card-outline card-tabs">
+                     <div class="card-header p-0 pt-1 border-bottom-0">
+                        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                           <li class="nav-item">
+                           <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Request</a>
+                           </li>
+                           <li class="nav-item">
+                           <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Appointment List</a>
+                           </li>
+                           <li class="nav-item">
+                           <a class="nav-link" id="custom-tabs-three-messages-tab" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-controls="custom-tabs-three-messages" aria-selected="false">Messages</a>
+                           </li>
+                           <li class="nav-item">
+                           <a class="nav-link" id="custom-tabs-three-settings-tab" data-toggle="pill" href="#custom-tabs-three-settings" role="tab" aria-controls="custom-tabs-three-settings" aria-selected="false">Settings</a>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-three-tabContent">
+                           <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                           <div class="row">
+                              <div class="col-sm-12 mb-2">
+                                 <a class="btn btn-primary" href="request_appointment.php">
+                                 <i class="fa fa-plus-circle"> </i> Request a Appointment
+                                 </a>
+                              </div>
+                           </div>                             
+                           <div class="col-sm-12 mb-2">                             
+                              <div class="table-responsive">
+                                 <table class="table table-borderless table-sm">
+                                    <?php
+                                       $sql = "SELECT * FROM tblappointment WHERE patient_id = '". $_SESSION['auth_user']['user_id']."' ORDER BY id DESC LIMIT 1";
+                                       $query_run = mysqli_query($conn,$sql);
 
-                  <div class="tab-pane" id="settings">
-                    <form class="form-horizontal">
-                      <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                       while($row = mysqli_fetch_array($query_run)){
+                                    ?>
+                                    <p class="lead text-success">Your Appointment Details</p>
+                                    <tr>
+                                       <th style="width:25%">Name</th>
+                                       <td><?php echo $_SESSION['auth_user']['user_fname'].' '. $_SESSION['auth_user']['user_lname'];?></td>
+                                    </tr>
+                                    <tr>
+                                       <th>Appointment Date</th>
+                                       <td><?php echo date('l, d M Y',strtotime($row['schedule']));?></td>
+                                    </tr>
+                                    <tr>
+                                       <th>Time:</th>
+                                       <td><?php
+                                       if($row['starttime'] == '')
+                                       {
+                                          echo '--';
+                                       }
+                                       else
+                                       {
+                                          echo $row['starttime'];
+                                       }
+                                       ?></td>
+                                    </tr>
+                                    <tr>
+                                       <th>Status:</th>
+                                       <td><?php
+                                       if($row['status'] == 'Confirmed')
+                                       {
+                                       echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
+                                       }
+                                       else if($row['status'] == 'Pending')
+                                       {
+                                       echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
+                                       }
+                                       else if($row['status'] == 'Treated')
+                                       {
+                                       echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                                       }
+                                       else
+                                       {
+                                       echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
+                                       }
+                                       ?>
+                                       </td>                                 
+                                    </tr>
+                                    <?php } ?>
+                                 </table>
+                              </div>
+                           </div>
+               <!-- /.col -->
+                           </div>
+                           <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                              <div class="card-body col-sm-12 p-0 mt-3">
+                                 <div class="table-responsive overflow-hidden">
+                                    <table id="appointmenttable" class="table table-hover" style="width:100%;">
+                                       <thead>
+                                       <tr>
+                                          <th class="bg-light">Date</th>
+                                          <th class="bg-light">Time</th>
+                                          <th class="bg-light">Doctor</th>
+                                          <th class="bg-light">Status</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
+                                          <?php
+                                             $id = $_SESSION['auth_user']['user_id']; 
+                                             $sql = "SELECT a.schedule,a.starttime,a.status,a.endtime,d.name as dname FROM tbldoctor d INNER JOIN tblappointment a WHERE a.doc_id = d.id AND a.patient_id ='$id' ORDER BY a.id DESC";
+                                             $query_run = mysqli_query($conn,$sql);
+                                             while($row = mysqli_fetch_array($query_run)){
+                                          ?>
+                                       <tr>
+                                          <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
+                                          <td><?php echo $row['starttime'].' - '.$row['endtime'];?></td>
+                                          <td><?php echo $row['dname'];?></td>
+                                          <td>
+                                             <?php
+                                             if($row['status'] == 'Confirmed')
+                                             {
+                                             echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
+                                             }
+                                             else if($row['status'] == 'Pending')
+                                             {
+                                             echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
+                                             }
+                                             else if($row['status'] == 'Treated')
+                                             {
+                                             echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                                             }
+                                             else
+                                             {
+                                             echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
+                                             }
+                                             ?>
+                                          </td>
+                                       </tr>
+                                       <?php } ?>
+                                       </tbody>
+                                    </table>
+                                 </div>
+                                 
+                              </div>
+                           </div>
+                           <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel" aria-labelledby="custom-tabs-three-messages-tab">
+                              Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                           </div>
+                           <div class="tab-pane fade" id="custom-tabs-three-settings" role="tabpanel" aria-labelledby="custom-tabs-three-settings-tab">
+                              Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet accumsan ex sit amet facilisis.
+                           </div>
                         </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
-                          <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
-                        <div class="col-sm-10">
-                          <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                          <div class="checkbox">
-                            <label>
-                              <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Submit</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                  <!-- /.tab-pane -->
-                </div>
-                <!-- /.tab-content -->
-              </div><!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-          <div id="calendar"></div>
-        </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-
-</div>  
-<?php include('includes/scripts.php');?> 
+                     </div>
+                  <!-- /.card -->
+               </div>             
+         </div>
+         <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+   </div>
 <?php include('includes/footer.php');?>
+<?php include('includes/scripts.php');?> 

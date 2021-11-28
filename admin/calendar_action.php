@@ -21,9 +21,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr>                          
                             <th class="text-muted">Client:</th>
-                            <td><a href=""><?php echo $row['pname'];?></a></br>
+                            <td id="client-label" data-id='<?php echo $id; ?>'><a href=""><?php echo $row['pname'];?></a></br>
                             <?php echo $row['phone'];?></br>
                             <?php echo $row['email'];?></td>
                         </tr>

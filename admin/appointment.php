@@ -25,7 +25,8 @@ include('config/dbconn.php');
               <div class="col-sm-6">
                 <div class="form-group">
                 <label>Select Patient</label>
-                  <select class="form-control select2 patient" name="select_patient" required>
+                <span class="text-danger">*</span>
+                  <select class="form-control select2 patient" name="select_patient" style="width: 100%;" required>
                   <option selected disabled value="">Select Patient</option>
                     <?php
                       if(isset($_GET['id']))
@@ -57,8 +58,9 @@ include('config/dbconn.php');
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label>Select Dentist</label>
-                  <select class="form-control select2 dentist" name="select_dentist" required>
+                  <label>Select Doctor</label>
+                  <span class="text-danger">*</span>
+                  <select class="form-control select2 dentist" name="select_dentist" style="width: 100%;" required>
                   <option selected disabled value="">Select Doctor</option>
                   <?php
                       if(isset($_GET['id']))
@@ -91,12 +93,14 @@ include('config/dbconn.php');
               <div class="col-sm-12">              
                 <div class="form-group">
                     <label>Appontment Date</label>
+                    <span class="text-danger">*</span>
                     <input type="text" autocomplete="off" name="scheddate" class="form-control" id="scheddate" required onkeypress="return false;">
                 </div>
               </div>     
               <div class="col-sm-6">              
                 <div class="form-group">
                     <label>Appointment Start Time</label>
+                    <span class="text-danger">*</span>
                     <div class="input-group date" id="starttime" data-target-input="nearest">
                       <input type="text" autocomplete="off" name="start_time" class="form-control datetimepicker-input" required data-target="#starttime"/>
                       <div class="input-group-append" data-target="#starttime" data-toggle="datetimepicker">
@@ -108,6 +112,7 @@ include('config/dbconn.php');
               <div class="col-sm-6">              
                 <div class="form-group">
                     <label>Appointment End Time</label>
+                    <span class="text-danger">*</span>
                     <div class="input-group date" id="endtime" data-target-input="nearest">
                       <input type="text" autocomplete="off" name="end_time" class="form-control datetimepicker-input" required data-target="#endtime"/>
                       <div class="input-group-append" data-target="#endtime" data-toggle="datetimepicker">
@@ -119,13 +124,15 @@ include('config/dbconn.php');
               <div class="col-sm-12">
                 <div class="form-group">
                   <label>Reason</label>
+                  <span class="text-danger">*</span>
                   <textarea class="form-control" rows="2" name="reason" required placeholder="Enter ..."></textarea>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                     <label>Appointment Status</label>
-                    <select class="form-control form-select" name="status" required>
+                    <span class="text-danger">*</span>
+                    <select class="form-control custom-select" name="status" required>
                         <option>Pending</option>
                         <option>Confirmed</option>
                         <option>Treated</option>
@@ -136,7 +143,7 @@ include('config/dbconn.php');
               <div class="col-sm-12">
                 <div class="form-group">
                 <label for="color">Color</label>
-                <select name="color" class="form-control" id="color">
+                <select name="color" class="form-control custom-select" id="color">
                     <option style="color:#f39c12;" value="#f39c12">Yellow</option>
                     <option style="color:#00c0ef;" value="#00c0ef"> Aqua</option>
                     <option style="color:#0073b7;" value="#0073b7"> Blue</option>						  
@@ -153,7 +160,7 @@ include('config/dbconn.php');
       
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" name="insert_appointment" class="btn btn-info">Submit</button>
+          <button type="submit" name="insert_appointment" class="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>
@@ -199,6 +206,7 @@ include('config/dbconn.php');
                 <input type="hidden" name="edit_id" id="edit_id"> 
                 <div class="form-group">
                 <label>Select Patient</label>
+                <span class="text-danger">*</span>
                   <select class="form-control select2 patient" id="edit_patient" name="select_patient" required>
                   <?php
                       if(isset($_GET['id']))
@@ -230,7 +238,8 @@ include('config/dbconn.php');
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label>Select Dentist</label>
+                  <label>Select Doctor</label>
+                  <span class="text-danger">*</span>
                   <select class="form-control select2 dentist" id="edit_dentist" name="select_dentist" required>
                   <?php
                       if(isset($_GET['id']))
@@ -263,12 +272,14 @@ include('config/dbconn.php');
               <div class="col-sm-12">
                 <div class="form-group">
                     <label>Appointment Date</label>
+                    <span class="text-danger">*</span>
                     <input type="datetime" autocomplete="off" id="edit_sched" name="scheddate" class="form-control" required onkeypress="return false;">
                 </div>
               </div>           
               <div class="col-sm-6">              
                 <div class="form-group">
                     <label>Start Time</label>
+                    <span class="text-danger">*</span>
                     <div class="input-group date" id="edit_stime" data-target-input="nearest">
                       <input type="text" autocomplete="off" name="start_time" class="form-control datetimepicker-input" required data-target="#edit_stime"/>
                       <div class="input-group-append" data-target="#edit_stime" data-toggle="datetimepicker">
@@ -280,6 +291,7 @@ include('config/dbconn.php');
               <div class="col-sm-6">              
                 <div class="form-group">
                     <label>End Time</label>
+                    <span class="text-danger">*</span>
                     <div class="input-group date" id="edit_etime" data-target-input="nearest">
                       <input type="text" autocomplete="off" name="end_time" class="form-control datetimepicker-input" required data-target="#edit_etime"/>
                       <div class="input-group-append" data-target="#edit_etime" data-toggle="datetimepicker">
@@ -291,13 +303,15 @@ include('config/dbconn.php');
               <div class="col-sm-12">
                 <div class="form-group">
                   <label>Reason</label>
+                  <span class="text-danger">*</span>
                   <textarea class="form-control" rows="2" id="edit_reason" name="reason" required placeholder="Enter ..."></textarea>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
                     <label>Appointment Status</label>
-                    <select class="form-control form-select" id="edit_status" name="status" required>
+                    <span class="text-danger">*</span>
+                    <select class="form-control custom-select" id="edit_status" name="status" required>
                         <option>Pending</option>
                         <option>Confirmed</option>
                         <option>Treated</option>
@@ -309,7 +323,7 @@ include('config/dbconn.php');
                 <div class="form-group">
                 <label for="color">Color</label>
                 <span class="text-sm">(Optional)</span>
-                <select name="color" class="form-control" id="edit_color">
+                <select name="color" class="form-control custom-select" id="edit_color">
                     <option style="color:#f39c12;" value="#f39c12">Yellow</option>
                     <option style="color:#00c0ef;" value="#00c0ef"> Aqua</option>
                     <option style="color:#0073b7;" value="#0073b7"> Blue</option>						  
@@ -325,7 +339,7 @@ include('config/dbconn.php');
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" name="update_appointment" class="btn btn-info">Submit</button>
+          <button type="submit" name="update_appointment" class="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>
@@ -352,7 +366,7 @@ include('config/dbconn.php');
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-              <button type="submit" name="deletedata" class="btn btn-info ">Submit</button>
+              <button type="submit" name="deletedata" class="btn btn-primary ">Submit</button>
             </div>
             </form>
           </div>
@@ -387,10 +401,10 @@ include('config/dbconn.php');
           <?php
             include('message.php');
           ?>
-            <div class="card card-teal card-outline">
+            <div class="card card-primary card-outline">
               <div class="card-header">
                 <h3 class="card-title">Appointment List</h3>
-                <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#AddAppointmentModal">
+                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#AddAppointmentModal">
                 <i class="fa fa-plus"></i> &nbsp;&nbsp;Add Appointment</button>
               </div>
                 <div class="card-body">
@@ -409,6 +423,9 @@ include('config/dbconn.php');
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" id="treated-tab" data-toggle="tab" data-target="#treated" role="tab" aria-controls="treated-tab" aria-selected="false">Treated</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="requested-tab" data-toggle="tab" data-target="#requested" role="tab" aria-controls="requested-tab" aria-selected="false">Online Request</a>
                     </li>
                   </ul>
 
@@ -463,8 +480,23 @@ include('config/dbconn.php');
                               <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
                               <td><?php echo $row['pname'];?></td>
                               <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
-                              <td><?php echo date('h:i A',strtotime($row['starttime'])); ?></td>
-                              <td><?php echo date('h:i A',strtotime($row['endtime'])); ?></td>
+                              <td><?php
+                              if($row['starttime'] == ''){
+                                echo '';
+                              }
+                              else
+                              {
+                                echo date('h:i A',strtotime($row['starttime']));
+                              }?>
+                              </td>
+                              <td><?php
+                              if($row['endtime'] == ''){
+                                echo '';
+                              }
+                              else
+                              {
+                                echo date('h:i A',strtotime($row['starttime']));
+                              }?></td>
                               <td><?php echo $row['schedtype'];?></td>
                               <td><?php
                               if($row['status'] == 'Confirmed')
@@ -487,7 +519,7 @@ include('config/dbconn.php');
                               </td>
                               </td>
                               <td>
-                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
                                 <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
                               </td>
                               </tr>
@@ -547,7 +579,7 @@ include('config/dbconn.php');
                               </td>
                               </td>
                               <td>
-                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
                                 <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
                               </td>
                               </tr>
@@ -607,7 +639,7 @@ include('config/dbconn.php');
                               </td>
                               </td>
                               <td>
-                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
                                 <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
                               </td>
                               </tr>
@@ -665,9 +697,8 @@ include('config/dbconn.php');
                               }
                               ?>
                               </td>
-                              </td>
                               <td>
-                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
                                 <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
                               </td>
                               </tr>
@@ -694,7 +725,7 @@ include('config/dbconn.php');
                           <tbody>
                             <?php
                               $i = 1;
-                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Treated' ";
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a INNER JOIN tblpatient p WHERE p.id = a.patient_id AND status='Treated' ";
                               $query_run = mysqli_query($conn, $sql);
                               
                               while($row = mysqli_fetch_array($query_run)){
@@ -727,7 +758,82 @@ include('config/dbconn.php');
                               </td>
                               </td>
                               <td>
-                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-primary editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
+                              </td>
+                              </tr>
+                              <?php
+                              }
+                            ?>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="tab-pane fade" id="requested" role="tabpanel" aria-labelledby="requested-tab">
+                        <table id="requesttable" class="table table-bordered table-hover" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th class="text-center">#</th>
+                              <th>Patient</th>
+                              <th>Day</th>
+                              <th>Start Time</th>
+                              <th>End Time</th>
+                              <th>Schedule Type</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <?php
+                              $i = 1;
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a INNER JOIN tblpatient p WHERE p.id = a.patient_id AND schedtype='Online Schedule' ";
+                              $query_run = mysqli_query($conn, $sql);
+                              
+                              while($row = mysqli_fetch_array($query_run)){
+                            ?>
+                              <tr>                              
+                              <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
+                              <td><?php echo $row['pname'];?></td>
+                              <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
+                              <td><?php
+                              if($row['starttime'] == ''){
+                                echo '';
+                              }
+                              else
+                              {
+                                echo date('h:i A',strtotime($row['starttime']));
+                              }?>
+                              </td>
+                              <td><?php
+                              if($row['endtime'] == ''){
+                                echo '';
+                              }
+                              else
+                              {
+                                echo date('h:i A',strtotime($row['starttime']));
+                              }?></td>
+                              <td><?php echo $row['schedtype'];?></td>
+                              <td><?php
+                              if($row['status'] == 'Confirmed')
+                              {
+                                echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
+                              }
+                              else if($row['status'] == 'Pending')
+                              {
+                                echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
+                              }
+                              else if($row['status'] == 'Treated')
+                              {
+                                echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                              }
+                              else
+                              {
+                                echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
+                              }
+                              ?>
+                              </td>
+                              </td>
+                              <td>
+                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
                                 <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
                               </td>
                               </tr>
@@ -779,6 +885,9 @@ include('config/dbconn.php');
     var table5 = $('#treatedtable').DataTable( {
       responsive: true,
     } );
+    var table6 = $('#requesttable').DataTable( {
+      responsive: true,
+    } );
 
     $('.nav-tabs a').on('shown.bs.tab', function (event) {
       var tabID = $(event.target).attr('data-target');
@@ -796,6 +905,9 @@ include('config/dbconn.php');
       }
       if( tabID === '#treated') {
         table5.columns.adjust().responsive.recalc();
+      }
+      if( tabID === '#requested') {
+        table6.columns.adjust().responsive.recalc();
       }
     } );
 
@@ -831,7 +943,7 @@ include('config/dbconn.php');
       });
 
       $(".dentist").select2({
-      placeholder: "Select Dentist",
+      placeholder: "Select Doctor",
       allowClear: true
       });
 
@@ -841,7 +953,10 @@ include('config/dbconn.php');
         const color = event.target.value;
         event.target.style.color = color;
       }, false);
-      document.getElementById('color').addEventListener('change', function() {  this.style.color = this.value });
+
+      document.getElementById('color').addEventListener('change', function() {
+          this.style.color = this.value 
+      });
     
       $(document).on('click', '.viewbtn', function() {       
         var userid = $(this).data('id');

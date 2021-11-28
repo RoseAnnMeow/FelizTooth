@@ -33,6 +33,7 @@
     {
         ?>
         <div class="alert alert-info alert-dismissible fade show">
+        <i class="fas fa-info-circle"></i>
         <?php echo $_SESSION['info'];?>
     
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

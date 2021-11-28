@@ -126,5 +126,7 @@ if(isset($_SESSION['auth']))
       </div><!-- /.card -->
     </div>
     <!-- /.register-box -->
+  </div>
+</body>
+</html>
 <?php include('includes/scripts.php'); ?>
-<?php include('includes/footer.php'); ?>

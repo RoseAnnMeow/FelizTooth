@@ -24,17 +24,14 @@ include('config/dbconn.php');
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-info">Edit Appointment</button>              
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>             
             </div>
         </div>
       </div>
     </div>
 
-      
-<!-- Content Wrapper. Contains page content -->
+
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -48,21 +45,19 @@ include('config/dbconn.php');
             </ol>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
 
-    <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-3">
             <div class="sticky-top mb-3">
-              <div class="card card-teal card-outline">
+              <div class="card card-primary card-outline">
                 <div class="card-header">
                   <h4 class="card-title">Upcoming Appointments</h4>
                 </div>
                 <div class="card-body">
-                  <!-- the events -->
                   <div id="external-events">
                     <div class="col">
                   <div class="info-box">
@@ -76,7 +71,7 @@ include('config/dbconn.php');
                           echo $row;
                         ?>
                       </h3>
-                      <span class="info-box-text text-center text-success">Confirmed</span>                      
+                      <span class="info-box-text text-center">Confirmed</span>                      
                     </div>
                   </div>
                 </div>
@@ -92,7 +87,7 @@ include('config/dbconn.php');
                           echo $row;
                         ?>
                       </h3>
-                      <span class="info-box-text text-center text-success">Pending</span>      
+                      <span class="info-box-text text-center">Pending</span>      
                     </div>
                   </div>
                 </div>
@@ -105,7 +100,7 @@ include('config/dbconn.php');
           </div>
           <!-- /.col -->
             <div class="col-md-9">
-                <div class="card card-teal card-outline">
+                <div class="card card-primary card-outline">
                     <div class="card-body">
                         <div class="card-body p-0">
                             <!-- THE CALENDAR -->
@@ -127,6 +122,13 @@ $sched_arr = json_encode($query->fetch_all(MYSQLI_ASSOC));
 <?php include('includes/scripts.php');?>
 <script>
 $(function () {
+
+// $('.userdata').click(function (e) { 
+//   var clientTag = document.getElementById("client-label");
+//   var requiredId = clientTag.getAttribute('data-id');
+//   window.location.href = '/php-admin-panel/Feliz-Tooth-District-Clinic/admin//edit_appointment.php?id=' + requiredId;
+  
+// });
 
 function ini_events(ele) {
   ele.each(function () {
@@ -209,12 +211,20 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
            }
          });
         },
+
+
     
-  navLinks: true, // can click day/week names to navigate views
-  businessHours: true, // display business hours
-  editable: true,
+  navLinks: true, 
+  businessHours: [
+    {
+      daysOfWeek: [1,2,3,4,5,6],
+      startTime: '09:00',
+      endTime: '18:00'
+    }
+  ], // display business hours
+  editable: false,
   selectable: true,
-  droppable : false, // this allows things to be dropped onto the calendar !!!
+  droppable : false, //
 });
 
 calendar.render();
