@@ -6,6 +6,7 @@
     {
         session_destroy();
         unset($_SESSION['auth']);
+        unset($_SESSION['auth_role']);
         unset($_SESSION['auth_user']);
 
         $_SESSION['success'] = "Logged out successfully";
@@ -22,11 +23,13 @@
         $gender = $_POST['gender'];
         $phone = $_POST['phone'];
         $email = $_POST['email'];
-        $password =$_POST['password'];
+        $role ='';
+        $password = $_POST['password'];
         $confirmPassword = $_POST['confirmPassword'];
         
         if($password == $confirmPassword)
         {
+            $hash = password_hash($password,PASSWORD_DEFAULT);
             $checkemail = "SELECT email FROM tblpatient WHERE email='$email' ";
             $checkemail_run = mysqli_query($conn, $checkemail);
 
@@ -37,8 +40,8 @@
             }
             else
             {
-                $sql = "INSERT INTO tblpatient (fname,lname,address,dob,gender,phone,email,password)
-                VALUES ('$fname','$lname','$address','$dob','$gender','$phone','$email','$password')";
+                $sql = "INSERT INTO tblpatient (fname,lname,address,dob,gender,phone,email,password,role)
+                VALUES ('$fname','$lname','$address','$dob','$gender','$phone','$email','$hash','3')";
                 $patient_query_run = mysqli_query($conn,$sql);
                 if ($patient_query_run)
                 {      

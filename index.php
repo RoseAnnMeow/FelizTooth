@@ -16,7 +16,7 @@
             <div class="row">
                <div class="col-md-12">
                   <?php
-                  include('message.php');
+                  include('admin/message.php');
                   ?>
                   <div class="callout callout-danger">
                      <h5 class="text-danger"><i class="icon fas fa-info"></i> Reminder</h5>
@@ -147,7 +147,7 @@
                                  </table>
                               </div>
                            </div>
-               <!-- /.col -->
+               
                            </div>
                            <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
                               <div class="card-body col-sm-12 p-0 mt-3">

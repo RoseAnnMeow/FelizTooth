@@ -6,6 +6,7 @@
     {
         session_destroy();
         unset($_SESSION['auth']);
+        unset($_SESSION['auth_role']);
         unset($_SESSION['auth_user']);
 
         $_SESSION['status'] = "Logged out successfully";

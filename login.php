@@ -33,7 +33,7 @@ if(isset($_SESSION['auth']))
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in</p>
                 <?php
-                include('message.php');
+                include('admin/message.php');
                 ?>
                 <form action="logincode.php" method="post">
                     <div class="input-group mb-3">

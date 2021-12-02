@@ -52,6 +52,8 @@
   <link rel="stylesheet" href="assets/plugins/jqvmap/jqvmap.min.css">
   <!--Custom style -->
   <link rel="stylesheet" href="assets/dist/css/custom.css">
+    <!-- summernote -->
+  <link rel="stylesheet" href="assets/plugins/summernote/summernote-bs4.min.css">
   
 </head>
 

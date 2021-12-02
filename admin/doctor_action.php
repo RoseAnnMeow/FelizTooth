@@ -6,6 +6,7 @@
     {
         session_destroy();
         unset($_SESSION['auth']);
+        unset($_SESSION['auth_role']);
         unset($_SESSION['auth_user']);
 
         $_SESSION['success'] = "Logged out successfully";
@@ -77,6 +78,9 @@
         $doc_specialty = $_POST['specialty'];
         $password = $_POST['edit_password'];
         $confirmPassword = $_POST['edit_confirmPassword'];
+
+        $old_image = $_POST['old_image'];
+        $image = $_FILES['edit_docimage']['name'];
         
         $checkemail = "SELECT email FROM tbldoctor WHERE email='$doc_email' AND id != '$id' ";
         $checkemail_run = mysqli_query($conn, $checkemail);
@@ -90,15 +94,16 @@
             }
             else
             {
-                $doctor_profile_image = $_POST["hidden_doctor_profile_image"];
+                $update_filename =" ";
 
-                if($_FILES['edit_docimage']['name'] != '')
+                if($image!=NULL)
                 {
+                    
                     $allowed_file_format = array('jpg', 'png','jpeg');
     
-                    $file_extension = pathinfo($_FILES["edit_docimage"]["name"], PATHINFO_EXTENSION);
+                    $image_extension = pathinfo($image, PATHINFO_EXTENSION);
     
-                    if(!in_array($file_extension, $allowed_file_format))
+                    if(!in_array($image_extension, $allowed_file_format))
                     {
                         $_SESSION['error'] = "Upload valiid file. jpg, png";
                         header('Location:doctors.php');
@@ -110,26 +115,29 @@
                     }
                     else 
                     {
-                        $new_name = rand() . '.' . $file_extension;
-    
-                        $destination = '../upload/' . $new_name;
-    
-                        move_uploaded_file($_FILES['edit_docimage']['tmp_name'], $destination);
-    
-                        $doctor_profile_image = $destination;
+                        $filename = time().'.'.$image_extension;
+                        $update_filename = $filename;
                     }
+                }
+                else
+                {
+                    $update_filename = $old_image;
                 }
                 if($_SESSION['error'] == '')
                 {
-                    $sql = "UPDATE tbldoctor set name='$fname',address='$address',dob='$dob', gender='$gender', phone='$phone', email='$doc_email', degree='$doc_degree', specialty='$doc_specialty', password='$password', image='$doctor_profile_image' WHERE id='$id' ";
+                    $sql = "UPDATE tbldoctor set name='$fname',address='$address',dob='$dob', gender='$gender', phone='$phone', email='$doc_email', degree='$doc_degree', specialty='$doc_specialty', password='$password', image='$update_filename' WHERE id='$id' ";
                     $query_run = mysqli_query($conn,$sql);
         
                     if ($query_run)
                     {                   
-                        if($_FILES['edit_docimage']['name'] != '')
+                        if($image != NULL)
                         {
-                            
-                        }      
+                            if(file_exists('../upload/'.$old_image))
+                            {
+                                unlink("../upload/".$old_image);
+                            }
+                            move_uploaded_file($_FILES['edit_docimage']['tmp_name'], '../upload/'.$update_filename);
+                        }     
                         $_SESSION['success'] = "Doctor Updated Successfully";
                         header('Location:doctors.php');
                     }
@@ -187,7 +195,7 @@
                         <?php echo '<img src="'.$row['image'].'" class="img-fluid img-thumbnail" width="120">';?>
                     </div>
                     <h3 class="profile-username text-center"><?php echo $row['name']; ?></h3>
-                    <p class="text-muted text-center">Dentist</p>
+                    <p class="text-muted text-center"><?php echo $row['specialty']; ?></p>
                     <ul class="list-group list-group-unbordered mb-2">
                         <li class="list-group-item">
                             <b>Email</b> <p class="float-right text-muted"><?php echo $row['email']; ?></p>
@@ -229,11 +237,15 @@
         $doc_email = $_POST['email'];
         $doc_degree = $_POST['degree'];
         $doc_specialty = $_POST['specialty'];
+        $role = '';
         $password = $_POST['password'];
         $confirmPassword = $_POST['confirmPassword'];
 
+        $image = $_FILES['doc_image']['name'];
+
         if($password == $confirmPassword)
-        {       
+        {
+            $hash = password_hash($password,PASSWORD_DEFAULT);       
             $checkemail = "SELECT email FROM tbldoctor WHERE email='$doc_email' ";
             $checkemail_run = mysqli_query($conn, $checkemail);
 
@@ -244,15 +256,14 @@
             }
             else
             {
-                if($_FILES['doc_image']['name'] != '')
+                if($image!= NULL)
                 {
                     $allowed_file_format = array('jpg', 'png','jpeg');
 
-                    $doctor_profile_image = $_FILES['doc_image']['name'];
+                    $image_extension = pathinfo($image, PATHINFO_EXTENSION);
 
-                    $file_extension = pathinfo($doctor_profile_image, PATHINFO_EXTENSION);
 
-                    if(!in_array($file_extension, $allowed_file_format))
+                    if(!in_array($image_extension, $allowed_file_format))
                     {
                         $_SESSION['error'] = "Upload valid file. jpg, png";
                         header('Location:doctors.php');
@@ -264,13 +275,8 @@
                     }
                     else
                     {
-                        $new_name = rand() . '.' . $file_extension;
-
-                        $destination = '../upload/' . $new_name;
-
-                        move_uploaded_file($_FILES['doc_image']['tmp_name'], $destination);
-
-                        $doctor_profile_image = $destination;
+                        $filename = time().'.'.$image_extension;
+                        move_uploaded_file($_FILES['doc_image']['tmp_name'], '../upload/'.$filename);  
                     }
                 }
                 else
@@ -291,11 +297,12 @@
 
                 if($_SESSION['error'] == '')
                 {
-                    $sql = "INSERT INTO tbldoctor (name,address,dob,gender,phone,email,degree,specialty,image,password)
-                    VALUES ('$doc_fname','$doc_address','$doc_dob','$doc_gender','$doc_phone','$doc_email','$doc_degree','$doc_specialty','$doctor_profile_image','$password')";
+                    $sql = "INSERT INTO tbldoctor (name,address,dob,gender,phone,email,degree,specialty,image,password,role)
+                    VALUES ('$doc_fname','$doc_address','$doc_dob','$doc_gender','$doc_phone','$doc_email','$doc_degree','$doc_specialty','$filename','$hash','2')";
                     $doctor_query_run = mysqli_query($conn,$sql);
                     if ($doctor_query_run)
-                    {     
+                    {
+                           
                         $_SESSION['success'] = "Adding Doctor Successfully";
                         header('Location:doctors.php');
                     }

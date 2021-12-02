@@ -51,6 +51,7 @@ function sendmail_verify($fname,$email,$verify_token)
     {
         session_destroy();
         unset($_SESSION['auth']);
+        unset($_SESSION['auth_role']);
         unset($_SESSION['auth_user']);
 
         $_SESSION['status'] = "Logged out successfully";
@@ -73,6 +74,7 @@ function sendmail_verify($fname,$email,$verify_token)
         
         if($password == $confirmPassword)
         {
+            $hash = password_hash($password,PASSWORD_DEFAULT);
             $checkemail = "SELECT email FROM tblpatient WHERE email='$email' LIMIT 1";
             $checkemail_run = mysqli_query($conn, $checkemail);
 
@@ -83,8 +85,8 @@ function sendmail_verify($fname,$email,$verify_token)
             }
             else
             {
-                $sql = "INSERT INTO tblpatient (fname,lname,address,dob,gender,phone,email,password,verify_token)
-                VALUES ('$fname','$lname','$address','$dob','$gender','$phone','$email','$password','$verify_token')";
+                $sql = "INSERT INTO tblpatient (fname,lname,address,dob,gender,phone,email,password,role,verify_token)
+                VALUES ('$fname','$lname','$address','$dob','$gender','$phone','$email','$hash','3','$verify_token')";
                 $patient_query_run = mysqli_query($conn,$sql);
                 if ($patient_query_run)
                 {

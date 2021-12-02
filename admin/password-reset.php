@@ -1,12 +1,6 @@
 <?php
 session_start();
 include('includes/header.php');
-if(isset($_SESSION['auth']))
-{
-    $_SESSION['status'] = "You are already logged in";
-    header('Location: index.php');
-    exit(0);
-}
 ?>
 
 <body class="hold-transition login-page">
@@ -28,43 +22,35 @@ if(isset($_SESSION['auth']))
             unset($_SESSION['auth_status']);
         }
         ?>
-        <?php
-        include('message.php');
-        ?>
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Sign in</p>
-
-                <form action="logincode.php" method="post">
+                <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
+                <?php
+                include('message.php');
+                ?>
+                <form action="password-reset-code.php" method="post">
                     <div class="input-group mb-3">
-                        <input type="email" name="email" class="form-control" placeholder="Email" required/>
+                        <input type="email" name="email" class="form-control" placeholder="Email" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                            <span class="fas fa-envelope"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" name="password" class="form-control" placeholder="Password" required/>
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
-                            </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" name="password_reset_link" class="btn btn-primary btn-block">Send Password Reset Link</button>
                         </div>
                     </div>
-                        <div class="form-group">
-                            <button type="submit" name="login_btn" class="btn btn-secondary btn-block">Log In</button>
-                        </div>
                 </form>
-                <p class="mb-1 ">
-                    <a href="password-reset.php">Forgot password?</a>
+                <p class="mt-3 mb-1">
+                    <a href="login.php">Login</a>
                 </p>
+                </div>
             </div>
-            <!-- /.login-card-body -->
         </div>
     </div>
-</div>
 </body>
 </html>
 <?php include('includes/scripts.php'); ?>

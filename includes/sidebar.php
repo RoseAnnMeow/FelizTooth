@@ -1,19 +1,14 @@
-<!-- Main Sidebar Container -->
+
 <aside class="main-sidebar sidebar-light-primary elevation-3">
-    <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="admin/assets/dist/img/AdminLTELogo.png" alt="Feliz Tooth Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Feliz Tooth</span>
+      <img src="admin/assets/dist/img/feliztooth.png" alt="Feliz Tooth Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Feliz Tooth District</span>
     </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
 
-      <!-- Sidebar Menu -->
+    <div class="sidebar">
       <nav class="mt-4">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
           <li class="nav-item">
                 <a href="index.php" class="nav-link active">
                   <i class="fa fa-home nav-icon"></i>
@@ -52,7 +47,5 @@
           </li>
         </ul>
       </nav>
-      <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
   </aside>

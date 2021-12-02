@@ -23,8 +23,6 @@ include('config/dbconn.php');
           </div>
         </div>
       </div>
-    <!-- /.content-header -->
-     <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
           <?php

@@ -1,8 +1,15 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-3">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="assets/dist/img/AdminLTELogo.png" alt="Feliz Tooth Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Feliz Tooth</span>
+      <img src="assets/dist/img/feliztooth.png" alt="Feliz Tooth District Logo" class="brand-image img-circle elevation-3">
+      <span class="brand-text font-weight-light text-md">
+        <?php 
+        $sql = "SELECT * FROM system_details LIMIT 1";
+        $result = mysqli_query($conn,$sql);
+        while($row = mysqli_fetch_array($result)){
+          echo $row['title'];
+        }
+        ?></span>
     </a>
     <?php $page = substr($_SERVER['SCRIPT_NAME'],strrpos($_SERVER['SCRIPT_NAME'],"/")+1);?>
     <div class="sidebar">
@@ -21,12 +28,12 @@
             </a>
           </li>   
           <li class="nav-item">
-            <a href="#" class="nav-link <?= $page == 'patients.php' || $page == 'medical_records.php'? 'active':''?>">
+            <a href="#" class="nav-link <?= $page == 'patients.php' || $page == 'medical_history.php'? 'active':''?>">
               <i class="nav-icon fa fa-users-medical"></i>
               <p>Patients</p>
               <i class="fas fa-angle-left right"></i>
             </a>
-            <ul class="nav nav-treeview <?= $page == 'patients.php' || $page == 'medical_records.php' ? 'show':''?>">
+            <ul class="nav nav-treeview <?= $page == 'patients.php' || $page == 'medical_history.php' ? 'show':''?>">
               <li class="nav-item">
                 <a href="patients.php" class="nav-link <?= $page == 'patients.php' ? 'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
@@ -34,9 +41,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="medical_records.php" class="nav-link <?= $page == 'medical_records.php' ? 'active':''?>">
+                <a href="medical_history.php" class="nav-link <?= $page == 'medical_history.php' ? 'active':''?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Medical Records</p>
+                  <p>Medical History</p>
                 </a>
               </li>
             </ul>
@@ -94,7 +101,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="prescription.php" class="nav-link <?= $page == 'prescription.php' ? 'active':''?>">
               <i class="nav-icon fas fa-prescription"></i>
               <p>Prescription</p>
             </a>
@@ -118,7 +125,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="settings.php" class="nav-link">
               <i class="nav-icon fa fa-cog"></i>
               <p>Settings</p>
             </a>

@@ -33,7 +33,7 @@ include('config/dbconn.php');
                 <div class="form-group">
                     <label>Birthdate</label>
                     <span class="text-danger">*</span>
-                    <input type="text" autocomplete="off" name="birthday" class="form-control" id="datepicker" required onkeypress="return false;">
+                    <input type="text" autocomplete="off" name="birthday" class="form-control" id="datepicker" required>
                 </div>
               </div>
             </div>
@@ -111,7 +111,7 @@ include('config/dbconn.php');
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="doc_image">Upload Image</label>
-                <input type="file" name ="doc_image" id="doc_image" name="image">
+                <input type="file" name="doc_image" id="doc_image">
               </div>
             </div>
           </div>
@@ -172,7 +172,7 @@ include('config/dbconn.php');
                 <div class="form-group">
                     <label>Birthdate</label>
                     <span class="text-danger">*</span>
-                    <input type="text" autocomplete="off" id="edit_dob" name="birthday" class="form-control" required onkeypress="return false;">
+                    <input type="text" autocomplete="off" id="edit_dob" name="birthday" class="form-control" required>
                 </div>
               </div>
             </div>
@@ -231,28 +231,16 @@ include('config/dbconn.php');
             </div>
           </div>
           <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Password</label>
-                <span class="text-danger">*</span>
-                <input type="password" id="edit_password" name="edit_password" class="form-control" required>
-              </div>
-            </div>
-            <div class="col-sm-6 auto">
-              <div class="form-group">
-                <label>Confirm Password</label>
-                <span class="text-danger">*</span>
-                <input type="password" id="edit_confirmPassword" name="edit_confirmPassword" class="form-control" required>
-              </div>             
-            </div>
+            <input type="hidden" id="edit_password" name="edit_password" class="form-control" required>
+            <input type="hidden" id="edit_confirmPassword" name="edit_confirmPassword" class="form-control" required>
           </div>
           <div class="row">
             <div class="col-sm-6">
               <div class="form-group">
                 <label for="doc_image">Upload Image</label>
-                <input type="file" id="edit_docimage" name="edit_docimage">
-                <div id="uploaded_image"></div>  
-                <input type="hidden" name="hidden_doctor_profile_image" id="hidden_doctor_profile_image" />             
+                <input type="file" id="edit_docimage" name="edit_docimage"/>
+                <input type="hidden" name="old_image" id="old_image"/>
+                <div id="uploaded_image"></div>               
               </div>
             </div>
           </div>
@@ -353,7 +341,7 @@ include('config/dbconn.php');
                         <tr>
                         <td class="text-center"><?php echo $i++; ?></td>
                         <td>
-                          <?php echo '<img src="'.$row['image'].'" class="img-thumbnail" width="60">'; ?>
+                        <img src="../upload/<?= $row['image']?>" class="img-thumbnail" width="60" alt="">
                         </td>
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['phone']; ?></td>
@@ -441,8 +429,8 @@ include('config/dbconn.php');
           $('#edit_email').val(value['email']);
           $('#edit_degree').val(value['degree']);
           $('#edit_specialty').val(value['specialty']);
-          $('#uploaded_image').html('<img src="'+value['image']+'" class="img-fluid img-thumbnail" width="120" />');
-          $('#hidden_doctor_profile_image').val(value['image']);
+          $('#uploaded_image').html('<img src="../upload/'+value['image']+'" class="img-fluid img-thumbnail" width="120" />');
+          $('#old_image').val(value['image']);
           $('#edit_password').val(value['password']);
           $('#edit_confirmPassword').val(value['password']);
         });

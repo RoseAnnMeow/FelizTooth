@@ -495,7 +495,7 @@ include('config/dbconn.php');
                               }
                               else
                               {
-                                echo date('h:i A',strtotime($row['starttime']));
+                                echo date('h:i A',strtotime($row['endtime']));
                               }?></td>
                               <td><?php echo $row['schedtype'];?></td>
                               <td><?php
@@ -809,7 +809,7 @@ include('config/dbconn.php');
                               }
                               else
                               {
-                                echo date('h:i A',strtotime($row['starttime']));
+                                echo date('h:i A',strtotime($row['endtime']));
                               }?></td>
                               <td><?php echo $row['schedtype'];?></td>
                               <td><?php

@@ -13,7 +13,7 @@ include('includes/header.php');
             <div class="card-body login-card-body">
                 <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
                 <?php
-                include('admin/message.php');
+                include('message.php');
                 ?>
                 <form action="password-reset-code.php" method="post">
                     <input type="hidden" name="password_token" value="<?php if(isset($_GET['token'])){echo $_GET['token'];}?>">

@@ -6,11 +6,11 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <script>
-//   window.setTimeout(function() {
-//     $(".alert").fadeTo(600, 0).slideUp(600, function(){
-//         $(this).remove(); 
-//     });
-// }, 4000);
+  window.setTimeout(function() {
+    $(".alert").fadeTo(600, 0).slideUp(600, function(){
+        $(this).remove(); 
+    });
+}, 4000);
 </script>
 <!-- Bootstrap 4 -->
 <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -53,10 +53,11 @@
 <script src="assets/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="assets/dist/js/pages/dashboard.js"></script>
+<!-- Summernote -->
+<script src="assets/plugins/summernote/summernote-bs4.min.js"></script>
 
 <script>
     $(document).ready(function () {
-
     $('.select2bs4').select2({
       theme: 'bootstrap4'
     })

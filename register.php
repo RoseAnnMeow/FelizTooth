@@ -27,7 +27,7 @@ if(isset($_SESSION['auth']))
       }
       ?>
       <?php
-      include('message.php');
+      include('admin/message.php');
     ?>
       <div class="card card-outline card-primary">
         <div class="card-body register-card-body">

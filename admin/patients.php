@@ -42,7 +42,7 @@ include('config/dbconn.php');
                 <div class="form-group">
                     <label>Birthdate</label>
                     <span class="text-danger">*</span>
-                    <input type="text" autocomplete="off" name="birthday" class="form-control" id="datepicker" required onkeypress="return false;">
+                    <input type="text" autocomplete="off" name="birthday" class="form-control" id="datepicker" required>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -166,7 +166,7 @@ include('config/dbconn.php');
                 <div class="form-group">
                     <label>Birthdate</label>
                     <span class="text-danger">*</span>
-                    <input type="text" autocomplete="off" id="edit_dob" name="birthday" class="form-control" id="datepicker" required onkeypress="return false;">
+                    <input type="text" autocomplete="off" id="edit_dob" name="birthday" class="form-control" id="datepicker" required>
                 </div>
               </div>
               <div class="col-sm-6 mb-2">
@@ -209,20 +209,8 @@ include('config/dbconn.php');
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-6 mb-2">
-                <div class="form-group">
-                  <label>Password</label>
-                  <span class="text-danger">*</span>
-                  <input type="password" id="edit_password" name="password" class="form-control" required>
-                </div>
-              </div>
-              <div class="col-sm-6 mb-2">
-                <div class="form-group">
-                  <label>Confirm Password</label>
-                  <span class="text-danger">*</span>
-                  <input type="password" id="edit_cpassword" name="confirmPassword" class="form-control" required>
-                </div>             
-              </div>
+              <input type="hidden" id="edit_password" name="password" class="form-control" required>
+              <input type="hidden" id="edit_cpassword" name="confirmPassword" class="form-control" required>
             </div>
           </div>
 

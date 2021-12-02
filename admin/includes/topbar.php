@@ -21,14 +21,21 @@
       <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
           <span><?php
+          include_once('config/dbconn.php');
           if(isset($_SESSION['auth']))
           {
-              echo '<img src="'.$_SESSION['auth_user']['user_image'].'" class="user-image img-circle elevation-2" alt="Doc Image">';
+            $sql = "SELECT * FROM tbldoctor WHERE id = '".$_SESSION['auth_user']['user_id']."'";
+            $query_run = mysqli_query($conn,$sql);
+            while($row = mysqli_fetch_array($query_run))
+            {
+                echo '<img src="'.$row['image'].'" class="user-image img-circle elevation-2" alt="Doc Image">';
+            }
           }
           else
           {
             echo "Not Logged in";
           }
+          
           ?>
           <span class="d-none d-md-inline">
             <?php echo $_SESSION['auth_user']['user_fname'];?> 

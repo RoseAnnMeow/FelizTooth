@@ -24,6 +24,7 @@ include('config/dbconn.php');
               </div>
             </div>
             <div class="modal-footer">
+              <button type="button" class="btn btn-primary userdata">Edit Appointment</button>             
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>             
             </div>
         </div>
@@ -123,12 +124,12 @@ $sched_arr = json_encode($query->fetch_all(MYSQLI_ASSOC));
 <script>
 $(function () {
 
-// $('.userdata').click(function (e) { 
-//   var clientTag = document.getElementById("client-label");
-//   var requiredId = clientTag.getAttribute('data-id');
-//   window.location.href = '/php-admin-panel/Feliz-Tooth-District-Clinic/admin//edit_appointment.php?id=' + requiredId;
+$('.userdata').click(function (e) { 
+  var clientTag = document.getElementById("client-label");
+  var requiredId = clientTag.getAttribute('data-id');
+  window.location.href = 'edit-appointment.php?id=' + requiredId;
   
-// });
+});
 
 function ini_events(ele) {
   ele.each(function () {
@@ -222,7 +223,7 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
       endTime: '18:00'
     }
   ], // display business hours
-  editable: false,
+  editable: true,
   selectable: true,
   droppable : false, //
 });

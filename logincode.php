@@ -7,12 +7,12 @@ if(isset($_POST['login_btn']))
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $log_query = "SELECT * FROM tblpatient WHERE email='$email' AND password='$password' LIMIT 1";
-    $log_query_run = mysqli_query($conn,$log_query);
+    $sql = "SELECT * FROM tblpatient WHERE email='$email'";
+    $result = mysqli_query($conn,$sql);
 
-    if(mysqli_num_rows($log_query_run) > 0)
+    if(mysqli_num_rows($result) > 0)
     {
-        foreach($log_query_run as $row)
+        while($row = mysqli_fetch_assoc($result))
         {
             $user_id = $row['id'];
             $user_fname = $row['fname'];
@@ -22,31 +22,44 @@ if(isset($_POST['login_btn']))
             $user_gender = $row['gender'];
             $user_phone = $row['phone'];
             $user_email = $row['email'];
+            $role_as = $row['role'];
+
+            if(password_verify($password, $row['password']))
+            {                
+                $_SESSION['auth'] = true;
+                $_SESSION['auth_role'] = "$role_as";
+                $_SESSION['auth_user'] = [
+                'user_id'=>$user_id,
+                'user_fname'=>$user_fname,
+                'user_lname'=>$user_lname,
+                'user_address'=>$user_address,
+                'user_dob'=>$user_dob,
+                'user_gender'=>$user_gender,
+                'user_phone'=>$user_phone,
+                'user_email'=>$user_email
+                ];
+
+                // if($_SESSION['auth_role'] == '1') //1-admin
+                // {
+                //     header('Location: admin/index.php');
+                //     exit(0); 
+                // }
+                    header('Location: index.php');
+                    exit(0);                         
+            }
+            else
+            {
+                $_SESSION['error'] = "Incorrect Email or Password";
+                header('Location: login.php');
+            }                   
         }
-
-        $_SESSION['auth'] = true;
-        $_SESSION['auth_user'] = [
-            'user_id'=>$user_id,
-            'user_fname'=>$user_fname,
-            'user_lname'=>$user_lname,
-            'user_address'=>$user_address,
-            'user_dob'=>$user_dob,
-            'user_gender'=>$user_gender,
-            'user_phone'=>$user_phone,
-            'user_email'=>$user_email
-            
-        ];
-        
-        //$_SESSION['status'] = "Logged in Successfully";
-        header('Location: index.php');
-
     }
     else
     {
         $_SESSION['error'] = "Incorrect email or password";
         header('Location: login.php');
 
-    }
+    }    
 }
 else 
 {

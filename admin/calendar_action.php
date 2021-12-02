@@ -63,5 +63,27 @@
             echo $return = "<h5> No Record Found</h5>";
         }
     }
+
+    if(isset($_POST['checking_appointment']))
+    {
+        $s_id = $_POST['user_id'];
+        $result_array = [];
+
+        $sql = "SELECT * FROM tblappointment WHERE id='$s_id' ";
+        $query_run = mysqli_query($conn,$sql);
+
+        if(mysqli_num_rows($query_run) > 0)
+        {
+            foreach($query_run as $row)
+            {
+               array_push($result_array, $row);              
+            }
+            header('Content-type: application/json');
+            echo json_encode($result_array);
+        }
+        else{
+            echo $return = "<h5> No Record Found</h5>";
+        }
+    }
     
 ?>
