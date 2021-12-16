@@ -132,11 +132,8 @@ include('config/dbconn.php');
                 <div class="form-group">
                     <label>Appointment Status</label>
                     <span class="text-danger">*</span>
-                    <select class="form-control custom-select" name="status" required>
-                        <option>Pending</option>
-                        <option>Confirmed</option>
-                        <option>Treated</option>
-                        <option>Cancelled</option>
+                    <select class="form-control custom-select" name="status" id="show-checkbox" required>
+                        <option value="Confirmed">Confirmed</option>
                     </select>
                 </div>
               </div>
@@ -153,6 +150,12 @@ include('config/dbconn.php');
                     <option style="color:#f56954;" value="#f56954"> Red</option>						  
                   </select>
                 </div>             
+              </div>
+              <div class="col-sm-12">
+                <div class="custom-control custom-checkbox" id="show-email">
+                    <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
+                    <label for="customCheckbox2" class="custom-control-label">Send Email</label>
+                  </div>
               </div>       
             </div>
           </div>
@@ -312,10 +315,11 @@ include('config/dbconn.php');
                     <label>Appointment Status</label>
                     <span class="text-danger">*</span>
                     <select class="form-control custom-select" id="edit_status" name="status" required>
-                        <option>Pending</option>
-                        <option>Confirmed</option>
-                        <option>Treated</option>
-                        <option>Cancelled</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Treated">Treated</option>
+                        <option value="No Show">No Show</option>
+                        <option value="Cancelled">Cancelled</option>
                     </select>
                 </div>
               </div>
@@ -333,7 +337,13 @@ include('config/dbconn.php');
                     <option style="color:#f56954;" value="#f56954"> Red</option>							  
                   </select>
                 </div>             
-              </div>       
+              </div>
+              <div class="col-sm-12">
+                <div class="custom-control custom-checkbox" style="display:none" id="show-emails">
+                    <input class="custom-control-input" type="checkbox" id="customCheckbox3" checked>
+                    <label for="customCheckbox3" class="custom-control-label">Send Email</label>
+                  </div>
+              </div>        
             </div>
           </div>
 
@@ -381,7 +391,7 @@ include('config/dbconn.php');
         <section class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Appointment</h1>
+                <h1>Appointment</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -411,9 +421,6 @@ include('config/dbconn.php');
                   <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                     <li class="nav-item">
                       <a class="nav-link active" id="all-tab" data-toggle="tab" data-target="#all" role="tab" aria-controls="all" aria-selected="true">All</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" id="pending-tab" data-toggle="tab" data-target="#pending" role="tab" aria-controls="pending" aria-selected="false">Pending</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" id="confirmed-tab" data-toggle="tab" data-target="#confirmed" role="tab" aria-controls="confirmed" aria-selected="false">Confirmed</a>
@@ -451,12 +458,9 @@ include('config/dbconn.php');
                             </div>
                           </div>
                         </div>
-                        <table id="alltable" class="table table-bordered table-hover" style="width:100%">
-                          <thead>
+                        <table id="alltable" class="table table-borderless table-hover" style="width:100%">
+                          <thead class="bg-light">
                             <tr>
-                              <th class="text-center">
-                                <input type="checkbox" name="" value="" id="selectAll">
-                              </th>
                               <th class="text-center">#</th>
                               <th>Patient</th>
                               <th>Day</th>
@@ -470,13 +474,12 @@ include('config/dbconn.php');
                           <tbody>
                             <?php
                               $i = 1;
-                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id";
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a INNER JOIN tblpatient p WHERE p.id = a.patient_id ORDER BY id";
                               $query_run = mysqli_query($conn, $sql);
                               
                               while($row = mysqli_fetch_array($query_run)){
                             ?>
-                              <tr>
-                              <td style="width:10px; text-align:center;"><input type="checkbox" class="invCheck" name="update_status[]" value="<?php echo $row['id']; ?>"></td>
+                              <tr>                              
                               <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
                               <td><?php echo $row['pname'];?></td>
                               <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
@@ -511,65 +514,9 @@ include('config/dbconn.php');
                               {
                                 echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
                               }
-                              else
+                              else if($row['status'] == 'No Show')
                               {
-                                echo $row['status'] = '<span class="badge badge-danger">Cancelled</span>';
-                              }
-                              ?>
-                              </td>
-                              </td>
-                              <td>
-                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
-                                <button type="button" data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
-                              </td>
-                              </tr>
-                              <?php
-                              }
-                            ?>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="tab-pane fade" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-                        <table id="pendingtable" class="table table-bordered table-hover" style="width:100%">
-                          <thead>
-                            <tr>
-                              <th class="text-center">#</th>
-                              <th>Patient</th>
-                              <th>Day</th>
-                              <th>Start Time</th>
-                              <th>End Time</th>
-                              <th>Schedule Type</th>
-                              <th>Status</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <?php
-                              $i = 1;
-                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Pending' ";
-                              $query_run = mysqli_query($conn, $sql);
-                              
-                              while($row = mysqli_fetch_array($query_run)){
-                            ?>
-                              <tr>                              
-                              <td style="width:10px; text-align:center;"><?php echo $i++; ?></td>
-                              <td><?php echo $row['pname'];?></td>
-                              <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
-                              <td><?php echo date('h:i A',strtotime($row['starttime'])); ?></td>
-                              <td><?php echo date('h:i A',strtotime($row['endtime'])); ?></td>
-                              <td><?php echo $row['schedtype'];?></td>
-                              <td><?php
-                              if($row['status'] == 'Confirmed')
-                              {
-                                echo $row['status'] = '<span class="badge badge-success">Confirmed</span>';
-                              }
-                              else if($row['status'] == 'Pending')
-                              {
-                                echo $row['status'] = '<span class="badge badge-warning">Pending</span>';
-                              }
-                              else if($row['status'] == 'Treated')
-                              {
-                                echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                                echo $row['status'] = '<span class="badge badge-secondary">No Show</span>';
                               }
                               else
                               {
@@ -590,8 +537,8 @@ include('config/dbconn.php');
                         </table>
                       </div>
                       <div class="tab-pane fade" id="confirmed" role="tabpanel" aria-labelledby="confirmed-tab">
-                        <table id="confirmedtable" class="table table-bordered table-hover" style="width:100%">
-                          <thead>
+                        <table id="confirmedtable" class="table table-borderless table-hover" style="width:100%">
+                          <thead class="bg-light">
                             <tr>
                               <th class="text-center">#</th>
                               <th>Patient</th>
@@ -606,7 +553,7 @@ include('config/dbconn.php');
                           <tbody>
                             <?php
                               $i = 1;
-                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Confirmed' ";
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Confirmed' ORDER BY id";
                               $query_run = mysqli_query($conn, $sql);
                               
                               while($row = mysqli_fetch_array($query_run)){
@@ -650,8 +597,8 @@ include('config/dbconn.php');
                         </table>
                       </div>
                       <div class="tab-pane fade" id="cancelled" role="tabpanel" aria-labelledby="cancelled-tab">
-                        <table id="cancelledtable" class="table table-bordered table-hover" style="width:100%">
-                          <thead>
+                        <table id="cancelledtable" class="table table-borderless table-hover" style="width:100%">
+                          <thead class="bg-light">
                             <tr>
                               <th class="text-center">#</th>
                               <th>Patient</th>
@@ -666,7 +613,7 @@ include('config/dbconn.php');
                           <tbody>
                             <?php
                               $i = 1;
-                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Cancelled' ";
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a,tblpatient p WHERE p.id = a.patient_id AND status='Cancelled' ORDER BY id ";
                               $query_run = mysqli_query($conn, $sql);
                               
                               while($row = mysqli_fetch_array($query_run)){
@@ -709,8 +656,8 @@ include('config/dbconn.php');
                         </table>
                       </div>
                       <div class="tab-pane fade" id="treated" role="tabpanel" aria-labelledby="treated-tab">
-                        <table id="treatedtable" class="table table-bordered table-hover" style="width:100%">
-                          <thead>
+                        <table id="treatedtable" class="table table-borderless table-hover" style="width:100%">
+                          <thead class="bg-light">
                             <tr>
                               <th class="text-center">#</th>
                               <th>Patient</th>
@@ -725,7 +672,7 @@ include('config/dbconn.php');
                           <tbody>
                             <?php
                               $i = 1;
-                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a INNER JOIN tblpatient p WHERE p.id = a.patient_id AND status='Treated' ";
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a INNER JOIN tblpatient p WHERE p.id = a.patient_id AND status='Treated' ORDER BY id";
                               $query_run = mysqli_query($conn, $sql);
                               
                               while($row = mysqli_fetch_array($query_run)){
@@ -769,8 +716,8 @@ include('config/dbconn.php');
                         </table>
                       </div>
                       <div class="tab-pane fade" id="requested" role="tabpanel" aria-labelledby="requested-tab">
-                        <table id="requesttable" class="table table-bordered table-hover" style="width:100%">
-                          <thead>
+                        <table id="requesttable" class="table table-borderless table-hover" style="width:100%">
+                          <thead class="bg-light">
                             <tr>
                               <th class="text-center">#</th>
                               <th>Patient</th>
@@ -785,7 +732,7 @@ include('config/dbconn.php');
                           <tbody>
                             <?php
                               $i = 1;
-                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a INNER JOIN tblpatient p WHERE p.id = a.patient_id AND schedtype='Online Schedule' ";
+                              $sql = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname FROM tblappointment a INNER JOIN tblpatient p WHERE p.id = a.patient_id AND schedtype='Online Schedule'ORDER BY id ";
                               $query_run = mysqli_query($conn, $sql);
                               
                               while($row = mysqli_fetch_array($query_run)){
@@ -824,6 +771,10 @@ include('config/dbconn.php');
                               else if($row['status'] == 'Treated')
                               {
                                 echo $row['status'] = '<span class="badge badge-primary">Treated</span>';
+                              }
+                              else if($row['status'] == 'No Show')
+                              {
+                                echo $row['status'] = '<span class="badge badge-secondary">No Show</span>';
                               }
                               else
                               {
@@ -868,8 +819,6 @@ include('config/dbconn.php');
 
       var table1 = $('#alltable').DataTable( {
       responsive: true,
-      "columnDefs": [{ 'orderable': false, 'targets': 0 }],
-      "aaSorting": [[1, 'asc']],
     } );
 
     var table2 = $('#pendingtable').DataTable( {
@@ -1011,48 +960,69 @@ include('config/dbconn.php');
       
       });
 
-      $('#selectAll').change(function(){
-        if($(this).is(':checked'))
-        {
-          $('input[name="update_status[]"]').prop('checked',true);
-        }
-        else{
-          $('input[name="update_status[]"]').each(function(){
-            $(this).prop('checked',false);
-          })
-        }
-      });
+      $('#show-checkbox').on('change', function() {
+      if( this.value == 'Confirmed')
+      {
+        $("#show-email").show();
+      }
+      else
+      {
+        $("#show-email").hide();
+      }
+    });
+      $('#edit_status').on('change', function() {
+      if( this.value == 'Confirmed')
+      {
+        $("#show-emails").show();
+      }
+      else
+      {
+        $("#show-emails").hide();
+      }
+    });
 
-      $('.invCheck').change(function(){   
-        if($('.invCheck').length == $(".invCheck:checked").length)
-        {
-          $("#selectAll").prop("checked", true);
-        }
-        else
-        {
-          $("#selectAll").prop("checked", false);
-        }
-      });
+      // $('#selectAll').change(function(){
+      //   if($(this).is(':checked'))
+      //   {
+      //     $('input[name="update_status[]"]').prop('checked',true);
+      //   }
+      //   else{
+      //     $('input[name="update_status[]"]').each(function(){
+      //       $(this).prop('checked',false);
+      //     })
+      //   }
+      // });
+
+      // $('.invCheck').change(function(){   
+      //   if($('.invCheck').length == $(".invCheck:checked").length)
+      //   {
+      //     $("#selectAll").prop("checked", true);
+      //   }
+      //   else
+      //   {
+      //     $("#selectAll").prop("checked", false);
+      //   }
+      // });
       
-      $('input[type="checkbox"]').change(function() {
-        if($(this).is(':checked')==true)
-        {
-          if($('#selected_opt').is(':visible') == false)
-          {
-					  $('#selected_opt').show('slow')
-				  }
-        }
-        else
-        {
-          if($('#alltable').find(':checkbox:checked').length <= 0)
-          {
-            if($('#selected_opt').is(':visible') == true)
-            {
-              $('#selected_opt').hide('slow')
-            }   
-          }                
-        }
-			});
+      // $('input[type="checkbox"]').change(function() {
+      //   if($(this).is(':checked')==true)
+      //   {
+      //     if($('#selected_opt').is(':visible') == false)
+      //     {
+			// 		  $('#selected_opt').show('slow')
+			// 	  }
+      //   }
+      //   else
+      //   {
+      //     if($('#alltable').find(':checkbox:checked').length <= 0)
+      //     {
+      //       if($('#selected_opt').is(':visible') == true)
+      //       {
+      //         $('#selected_opt').hide('slow')
+      //       }   
+      //     }                
+      //   }
+			// });
 
 });
 

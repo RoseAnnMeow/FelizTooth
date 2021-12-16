@@ -10,17 +10,20 @@ include('config/dbconn.php');
 <div class="wrapper">
 
 <div class="content-wrapper">
-    <section class="content-header">
+    <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="content">
+    <div class="content">
       <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+            <?php
+              include('message.php');
+            ?>
                 <div class="card card-primary card-outline">
                     <div class="card-header">
                         <h3 class="card-title">Edit Prescription</h3>
@@ -128,7 +131,7 @@ include('config/dbconn.php');
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Advice</label>
+                                            <label>Notes</label>
                                             <textarea class="summernote" id="edit_advice" name="advice_note"><?php echo $user['advice'];?>
                                             </textarea>
                                         </div>
@@ -160,7 +163,7 @@ include('config/dbconn.php');
     </div>
         <!-- /.row -->
 </div><!-- /.container-fluid -->
-</section>
+</div>
 
 </div>
 <?php include('includes/scripts.php');?>
@@ -168,9 +171,29 @@ include('config/dbconn.php');
      $(function () {
     $('.summernote').summernote({
         height: 250,
+        toolbar: [
+                [ 'style', [ 'style' ] ],
+                [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                [ 'fontname', [ 'fontname' ] ],
+                [ 'fontsize', [ 'fontsize' ] ],
+                [ 'color', [ 'color' ] ],
+                [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                [ 'table', [ 'table' ] ],
+                [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+		    ]
     })
     $('#advice_note').summernote({
         height: 250,
+        toolbar: [
+                [ 'style', [ 'style' ] ],
+                [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                [ 'fontname', [ 'fontname' ] ],
+                [ 'fontsize', [ 'fontsize' ] ],
+                [ 'color', [ 'color' ] ],
+                [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                [ 'table', [ 'table' ] ],
+                [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+		    ]
     })
 
     $('.select2').select2()

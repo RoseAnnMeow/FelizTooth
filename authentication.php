@@ -7,7 +7,6 @@ if(!isset($_SESSION['auth']))
 }
 else if($_SESSION['auth_role'] == "2")
 {
-    $_SESSION['error'] = "Access Denied";
     header('Location: admin/index.php');
     exit(0);
 }

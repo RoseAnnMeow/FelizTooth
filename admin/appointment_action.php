@@ -1,6 +1,59 @@
 <?php
-    include('authentication.php');
-    include('config/dbconn.php');
+include('authentication.php');
+include('config/dbconn.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php';
+
+function sendEmail($pdf,$patient_name,$patient_email,$patient_date,$patient_time,$patient_phone,$reason)
+{
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();                                         
+    $mail->Host       = 'smtp.gmail.com'; 
+    $mail->SMTPAuth   = true;                 
+    $mail->Username   = 'feliztoothdev@gmail.com';                  
+    $mail->Password   = 'felizdevelopers123';  
+
+    $mail->SMTPSecure = 'tls';                                
+    $mail->Port       = 587;                      
+
+    $mail->setFrom('feliztoothdev@gmail.com','Feliz Tooth District');
+    $mail->addAddress($patient_email);  
+    
+    //Recipients
+    $mail->addStringAttachment($pdf,"attachment.pdf");
+    // Content
+    $mail->isHTML(true);                                  
+    $mail->Subject = 'Set an Appointment | Feliz Tooth District Dental Clinic';
+    $email_template = 
+                    '<p>Appointment Submitted on ' .$patient_date. ' - ' .$patient_time.'</p>
+                    <p>Appointment Details<br>
+                    Full name: ' .$patient_name. '<br>
+                    Contact Number: ' .$patient_phone. '<br>
+                    Email: ' .$patient_email. '<br>
+                    Preferred Date: ' .$patient_date. '<br>
+                    Time: ' .$patient_time. '</p>
+                    <p>Your concerns: ' . $reason. '</p>
+                    <p>Print, sign and bring the attached PDF on the date of your appointment. This<br>
+                    will serve also as proof of appointment. We will confirm your appointment via<br>
+                    email or call 2 to 3 days before your appointment date.</p>
+                    <p>Thank you!<br>
+                    Feliz Tooth District Team</p>'
+                    ;
+    $mail->Body = $email_template;
+    try
+    {
+        $mail->send();
+        echo "Message has been sent";
+    }
+    catch(Exception $e)
+    {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
 
     if(isset($_POST['logout_btn']))
     {
@@ -25,20 +78,46 @@
         $status = $_POST['status'];
         $bgcolor = $_POST['color'];
         $schedtype = 'Walk-in Schedule';
+        $send_email = $_POST['send-email'];
 
-        $sql = "INSERT INTO tblappointment (patient_id,doc_id,schedule,starttime,endtime,reason,schedtype,status,bgcolor) VALUES ('$patient_id','$doctor_id','$schedule','$s_time','$e_time','$reason','$schedtype','$status','$bgcolor')";
-        $query_run = mysqli_query($conn,$sql);
+        $fulldata = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname,p.phone,p.email FROM tblappointment a INNER JOIN tblpatient p WHERE p.id ='$patient_id'";
+        $appdetails = mysqli_query($conn,$fulldata);
+        $patient_data = mysqli_fetch_array($appdetails);
+        $patient_name = $patient_data['pname'];
+        $patient_email = $patient_data['email'];
+        $patient_date = date('D, F j, Y',strtotime($patient_data['schedule']));
+        $patient_phone = $patient_data['phone'];
+        $patient_time = $s_time;
 
-        if($query_run)
+        if(!empty($_POST['send-email']))
         {
-            $_SESSION['success'] = "Appointment Added Successfully";
-            header('Location:appointment.php');
+            $mpdf = new \Mpdf\Mpdf();
+            $data = "";
+            $data .= "<h1>Your Details</h1>";
+            $data .= "<strong>Name:</strong> " . $patient_name . "<br>";
+            $data .= "<strong>Contact Number:</strong> " .$patient_phone. "<br>";
+            $data .= "<strong>Email:</strong> " . $patient_email . "<br>";
+            $data .= "<strong>Date & Time of Visit:</strong> " . $patient_date ." - ". $s_time ."<br>";
+            $data .= "<strong>Date Submitted:</strong> " . date('F j, Y',strtotime($patient_data['created_at'])) ." - ". $s_time ."<br>";
+            $mpdf->WriteHtml($data);
+            $pdf = $mpdf->output("","S");
+            sendEmail($pdf,$patient_name,$patient_email,$patient_date,$patient_time,$patient_phone,$reason);  
         }
-        else
-        {
-            $_SESSION['error'] = "Appointment Added Unsuccessfully";
-            header('Location:appointment.php');
-        }
+
+        // $sql = "INSERT INTO tblappointment (patient_id,doc_id,schedule,starttime,endtime,reason,schedtype,status,bgcolor) VALUES ('$patient_id','$doctor_id','$schedule','$s_time','$e_time','$reason','$schedtype','$status','$bgcolor')";
+        // $query_run = mysqli_query($conn,$sql);
+
+        // if($query_run)
+        // {
+            
+        //     $_SESSION['success'] = "Appointment Added Successfully";
+        //     header('Location:appointment.php');
+        // }
+        // else
+        // {
+        //     $_SESSION['error'] = "Appointment Added Unsuccessfully";
+        //     header('Location:appointment.php');
+        // }
                 
     }
 

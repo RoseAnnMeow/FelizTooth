@@ -44,7 +44,7 @@ if(isset($_POST['login_btn']))
                 //     header('Location: admin/index.php');
                 //     exit(0); 
                 // }
-                    header('Location: index.php');
+                    header('Location: dashboard.php');
                     exit(0);                         
             }
             else

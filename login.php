@@ -4,7 +4,7 @@ include('includes/header.php');
 if(isset($_SESSION['auth']))
 {
     $_SESSION['status'] = "You are already logged in";
-    header('Location: index.php');
+    header('Location: dashboard.php');
     exit(0);
 }
 ?>

@@ -63,12 +63,12 @@
         if($query_run)
         {
             $_SESSION['success'] = "Prescription Updated Successfully";
-            header('Location:prescription.php');
+            header('Location:edit-prescription.php?id='.$id);
         }
         else
         {
             $_SESSION['error'] = "Prescription Updated Unsuccessfully";
-            header('Location:prescription.php');
+            header('Location:edit-prescription.phpid='.$id);
         }
                 
     }

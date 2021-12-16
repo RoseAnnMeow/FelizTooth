@@ -17,12 +17,15 @@
         if($query_run)
         {
             $_SESSION['success'] = "Appointment Submitted Successfully";
-            header('Location: index.php');
+            header('Location: dashboard.php');
         }
         else{
             $_SESSION['error'] = "Appointment Submission Failed";
-            header('Location: index.php');
+            header('Location: dashboard.php');
         }
+
+        $sql = "INSERT INTO notification (patient_id) VALUES ('$patient_id')";
+        $query_run = mysqli_query($conn,$sql);
     }
 
 ?>

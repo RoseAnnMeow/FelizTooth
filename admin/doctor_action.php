@@ -50,11 +50,23 @@
         $id = $_POST['delete_id'];
         $del_image = $_POST['del_image'];
         
-        $sql = "DELETE FROM tbldoctor WHERE id='$id' ";
-        $query_run = mysqli_query($conn,$sql);
+        $check_img_query = " SELECT * FROM tbldoctor WHERE id='$id' LIMIT 1";
+        $img_res = mysqli_query($conn,$check_img_query);
+        $res_data = mysqli_fetch_array($img_res);
+        $image = $res_data['image'];
         
-        if ($query_run)
-        {
+        $sql = "DELETE FROM tbldoctor WHERE id='$id' LIMIT 1";
+        $query_run = mysqli_query($conn,$sql);
+       
+        if($query_run)
+        {                   
+            if($image != NULL)
+            {
+                if(file_exists('../upload/doctors/'.$image))
+                {
+                    unlink("../upload/doctors/".$image);
+                }
+            }     
             $_SESSION['success'] = "Doctor Deleted Successfully";
             header('Location:doctors.php');
         }
@@ -62,7 +74,7 @@
         {
             $_SESSION['error'] = "Doctor Deleted Unsuccessfully";
             header('Location:doctors.php');
-        }
+        }        
     }
 
     if(isset($_POST['updatedoctor']))
@@ -132,11 +144,11 @@
                     {                   
                         if($image != NULL)
                         {
-                            if(file_exists('../upload/'.$old_image))
+                            if(file_exists('../upload/doctors/'.$old_image))
                             {
-                                unlink("../upload/".$old_image);
+                                unlink("../upload/doctors/".$old_image);
                             }
-                            move_uploaded_file($_FILES['edit_docimage']['tmp_name'], '../upload/'.$update_filename);
+                            move_uploaded_file($_FILES['edit_docimage']['tmp_name'], '../upload/doctors/'.$update_filename);
                         }     
                         $_SESSION['success'] = "Doctor Updated Successfully";
                         header('Location:doctors.php');
@@ -192,7 +204,7 @@
             {
                 ?>
                     <div class="text-center">
-                        <?php echo '<img src="'.$row['image'].'" class="img-fluid img-thumbnail" width="120">';?>
+                        <img src="../upload/doctors/<?= $row['image']?>" class="img-thumbnail img-fluid img-circle" width="120" alt="Doctor Image">                       
                     </div>
                     <h3 class="profile-username text-center"><?php echo $row['name']; ?></h3>
                     <p class="text-muted text-center"><?php echo $row['specialty']; ?></p>
@@ -276,23 +288,23 @@
                     else
                     {
                         $filename = time().'.'.$image_extension;
-                        move_uploaded_file($_FILES['doc_image']['tmp_name'], '../upload/'.$filename);  
+                        move_uploaded_file($_FILES['doc_image']['tmp_name'], '../upload/doctors/'.$filename);  
                     }
                 }
                 else
                 {
                     $character = $_POST["fname"][0];
-                    $path = "../upload/". time() . ".png";
-                    $image = imagecreate(200, 200);
+                    $path = time() . ".png";
+                    $imagecreate = imagecreate(200, 200);
                     $red = rand(0, 255);
                     $green = rand(0, 255);
                     $blue = rand(0, 255);
-                    imagecolorallocate($image, 230, 230, 230);  
-                    $textcolor = imagecolorallocate($image, $red, $green, $blue);
-                    imagettftext($image, 100, 0, 55, 150, $textcolor, 'font/arial.ttf', $character);
-                    imagepng($image, $path);
-                    imagedestroy($image);
-                    $doctor_profile_image = $path;
+                    imagecolorallocate($imagecreate, 230, 230, 230);  
+                    $textcolor = imagecolorallocate($imagecreate, $red, $green, $blue);
+                    imagettftext($imagecreate, 100, 0, 55, 150, $textcolor, 'font/arial.ttf', $character);
+                    imagepng($imagecreate, '../upload/doctors/'.$path);
+                    imagedestroy($imagecreate);
+                    $filename = $path;
                 }
 
                 if($_SESSION['error'] == '')

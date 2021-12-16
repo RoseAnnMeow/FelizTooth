@@ -23,7 +23,7 @@
                     <tbody>
                         <tr>                          
                             <th class="text-muted">Client:</th>
-                            <td id="client-label" data-id='<?php echo $id; ?>'><a href=""><?php echo $row['pname'];?></a></br>
+                            <td id="client-label" data-id='<?php echo $id; ?>'><a href="patient-details.php?id=<?=$row['patient_id']?>"><?=$row['pname']?></a></br>
                             <?php echo $row['phone'];?></br>
                             <?php echo $row['email'];?></td>
                         </tr>
@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <th class="text-muted">Date:</th>
-                            <td><?php echo date('F, j Y',strtotime($row['schedule'])); ?></td>
+                            <td><?php echo date('F j, Y',strtotime($row['schedule'])); ?></td>
                         </tr>
                         <tr>
                             <th class="text-muted">Time:</th>

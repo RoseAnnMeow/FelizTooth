@@ -57,35 +57,63 @@
 <script src="assets/plugins/summernote/summernote-bs4.min.js"></script>
 
 <script>
+  $(document).ready(function(){
+	
+	function load_unseen_notification(view = '')
+	{
+		$.ajax({
+			url:"fetch_notification.php",
+			method:"POST",
+			data:{view:view},
+			dataType:"json",
+			success:function(data)
+			{
+			$('.dropdown-menu').html(data.notification);
+			if(data.unseen_notification > 0){
+			$('.count').html(data.unseen_notification);
+			}
+			}
+		});
+	}
+ 
+	load_unseen_notification();
+ 
+	$(document).on('click', '.notification', function(){
+	$('.count').html('');
+	load_unseen_notification('yes');
+	});
+ 
+	setInterval(function(){ 
+		load_unseen_notification();; 
+	}, 5000);
+ 
+});
+</script>
+<script>
     $(document).ready(function () {
     $('.select2bs4').select2({
       theme: 'bootstrap4'
     })
-
     $(document).on('click', '.logoutbtn', function() {       
       $('#logoutModal').modal('show'); 
     });
-
     $('#datepicker').datepicker({
       todayHighlight: true,
       clearBtn: true,
       autoclose: true,
       endDate: new Date()
     })
-
     $('#edit_dob').datepicker({
       clearBtn: true,
       autoclose: true,
       endDate: new Date()
     })
-
 });
 </script>
 
 <script>
   var password = document.getElementById("password"), 
   confirmPassword = document.getElementById("confirmPassword");
-
   function validatePassword(){
   if(password.value != confirmPassword.value) {
     confirmPassword.setCustomValidity("Password does not match");
@@ -114,4 +142,3 @@
     });
   });
 </script>
-

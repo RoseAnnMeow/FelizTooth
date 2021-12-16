@@ -19,7 +19,7 @@ include('config/dbconn.php');
         </button>
       </div>
 
-      <form action="patient_action.php" method="POST">
+      <form action="patient_action.php" method="POST"  enctype="multipart/form-data">
         <div class="modal-body">
             <div class="row">
               <div class="col-sm-6">
@@ -49,7 +49,7 @@ include('config/dbconn.php');
                 <div class="form-group">
                   <label>Gender</label>
                   <span class="text-danger">*</span>
-                  <select class="form-control form-select" name="gender" required>
+                  <select class="form-control custom-select" name="gender" required>
                     <option selected disabled value="">Choose</option>
                     <option>Female</option>
                     <option>Male</option>
@@ -99,6 +99,14 @@ include('config/dbconn.php');
                 </div>             
               </div>
             </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="patient_image">Upload Image</label>
+                  <input type="file" name="patient_image" id="patient_image">
+                </div>
+              </div>
+            </div>
           </div>
       
         <div class="modal-footer">
@@ -142,7 +150,7 @@ include('config/dbconn.php');
         </button>
       </div>
  
-      <form action="patient_action.php" method="POST">
+      <form action="patient_action.php" method="POST" enctype="multipart/form-data">
         <div class="modal-body">
             <div class="row">
               <div class="col-sm-6 mb-2">
@@ -173,7 +181,7 @@ include('config/dbconn.php');
                 <div class="form-group">
                   <label>Gender</label>
                   <span class="text-danger">*</span>
-                  <select class="form-control form-select" name="gender" id="edit_gender" required>
+                  <select class="form-control custom-select" name="gender" id="edit_gender" required>
                     <option selected disabled value="">Choose</option>
                     <option>Female</option>
                     <option>Male</option>
@@ -208,6 +216,16 @@ include('config/dbconn.php');
                 </div>             
               </div>
             </div>
+            <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="">Upload Image</label>
+                <input type="file" id="edit_patimage" name="edit_patimage"/>
+                <input type="hidden" name="old_image" id="old_image"/>
+                <div id="uploaded_image"></div>               
+              </div>
+            </div>
+          </div>
             <div class="row">
               <input type="hidden" id="edit_password" name="password" class="form-control" required>
               <input type="hidden" id="edit_cpassword" name="confirmPassword" class="form-control" required>
@@ -249,28 +267,24 @@ include('config/dbconn.php');
           </div>
         </div>
       </div>
-      <!--/delete modal -->
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
- <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <section class="container-fluid">
+      <div class="content-wrapper">
+        <div class="content-header">
+          <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
                 <h1 class="m-0">Patient</h1>
-              </div><!-- /.col -->
+              </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                   <li class="breadcrumb-item active">Patient</li>
                 </ol>
-              </div> <!-- /.col -->
-            </div> <!-- /.row -->
-          </section><!-- /.container-fluid -->
-      </div> <!--/.content-header-->
+              </div>
+            </div> 
+          </div>
+        </div>
       
-
   <div class="content">
     <div class="container-fluid">
       <div class="row">
@@ -286,10 +300,11 @@ include('config/dbconn.php');
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                  <table id="example1" class="table table-bordered table-hover">
-                    <thead>
+                  <table id="example1" class="table table-hover table-borderless" style="width:100%;">
+                    <thead class="bg-light">
                       <tr>
-                        <th class="text-center">#</th>
+                        <th class="text-center" style="width: 1%">#</th>
+                        <th class="text-center">Photo</th>
                         <th>Name</th>
                         <th>Reg. Date</th>
                         <th>Mobile No.</th>
@@ -308,6 +323,7 @@ include('config/dbconn.php');
                       ?>
                         <tr>
                         <td class="text-center"><?php echo $i++; ?></td>
+                        <td><img src="../upload/patients/<?= $row['image']?>" class="img-thumbnail img-circle" width="50" alt=""></td>
                         <td><?php echo $row['fname'].' '.$row['lname']; ?></td>
                         <td><?php echo date('d-M-Y',strtotime($row['created_at'])); ?></td>
                         <td><?php echo $row['phone']; ?></td>
@@ -324,8 +340,9 @@ include('config/dbconn.php');
                         ?>
                         </td>
                         <td>
-                          <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-secondary viewbtn"><i class="fa fa-eye"></i></button>
+                          <a href="patient-details.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
                           <button data-id="<?php echo $row['id']; ?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></button>
+                          <input type="hidden" name="del_image" value="<?php echo $row['image'];?>">
                           <button data-id="<?php echo $row['id']; ?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
                         </td>
                         </tr>
@@ -389,6 +406,8 @@ include('config/dbconn.php');
           $('#edit_gender').val(value['gender']);
           $('#edit_phone').val(value['phone']);
           $('#edit_email').val(value['email']);
+          $('#uploaded_image').html('<img src="../upload/patients/'+value['image']+'" class="img-fluid img-thumbnail" width="120" />');
+          $('#old_image').val(value['image']);
           $('#edit_password').val(value['password']);
           $('#edit_cpassword').val(value['password']);
         });

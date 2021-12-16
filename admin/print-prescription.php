@@ -5,104 +5,112 @@ include('config/dbconn.php');
 ?>
 <body>
 <div class="wrapper">
-<div class="row">
-            <div class="col-md-12">
-                <div class="invoice p-3 mb-3">
-              <!-- title row -->
-                  <div class="row d-flex justify-content-start">
-                      <div class="col-md-10">
-                          <h4 class="text-primary text-left top_title">
-                          Feliz Tooth District Clinic
-                          </h4>
-                          <address class="text-left">
-                              795 Folsom Ave, Suite 600
-                              San Francisco, CA 94107<br>
-                              Phone: (804) 123-5432<br>
-                              Email: info@almasaeedstudio.com
-                          </address>
-                      </div>
-                      <div class="col-md-2 d-flex justify-content-end"> 
-                      <img src="assets/dist/img/FelizToothLogo.png" height="100" alt="">
-                      </div>
+    <div class="row">
+        <div class="col-md-12">
+        <div class="invoice p-3 mb-3" id="prescription">
+              <div class="row d-flex justify-content-start">
+                  <div class="col-md-9">
+                    <?php 
+                      $sql = "SELECT * FROM system_details LIMIT 1";
+                      $result = mysqli_query($conn,$sql);
+                      while($row = mysqli_fetch_array($result))
+                      {
+                    ?>
+                      <h4 class="text-primary text-left top_title">
+                      <?=$row['title'];?>
+                      </h4>
+                      <address class="text-left text-dark">
+                        <?=$row['address'];?><br>
+                        <?=$row['telno'];?><br>
+                        <?=$row['mobile'];?><br>
+                        <?=$row['email'];?>
+                      </address>
                   </div>
-                <hr>
-                <div class="row mb-2 d-flex justify-content-start">                   
-                    <div class="col-md-3">
-                        Date: 27-11-2021
-                    </div>
-                    <div class="col-md-3">
-                        Prescription ID: 6
-                    </div>
-                    <div class="col-md-3">
-                        Patient ID: 6
-                    </div>
-                </div>
-                <hr>
-                <div class="row mb-2 d-flex justify-content-start">                   
-                    <div class="col-md-3">
-                        Name: Rose Ann Bonador
-                    </div>
-                    <div class="col-md-3">
-                        Addresss: 795 Folsom Ave, Suite 600
-                    </div>
-                    <div class="col-md-3">
-                        Age: 51 yrs old
-                    </div>
-                    <div class="col-md-3">
-                        Gender: Male
-                    </div>
-                </div>
-                <hr>
-
-              <div class="row">
-                <!-- accepted payments column -->
-                <div class="col-md-4">
-                  <p class="lead">Diagnosis</p>
-                  <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                    plugg
-                    dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                  </p>
-                </div>
-                <!-- /.col -->
-                <div class="col-md-8">
-                  <i class="fas fa-prescription fa-4x"></i>
-
-                  <div class="table-responsive">
-                    <table class="table table-hover table-borderless">                      
-                        <thead>       
-                            <th>Medicine</th>
-                            <th></th>
-                            <th class="text-right"></th>    
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="">Napa Extra - 500 </td>
-                            <td class="">10 - before food </td>
-                            <td class="text-right">0+0+1 </td>
-                        </tr>
-                        <tr>
-                            <td class="">Napa Extra - 500 </td>
-                            <td class="">10 - before food </td>
-                            <td class="text-right">0+0+1 </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                  <div class="col-md-3 d-flex justify-content-end"> 
+                    <img src="../upload/logo/<?= $row['logo']?>" height="130" alt="Logo">
                   </div>
-                </div>                
-                <!-- /.col -->
+                  <?php 
+                    } 
+                  ?>
               </div>
-              <!-- /.row -->
-              <div class="row">                   
-                    <div class="col-md-12 text-right mb-4" style="margin-top:60px;">
-                        Name: Rose Ann Bonador<br>
-                        Lic No: Rose Ann Bonador<br>
-                        PTR No: Rose Ann Bonador<br>
-                    </div>                 
+                <hr>
+                <?php
+                if(isset($_GET['id']))
+                {
+                  $user_id = $_GET['id'];
+                  $user = "SELECT pres.*, CONCAT(p.fname,' ',p.lname) AS pname, p.gender, p.address,d.name,
+                  DATE_FORMAT(FROM_DAYS(DATEDIFF(now(),STR_TO_DATE(p.dob, '%c/%e/%Y'))), '%Y')+0 AS Age FROM prescription pres INNER JOIN tblpatient p ON p.id = pres.patient_id INNER JOIN tbldoctor d ON d.id = pres.doc_id WHERE pres.id='$user_id' LIMIT 1";
+                  $users_run = mysqli_query($conn,$user);
+
+                  if(mysqli_num_rows($users_run) > 0)
+                  {
+                      foreach($users_run as $user)
+                      {                           
+                ?>
+                <div class="row mb-2 d-flex justify-content-start text-sm">                   
+                    <div class="col-md-4">
+                        Name: <?=$user['pname'];?>                       
+                    </div>
+                    <div class="col-md-8">
+                        Addresss: <?=$user['address'];?>
+                    </div>
                 </div>
-            </div>
+                <hr>
+                <div class="row mb-2 d-flex justify-content-start text-sm">                   
+                  <div class="col-md-3">
+                    Gender: <?=$user['gender'];?>
+                  </div>
+                  <div class="col-md-3">
+                    Age: <?=$user['Age'];?> yrs old
+                  </div>
+                  <div class="col-md-3">
+                    Date: <?=date('M j, Y',strtotime($user['date'])); ?>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-8 mt-2">
+                    <img src="assets/dist/img/prescriptionLogo.png" height="70" alt="">
+                    <div class="table-responsive">
+                      <table class="table table-borderless">                      
+                          <thead>       
+                              <th></th>
+                              <th></th>
+                              <th class="text-right"></th>    
+                          </thead>
+                          <tbody>
+                          <tr>
+                              <td class=""><?=$user['medicine']?></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                    </div>
+                  </div>                
+                </div>
+                <div class="row text-sm">                   
+                  <div class="col-md-12 text-left mb-4" style="margin-top:60px;">
+                      Signature<br>
+                      Lic No: <br>
+                      PTR No: <br>
+                  </div>                 
+                </div>
+                <div class="row no-print">
+                  <div class="col-md-4">
+                  <a href="print-prescription.php?id=<?=$user['id']?>" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                  </div>
+                </div>
+                <?php
+                    }
+                  }
+                  else
+                  {
+                  }
+                }
+                ?>
+              </div>
             </div>
         </div>
+    </div>
 </div>
 <script>
   window.addEventListener("load", window.print());

@@ -115,7 +115,7 @@ include('config/dbconn.php');
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Advice</label>
+                                    <label>Notes</label>
                                     <textarea id="advice_note" name="advice_note">                                
                                     </textarea>
                                 </div>
