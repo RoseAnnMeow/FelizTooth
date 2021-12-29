@@ -31,7 +31,7 @@ function sendEmail($pdf,$patient_name,$patient_email,$patient_date,$patient_time
     $email_template = 
                     '<p>Appointment Submitted on ' .$patient_date. ' - ' .$patient_time.'</p>
                     <p>Appointment Details<br>
-                    Full name: ' .$patient_name. '<br>
+                    Name: ' .$patient_name. '<br>
                     Contact Number: ' .$patient_phone. '<br>
                     Email: ' .$patient_email. '<br>
                     Preferred Date: ' .$patient_date. '<br>
@@ -80,25 +80,89 @@ function sendEmail($pdf,$patient_name,$patient_email,$patient_date,$patient_time
         $schedtype = 'Walk-in Schedule';
         $send_email = $_POST['send-email'];
 
+        $systemlogo = "SELECT * from system_details";
+        $systemdetails = mysqli_query($conn,$systemlogo);
+        $systemdata = mysqli_fetch_array($systemdetails);
+        $system_logo = $systemdata['logo'];
+
         $fulldata = "SELECT a.*, CONCAT(p.fname,' ',p.lname) AS pname,p.phone,p.email FROM tblappointment a INNER JOIN tblpatient p WHERE p.id ='$patient_id'";
         $appdetails = mysqli_query($conn,$fulldata);
         $patient_data = mysqli_fetch_array($appdetails);
         $patient_name = $patient_data['pname'];
         $patient_email = $patient_data['email'];
-        $patient_date = date('D, F j, Y',strtotime($patient_data['schedule']));
+        $patient_date = date('l, F j, Y',strtotime($patient_data['schedule']));
         $patient_phone = $patient_data['phone'];
         $patient_time = $s_time;
 
         if(!empty($_POST['send-email']))
         {
             $mpdf = new \Mpdf\Mpdf();
-            $data = "";
-            $data .= "<h1>Your Details</h1>";
-            $data .= "<strong>Name:</strong> " . $patient_name . "<br>";
-            $data .= "<strong>Contact Number:</strong> " .$patient_phone. "<br>";
-            $data .= "<strong>Email:</strong> " . $patient_email . "<br>";
-            $data .= "<strong>Date & Time of Visit:</strong> " . $patient_date ." - ". $s_time ."<br>";
-            $data .= "<strong>Date Submitted:</strong> " . date('F j, Y',strtotime($patient_data['created_at'])) ." - ". $s_time ."<br>";
+            $data = '
+            <html>
+            <head>
+            <style>
+            body
+            {
+                font-family: Roboto;
+                font-size: 14px;
+            }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            </style>
+            </head>
+            <body>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="../upload/logo/'.$system_logo.'" height="100" alt="Logo">
+                    </div>               
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table" style="width:100%;">          
+                        <tr>
+                            <td>Name: <b>'.$patient_name.'</b></td>
+                            <td>Date Submitted: <b>'.date('l, F j, Y \ - \ g:i a',strtotime($patient_data['created_at'])).'</b></td>
+                        </tr>
+                        <tr>
+                            <td>Email: <b>'.$patient_email.'</b></td>
+                            <td>Contact Number:<b>'.$patient_phone.'</b></td>
+
+                        </tr>
+                        <tr>
+                            <td>Date of Visit: <b>'.$patient_date.'</b></td>
+                            <td>Time of Visit: <b>'.$patient_time.'</b></td>
+                        </tr>
+                        </table>
+                        <p>Your concerns: <b>'.$reason.'</b></p>.<?php
+                                $sql = "SELECT * FROM questionnaires";
+                                $query_run = mysqli_query($conn,$sql);
+                                $check_services = mysqli_num_rows($query_run) > 0;
+
+                                if($check_services)
+                                {
+                                while($row = mysqli_fetch_array($query_run))
+                                {
+                                    ?>
+                                    <h1>'.$row['questions'].'</h1>
+                                    <?php
+                                }
+                                }
+                                else
+                                {
+                                echo "<h5> No Record Found</h5>";
+                                }
+                            ?>."
+                    </div>
+                    
+                </div>
+            </div> 
+            </body> 
+            </html>                                         
+            ';
+                      
             $mpdf->WriteHtml($data);
             $pdf = $mpdf->output("","S");
             sendEmail($pdf,$patient_name,$patient_email,$patient_date,$patient_time,$patient_phone,$reason);  

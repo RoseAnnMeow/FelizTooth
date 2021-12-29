@@ -5,7 +5,7 @@
     $result = mysqli_query($conn,$sql);
     while($row = mysqli_fetch_array($result)){
   ?>
-  <a href="index3.html" class="brand-link">
+  <a href="feliztoothdistrict.com" class="brand-link">
     <img src="../upload/logo/<?=$row['logo']?>" alt="Feliz Tooth District Logo" class="brand-image img-circle elevation-3">
     <span class="brand-text font-weight-light text-md"><?=$row['title'];}?></span>
   </a>
@@ -104,23 +104,29 @@
             <p>Prescription</p>
           </a>
         </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
+        <li class="nav-item <?= $page == 'services.php' || $page == 'procedures.php' || $page == 'health-declaration.php' ? 'menu-open':''?>">
+          <a href="#" class="nav-link <?= $page == 'services.php' || $page == 'procedures.php' || $page == 'health-declaration.php' ? 'active':''?>">
             <i class="nav-icon fas fa-globe"></i>
             <p>Website</p>
             <i class="fas fa-angle-left right"></i>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="services.php" class="nav-link">
+              <a href="services.php" class="nav-link <?= $page == 'services.php' ? 'active':''?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Services</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="procedures.php" class="nav-link">
+              <a href="procedures.php" class="nav-link <?= $page == 'procedures.php' ? 'active':''?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Procedures</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="health-declaration.php" class="nav-link <?= $page == 'health-declaration.php' ? 'active':''?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Questionnaire</p>
               </a>
             </li>
           </ul>
@@ -132,7 +138,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="pages/widgets.html" class="nav-link">
+          <a href="profile.php" class="nav-link <?= $page == 'profile.php' ? 'active':''?>">
             <i class="nav-icon fa fa-user-alt"></i>
             <p>Profile</p>
           </a>

@@ -2,13 +2,52 @@
     include('authentication.php');
     include('config/dbconn.php');
 
+    date_default_timezone_set("Asia/Manila");
+    function timeago($time,$tense='ago')
+    {
+        static $periods = array('year','month','day','hour','minute','second');
+        if(!(strtotime($time) > 0))
+        {
+        return trigger_error("Wrong time format: '$time'", E_USER_ERROR);
+        }
+        $now = new DateTime('now');
+        $time = new DateTime($time);
+        $diff = $now->diff($time)->format('%y %m %d %h %i %s');
+        $diff = explode(' ',$diff);
+        $diff = array_combine($periods,$diff);
+        $diff = array_filter($diff);
+
+        $period = key($diff);
+
+        $value = current($diff);
+        if(!$value)
+        {
+        $period = '';
+        $tense = '';
+        $value = 'Just now';
+        }
+        else
+        {
+        if($period == 'day' && $value  >= 7)
+        {
+            $period = 'week';
+            $value = floor($value/7);
+        }
+        if($value > 1)
+        {
+            $period .='s';
+        }
+        }
+        return "$value $period $tense";
+    }
+
     if(isset($_POST["view"])){
 	
         if($_POST["view"] != ''){
             mysqli_query($conn,"update notification set seen_status='1' where seen_status='0'");
         }
         
-        $query=mysqli_query($conn,"SELECT CONCAT(p.fname,' ',p.lname) AS pname,n.created_at FROM notification n INNER JOIN tblpatient p ON n.patient_id = p.id ORDER BY n.id desc limit 5");
+        $query=mysqli_query($conn,"SELECT CONCAT(p.fname,' ',p.lname) AS pname,p.image,n.created_at FROM notification n INNER JOIN tblpatient p ON n.patient_id = p.id ORDER BY n.id desc limit 5");
         $output = '';
         $count = mysqli_num_rows($query);
      
@@ -16,16 +55,15 @@
         while($row = mysqli_fetch_array($query)){
         $output .= '
         
-        
             <a href="#" class="dropdown-item">
             <div class="media">
-              <img src="assets/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="../upload/patients/'.$row['image'].'" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
               <h3 class="dropdown-item-title">
               '.$row['pname'].'
             </h3>
             <p class="text-sm">Request an Appointment</p>
-            <p class="text-sm text-muted">'.date('d M \a\t g:i a',strtotime($row['created_at'])).'</p>
+            <p class="text-sm text-muted">'.timeago($row['created_at']).'</p>
             </div>
             </div>
           </a>
@@ -34,8 +72,11 @@
         }
         }
         else{
-        $output .= '<li><a href="#" class="text-bold text-italic">No Notification Found</a></li>';
+        $output .= '<div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item dropdown-footer">You have no notifications</a>';
         }
+        $output .= '<div class="dropdown-divider"></div>
+            <a href="notifications.php" class="dropdown-item dropdown-footer">See All Notifications</a>';
         
         $query1=mysqli_query($conn,"select * from notification where seen_status='0'");
         $count = mysqli_num_rows($query1);
@@ -46,4 +87,5 @@
         echo json_encode($data);
         
     }
+
 ?>

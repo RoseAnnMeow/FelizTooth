@@ -70,7 +70,7 @@ include('config/dbconn.php');
                 $row = mysqli_num_rows($query_run);
                 echo $row;
               ?></h3>
-              <p>Appointments</p>
+              <p>Today's Appointment</p>
             </div>
             <div class="icon">
               <i class="fas fa-calendar-check"></i>
@@ -96,7 +96,7 @@ include('config/dbconn.php');
             <div class="icon">
               <i class="fad fa-prescription"></i>
             </div>
-            <a href="#" class="small-box-footer">
+            <a href="prescription.php" class="small-box-footer">
               More info <i class="fas fa-arrow-circle-right"></i>
             </a>
           </div>
@@ -104,8 +104,14 @@ include('config/dbconn.php');
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3>65</h3>
-              <p>Unique Visitors</p>
+              <h3><?php
+                $sql = "SELECT id FROM tblappointment WHERE status='Pending' ";
+                $query_run = mysqli_query($conn,$sql);
+
+                $row = mysqli_num_rows($query_run);
+                echo $row;
+              ?></h3>
+              <p>Appointment Request</p>
             </div>
             <div class="icon">
               <i class="fas fa-chart-pie"></i>

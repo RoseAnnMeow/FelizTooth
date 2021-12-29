@@ -74,6 +74,9 @@ include('config/dbconn.php');
                                         <input type="file" name="img_url" placeholder="">
                                         <input type="hidden" name="old_image" value="<?=$row['logo']?>"/>
                                         <span class="direct-chat-timestamp text-sm">Recommended Size : 200x100</span>
+                                        <div id="uploaded_image">
+                                            <img src="../upload/logo/<?= $row['logo']?>" class="img-thumbnail img-fluid" width="120" alt="Logo Image">
+                                        </div>
                                     </div>
                                 </div>
                                 <?php 
@@ -81,7 +84,7 @@ include('config/dbconn.php');
                                 ?>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <button type="submit" name="system_details" class="btn btn-primary">Submit</button>
+                                        <button type="submit" name="system_details" class="btn btn-primary">Update</button>
                                     </div>                                
                                 </div>
                             </div>

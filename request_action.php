@@ -11,6 +11,17 @@
         $concern = $_POST['concern'];
         $item = implode(',',$concern);
 
+        foreach($_POST as $key => $val)
+        {
+            if(substr($key, 0, 3) == 'ans')
+            {
+                $key = substr($key,4);
+                $sql = "INSERT INTO health_declaration (patient_id,question_id,answer) VALUES ('$patient_id','$key','$val') ";
+                $query_run = mysqli_query($conn,$sql);
+            }
+        }           
+       
+
         $sql = "INSERT INTO tblappointment (patient_id,schedule,reason,schedtype,status) VALUES ('$patient_id','$schedule','$item','$schedtype','$status')";
         $query_run = mysqli_query($conn,$sql);
 
@@ -27,5 +38,6 @@
         $sql = "INSERT INTO notification (patient_id) VALUES ('$patient_id')";
         $query_run = mysqli_query($conn,$sql);
     }
+
 
 ?>

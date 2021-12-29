@@ -17,8 +17,6 @@
   <link rel="stylesheet" href="admin/assets/plugins/jqvmap/jqvmap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="admin/assets/dist/css/adminlte.min.css">
-  <!-- Custom style -->
-  <link rel="stylesheet" href="admin/assets/dist/css/custom.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="admin/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
@@ -40,7 +38,8 @@
    <!-- Select2 -->
  <link rel="stylesheet" href="admin/assets/plugins/select2/css/select2.min.css">
  <link rel="stylesheet" href="admin/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-
+  <!-- Custom style -->
+  <link rel="stylesheet" href="admin/assets/dist/css/style.css">
 </head>
 
 

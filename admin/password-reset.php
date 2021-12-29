@@ -5,9 +5,6 @@ include('includes/header.php');
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="#" class="h4"><b>Feliz Tooth District Clinic</b></a>
-        </div>
         <?php
         if(isset($_SESSION['auth_status']))
         {

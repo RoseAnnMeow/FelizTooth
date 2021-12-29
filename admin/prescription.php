@@ -60,7 +60,7 @@ include('config/dbconn.php');
                     <i class="fa fa-plus"></i> &nbsp;&nbsp;Add Prescription</a>
                 </div>
                 <div class="card-body">
-                  <table id="example1" class="table table-borderless table-hover" style="width:100%;">
+                  <table id="example1" class="table table-borderless table-hover">
                     <thead class="bg-light">
                       <tr>
                         <th class="text-center">#</th>
@@ -86,7 +86,8 @@ include('config/dbconn.php');
                           <td><?php echo $row['medicine']; ?></td>
                           <td><?php echo $row['advice']; ?></td>
                           <td>
-                            <button data-id=<?php echo $row['id'];?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></a>
+                            <a href="view-prescription.php?id=<?php echo $row['id'];?>" class="btn btn-sm btn-secondary viewbtn"><i class="fa fa-eye"></i></a>
+                            <a href="edit-prescription.php?id=<?php echo $row['id'];?>" class="btn btn-sm btn-info editbtn"><i class="fas fa-edit"></i></a>
                             <button type="button" data-id="<?php echo $row['id'];?>" class="btn btn-danger btn-sm deletebtn"><i class="far fa-trash-alt"></i></button>
                           </td>
                         </tr>

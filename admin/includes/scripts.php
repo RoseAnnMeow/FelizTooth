@@ -68,7 +68,7 @@
 			dataType:"json",
 			success:function(data)
 			{
-			$('.dropdown-menu').html(data.notification);
+			$('.dropdown-notif').html(data.notification);
 			if(data.unseen_notification > 0){
 			$('.count').html(data.unseen_notification);
 			}

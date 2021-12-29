@@ -52,6 +52,8 @@
 <script src="admin/assets/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="admin/assets/dist/js/pages/dashboard.js"></script>
+<!-- InputMask -->
+<script src="admin/assets/plugins/moment/moment.min.js"></script>
 <!--Custom JS -->
 <script src="admin/assets/dist/js/custom.js"></script>
 

@@ -16,23 +16,40 @@
       </div>
   </form>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
+  <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link notification" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-danger navbar-badge count"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right dropdown-notif">
+          <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        </div>       
+      </li> 
       <li class="nav-item dropdown user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-        <i class="fas fa-user-circle fa-lg"></i>
+          <span><?php
+          include_once('admin/config/dbconn.php');
+          if(isset($_SESSION['auth']))
+          {
+            $sql = "SELECT * FROM tblpatient WHERE id = '".$_SESSION['auth_user']['user_id']."'";
+            $query_run = mysqli_query($conn,$sql);
+            while($row = mysqli_fetch_array($query_run))
+            {
+                echo '<img src="upload/patients/'.$row['image'].'" class="user-image img-circle elevation-2" alt="Doc Image">';
+            ?>
           <span class="d-none d-md-inline">
-            <?php
-            if(isset($_SESSION['auth']))
-            {
-              echo $_SESSION['auth_user']['user_fname'];
-            }
-            else
-            {
-              echo "Not Logged in";
-            }
-            ?> 
+            <?=$row['fname'].' '.$row['lname']?> 
           </span>
+            <?php }                        
+          }
+          else
+          {
+            echo "Not Logged in";
+          }
+          
+          ?>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item">
@@ -48,4 +65,3 @@
       </li>
     </ul>
   </nav>
-  <!-- /.navbar -->

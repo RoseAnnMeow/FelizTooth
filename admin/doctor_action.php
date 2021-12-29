@@ -34,12 +34,12 @@
         
         if ($query_run)
         {
-            $_SESSION['success'] = "Doctor Status Change Successfully";
+            $_SESSION['success'] = "Dentist Status Change Successfully";
             header('Location:doctors.php');
         }
         else
         {
-            $_SESSION['error'] = "Doctor Status Change Unsuccessfully";
+            $_SESSION['error'] = "Dentist Status Change Unsuccessfully";
             header('Location:doctors.php');
 
         }
@@ -67,12 +67,12 @@
                     unlink("../upload/doctors/".$image);
                 }
             }     
-            $_SESSION['success'] = "Doctor Deleted Successfully";
+            $_SESSION['success'] = "Dentist Deleted Successfully";
             header('Location:doctors.php');
         }
         else
         {
-            $_SESSION['error'] = "Doctor Deleted Unsuccessfully";
+            $_SESSION['error'] = "Dentist Deleted Unsuccessfully";
             header('Location:doctors.php');
         }        
     }
@@ -120,9 +120,9 @@
                         $_SESSION['error'] = "Upload valiid file. jpg, png";
                         header('Location:doctors.php');
                     }
-                    else if (($_FILES["edit_docimage"]["size"] > 2000000))
+                    else if (($_FILES["edit_docimage"]["size"] > 5000000))
                     {
-                        $_SESSION['error'] = "File size exceeds 2MB";
+                        $_SESSION['error'] = "File size exceeds 5MB";
                         header('Location:doctors.php');
                     }
                     else 
@@ -150,12 +150,12 @@
                             }
                             move_uploaded_file($_FILES['edit_docimage']['tmp_name'], '../upload/doctors/'.$update_filename);
                         }     
-                        $_SESSION['success'] = "Doctor Updated Successfully";
+                        $_SESSION['success'] = "Dentist Updated Successfully";
                         header('Location:doctors.php');
                     }
                     else
                     {
-                        $_SESSION['error'] = "Doctor Updated Unsuccessfully";
+                        $_SESSION['error'] = "Dentist Updated Unsuccessfully";
                         header('Location:doctors.php');
                     }
                 }               
@@ -315,12 +315,12 @@
                     if ($doctor_query_run)
                     {
                            
-                        $_SESSION['success'] = "Adding Doctor Successfully";
+                        $_SESSION['success'] = "Adding Dentist Successfully";
                         header('Location:doctors.php');
                     }
                     else
                     {
-                        $_SESSION['error'] = "Adding Doctor Failed";
+                        $_SESSION['error'] = "Adding Dentist Failed";
                         header('Location:doctors.php');
                     }
                 }

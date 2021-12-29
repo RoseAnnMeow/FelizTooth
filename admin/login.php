@@ -25,15 +25,14 @@ if(isset($_SESSION['auth']))
             unset($_SESSION['auth_status']);
         }
         ?>
-        <?php
-        include('message.php');
-        ?>
+        
         <div class="card card-outline card-primary">
             <div class="card-body login-card-body text-center">
                 <div class="text-center">
                     <a href="https://feliztoothdistrict.com"><img src="assets/dist/img/betalogo.png" class="img-circle" width="120" alt=""></a>
                 </div>
-                <h4 class="login-box-msg text-primary"><b class="text-danger">Feliz Tooth District</b><br>Dental Clinic</h4>
+                <h5 class="login-box-msg"><b class="text-danger">Feliz Tooth District</b><br>Dental Clinic</h5>
+                <?php include('message.php'); ?>
 
                 <form action="logincode.php" method="post">
                     <div class="input-group mb-3">

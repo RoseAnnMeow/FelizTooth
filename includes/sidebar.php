@@ -1,9 +1,15 @@
 
 <aside class="main-sidebar sidebar-dark-primary elevation-3">
-    <a href="index3.html" class="brand-link">
-      <img src="admin/assets/dist/img/feliztooth.png" alt="Feliz Tooth Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Feliz Tooth District</span>
-    </a>
+<?php 
+    $sql = "SELECT * FROM system_details LIMIT 1";
+    $result = mysqli_query($conn,$sql);
+    while($row = mysqli_fetch_array($result)){
+  ?>
+
+<a href="feliztoothdistrict.com" class="brand-link">
+<img src="upload/logo/<?=$row['logo']?>" alt="Feliz Tooth District Logo" class="brand-image img-circle elevation-3">
+    <span class="brand-text font-weight-light text-md"><?=$row['title'];}?></span>
+  </a>
 
 
     <div class="sidebar">

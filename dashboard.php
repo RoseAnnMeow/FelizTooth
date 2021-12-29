@@ -1,13 +1,13 @@
 <?php
-   include('admin/config/dbconn.php');
-   include('authentication.php');
-   include('includes/header.php');
-   include('includes/topbar.php');
-   include('includes/sidebar.php');
-   ?>
+include('admin/config/dbconn.php');
+include('authentication.php');
+include('includes/header.php');
+include('includes/topbar.php');
+include('includes/sidebar.php');
+?>
 <body class="hold-transition sidebar-mini layout-fixed">
-   <div class="wrapper">
-    <div class="content-wrapper">
+<div class="wrapper">
+   <div class="content-wrapper">
       <div class="content-header">
     
       </div>
@@ -27,34 +27,51 @@
                      </div>
                      <div class="card-body box-profile">
                         <div class="text-center">
+                           <?php
+                           if(isset($_SESSION['auth']))
+                           {
+                              $sql = "SELECT * FROM tblpatient WHERE id = '".$_SESSION['auth_user']['user_id']."'";
+                              $query_run = mysqli_query($conn,$sql);
+                              while($row = mysqli_fetch_array($query_run))
+                              {                                
+                              ?>
+                             
                            <img class="profile-user-img img-fluid img-circle"
-                              src="admin/assets/dist/img/user4-128x128.jpg"
+                              src="upload/patients/<?=$row['image']?>"
                               alt="User profile picture">
                         </div>
-                        <h3 class="profile-username text-center"><?php echo $_SESSION['auth_user']['user_fname'].' '.$_SESSION['auth_user']['user_lname'];?></h3>
-                        <p class="text-muted text-center"><?php echo $_SESSION['auth_user']['user_email'];?></p>
+                        <h3 class="profile-username text-center"><?=$row['fname'].' '.$row['lname']?></h3>
+                        <p class="text-muted text-center"><?=$row['email']?></p>
                         <ul class="list-group list-group-unbordered mb-3">
                            <li class="list-group-item">
                               <b>Gender</b> 
-                              <p class="float-right text-muted m-0"><?php echo $_SESSION['auth_user']['user_gender'];?></p>
+                              <p class="float-right text-muted m-0"><?=$row['gender']?></p>
                            </li>
                            <li class="list-group-item">
                               <b>Birthdate</b> 
-                              <p class="float-right text-muted m-0"><?php echo $_SESSION['auth_user']['user_dob'];?></p>
+                              <p class="float-right text-muted m-0"><?=$row['dob']?></p>
                            </li>
                            <li class="list-group-item">
                               <b>Phone</b> 
-                              <p class="float-right text-muted m-0"><?php echo $_SESSION['auth_user']['user_phone'];?></p>
+                              <p class="float-right text-muted m-0"><?=$row['phone']?></p>
                            </li>
                            <li class="list-group-item">
                               <b>Address</b> 
-                              <p class="float-right text-muted m-0"><?php echo $_SESSION['auth_user']['user_address'];?></p>
+                              <p class="float-right text-muted m-0"><?=$row['address']?></p>
                            </li>
                         </ul>
+                        <?php 
+                           }                        
+                        }
+                        else
+                        {
+                           echo "Not Logged in";
+                        }
+                        
+                        ?>
                      </div>    
                   </div>
-               </div>
-         
+               </div>        
                <div class="col-md-9">
                   <div class="card card-primary card-outline card-tabs">
                      <div class="card-header p-0 pt-1 border-bottom-0">
@@ -78,7 +95,7 @@
                            <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
                            <div class="row">
                               <div class="col-sm-12 mb-2">
-                                 <a class="btn btn-primary" href="request_appointment.php">
+                                 <a class="btn btn-primary" href="request-appointment.php">
                                  <i class="fa fa-plus-circle"> </i> Request a Appointment
                                  </a>
                               </div>
