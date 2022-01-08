@@ -58,7 +58,6 @@ include('config/dbconn.php');
                                             <label>Select Patient</label>
                                             <span class="text-danger">*</span>
                                             <select class="form-control select2 patient" id="edit_patient" name="select_patient" style="width: 100%;" required>
-                                            <option selected disabled value="">Select Patient</option>
                                             <?php
                                             if(isset($_GET['id']))
                                             {
@@ -88,16 +87,15 @@ include('config/dbconn.php');
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Select Doctor</label>
+                                            <label>Select Dentist</label>
                                             <span class="text-danger">*</span>
                                             <select class="form-control select2 doctor" id="edit_doctor" name="select_doctor" style="width: 100%;" required>
-                                            <option selected disabled value="">Select Doctor</option>
                                             <?php
                                                 if(isset($_GET['id']))
                                                 {
                                                     echo $id = $_GET['id'];
                                                 } 
-                                                $sql = "SELECT * FROM tbldoctor";
+                                                $sql = "SELECT * FROM tbldoctor WHERE status='1'";
                                                 $query_run = mysqli_query($conn,$sql);
                                                 if(mysqli_num_rows($query_run) > 0)
                                                 {

@@ -11,9 +11,6 @@ if(isset($_SESSION['auth']))
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="login.php" class="h4"><b>Feliz Tooth District Clinic</b></a>
-        </div>
         <?php
         if(isset($_SESSION['auth_status']))
         {
@@ -29,8 +26,9 @@ if(isset($_SESSION['auth']))
         }
         ?>
         <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
+        <div class="card card-outline card-primary shadow">
             <div class="card-body login-card-body">
+            <a href="index.php"><h3 class="login-box-msg text-danger font-weight-bold">Feliz Tooth District <br><b class="text-secondary">Dental Clinic</b></h3></a>
                 <p class="login-box-msg">Sign in</p>
                 <?php
                 include('admin/message.php');

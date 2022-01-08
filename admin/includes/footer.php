@@ -25,7 +25,7 @@
         <div class="float-right d-none d-sm-block">
             <b>Version</b> 1.0
         </div>
-        <strong>Copyright &copy; 2021 <a href="https://feliztoothdistrict.com">Feliz Tooth District Clinic</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2021 <a href="feliztoothdistrict.com">Feliz Tooth District Clinic</a>.</strong> All rights reserved.
   </footer>
 </body>
 </html>

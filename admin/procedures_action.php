@@ -18,7 +18,7 @@
         }
         else
         {
-            $_SESSION['error'] = "Procedure Added unsuccessful";
+            $_SESSION['error'] = "Procedure Failed to Add";
             header('Location: procedures.php');
         }
     }
@@ -44,4 +44,49 @@
             echo $return = "<h5> No Record Found</h5>";
         }
     }
+
+    if(isset($_POST['update_procedures']))
+    {
+        $id = $_POST['edit_id'];
+        $services = $_POST['select_services'];
+        $procedure = $_POST['procedure'];
+        $price = $_POST['price'];
+
+        $sql = "UPDATE procedures SET service_id='$services',procedures='$procedure',price='$price' WHERE id='$id'";
+        $query_run = mysqli_query($conn,$sql);
+
+        if($query_run)
+        {
+            $_SESSION['success'] = "Procedure Updated Successfully";
+            header('Location: procedures.php');
+        }
+        else
+        {
+            $_SESSION['error'] = "Procedure Failed to Update";
+            header('Location: procedures.php');
+        }
+
+    }
+
+
+    if(isset($_POST['deletedata']))
+    {  
+        $id = $_POST['delete_id'];
+        
+        $sql = "DELETE FROM procedures WHERE id='$id' ";
+        $query_run = mysqli_query($conn,$sql);
+        
+        if ($query_run)
+        {
+            $_SESSION['success'] = "Procedures Deleted Successfully";
+            header('Location:procedures.php');
+        }
+        else
+        {
+            $_SESSION['error'] = "Procedures Failed to Delete";
+            header('Location:procedures.php');
+        }
+    }
+
+
 ?>

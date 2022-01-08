@@ -5,9 +5,6 @@ include('includes/header.php');
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <a href="#" class="h4"><b>Feliz Tooth District Clinic</b></a>
-        </div>
         <?php
         if(isset($_SESSION['auth_status']))
         {
@@ -22,8 +19,7 @@ include('includes/header.php');
             unset($_SESSION['auth_status']);
         }
         ?>
-        <!-- /.login-logo -->
-        <div class="card card-outline card-primary">
+        <div class="card card-outline card-primary shadow">
             <div class="card-body login-card-body">
                 <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
                 <?php

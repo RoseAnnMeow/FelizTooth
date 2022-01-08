@@ -5,13 +5,14 @@
     if(isset($_POST['insert_services']))
     {
         $title = $_POST['title'];
+        $art_title = $_POST['art_title'];
         $description = $_POST['description'];
 
         $files = $_FILES['files']['name'];
         $file_extension = pathinfo($files, PATHINFO_EXTENSION);
         $filename = time().'.'.$file_extension;
 
-        $sql = "INSERT INTO services (title,description,image) VALUES ('$title','$description','$filename')";
+        $sql = "INSERT INTO services (title,article_title,description,image) VALUES ('$title','$art_title','$description','$filename')";
         $query_run = mysqli_query($conn,$sql);
 
         if($query_run)
@@ -53,6 +54,7 @@
     {
         $id = $_POST['edit_id'];
         $title = $_POST['title'];
+        $art_title = $_POST['art_title'];
         $description = $_POST['description'];
         $old_image = $_POST['old_image'];
         $image = $_FILES['files']['name'];
@@ -84,7 +86,7 @@
         }
         if($_SESSION['error'] == '')
         {
-            $sql = "UPDATE services SET title='$title',description='$description',image='$update_filename' WHERE id='$id'";
+            $sql = "UPDATE services SET title='$title',article_title='$art_title',description='$description',image='$update_filename' WHERE id='$id'";
             $query_run = mysqli_query($conn,$sql);
 
             if($query_run)

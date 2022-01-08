@@ -28,8 +28,7 @@ include('config/dbconn.php');
                       while($row = mysqli_fetch_array($result))
                       {
                     ?>
-                      <h4 class="text-primary text-left top_title">
-                      <?=$row['title'];?>
+                      <h4 class="text-primary text-left top_title">Feliz Tooth District Dental Clinic  
                       </h4>
                       <address class="text-left text-dark">
                         <?=$row['address'];?><br>
@@ -39,7 +38,7 @@ include('config/dbconn.php');
                       </address>
                   </div>
                   <div class="col-md-3 d-flex justify-content-end"> 
-                    <img src="../upload/logo/<?= $row['logo']?>" height="130" alt="Logo">
+                    <img src="../upload/<?= $row['logo']?>" height="130" alt="Logo">
                   </div>
                   <?php 
                     } 

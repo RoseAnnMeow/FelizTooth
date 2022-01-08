@@ -2,6 +2,8 @@
     include('authentication.php');
     include('admin/config/dbconn.php');
 
+    date_default_timezone_set("Asia/Manila");
+
     if(isset($_POST['insertdata']))
     {
         $patient_id = $_POST['userid'];
@@ -10,6 +12,7 @@
         $schedtype = "Online Schedule";
         $concern = $_POST['concern'];
         $item = implode(',',$concern);
+        $date_submitted = date('Y-m-d H:i:s');
 
         foreach($_POST as $key => $val)
         {
@@ -22,7 +25,7 @@
         }           
        
 
-        $sql = "INSERT INTO tblappointment (patient_id,schedule,reason,schedtype,status) VALUES ('$patient_id','$schedule','$item','$schedtype','$status')";
+        $sql = "INSERT INTO tblappointment (patient_id,schedule,reason,schedtype,status,created_at) VALUES ('$patient_id','$schedule','$item','$schedtype','$status','$date_submitted')";
         $query_run = mysqli_query($conn,$sql);
 
         if($query_run)

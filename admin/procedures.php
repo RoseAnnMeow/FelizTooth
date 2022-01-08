@@ -65,7 +65,7 @@ include('config/dbconn.php');
                         <div class="form-group">
                             <label>Price</label>
                             <span class="text-danger">*</span>
-                            <input type="number" autocomplete="off" name="price" class="form-control text-right" required>
+                            <input type="number" autocomplete="off" name="price" class="form-control" required>
                         </div>
                     </div>     
                 </div>         
@@ -89,7 +89,8 @@ include('config/dbconn.php');
             <form action="procedures_action.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-12">              
+                        <div class="col-sm-12">
+                            <input type="hidden" name="edit_id" id="edit_id">              
                             <div class="form-group">
                                 <label>Service</label>
                                 <span class="text-danger">*</span>
@@ -133,20 +134,20 @@ include('config/dbconn.php');
                             <div class="form-group">
                                 <label>Price</label>
                                 <span class="text-danger">*</span>
-                                <input type="number" autocomplete="off" id="edit_price" name="price" class="form-control text-right" required>
+                                <input type="number" autocomplete="off" id="edit_price" name="price" class="form-control" required>
                             </div>
                         </div>     
                     </div>         
                 </div>     
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" name="update_services" class="btn btn-primary">Submit</button>
+                <button type="submit" name="update_procedures" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<div class="modal fade" id="DeleteServiceModal">
+<div class="modal fade" id="DeleteProcedureModdal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -154,7 +155,7 @@ include('config/dbconn.php');
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
             </div> 
-            <form action="services_action.php" method="POST">
+            <form action="procedures_action.php" method="POST">
                 <div class="modal-body">
                     <input type="hidden" name="delete_id" id="delete_id">
                     <p> Do you want to delete this data?</p>                          
@@ -197,6 +198,46 @@ include('config/dbconn.php');
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        <form action="" method="GET">
+                            <div class="row">
+                                <div class="w-100 d-flex">
+                                    <div class="col-md-3 col-sm-6">             
+                                        <div class="form-group">
+                                            <select class="custom-select" name="service" style="width: 100%;" required>
+                                                <?php
+                                                if(isset($_GET['id']))
+                                                {
+                                                    echo $id = $_GET['id'];
+                                                } 
+                                                $sql = "SELECT * FROM services";
+                                                $query_run = mysqli_query($conn,$sql);
+                                                if(mysqli_num_rows($query_run) > 0)
+                                                {
+                                                    foreach($query_run as $row)
+                                                    {
+                                                    ?>
+                                                    <option value="<?=$row['id'];?>"<?php echo (isset($_GET['service']) && $_GET['service'] == $row['id']) ? 'selected' : ''; ?>>
+                                                    <?=$row['title']?></option>
+                                                    <?php
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    ?>
+                                                    <option value="">No Record Found"</option>
+                                                    <?php
+                                                }
+                                                ?>                  
+                                            </select>                                                                       
+                                        </div>   
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                        <a href="procedures.php" type="button" class="btn btn-secondary"><i class="fad fa-sync-alt"></i></a>
+                                    </div>      
+                                </div>
+                            </div>
+                        </form>
                         <table id="example1" class="table table-borderless table-hover" style="width:100%;">
                         <thead class="bg-light">
                             <tr>
@@ -208,22 +249,53 @@ include('config/dbconn.php');
                         </thead>
                         <tbody>
                             <?php
-                            $sql = "SELECT services.title,procedures.id,procedures.procedures,procedures.price FROM services INNER JOIN procedures ON services.id = procedures.service_id ";
-                            $query_run = mysqli_query($conn, $sql);
-                            
-                            while($row = mysqli_fetch_array($query_run)){
-                            ?>
-                            <tr>                       
-                            <td><?=$row['title']?></td>
-                            <td><?=$row['procedures']?></td>
-                            <td>₱<?=number_format($row['price'])?></td>     
-                            <td>
-                                <button data-id="<?=$row['id']?>"  class="btn btn-sm btn-info editProcedurebtn"><i class="fas fa-edit"></i></button>
-                                <button data-id="<?=$row['id']?>" class="btn btn-danger btn-sm deleteServicebtn"><i class="far fa-trash-alt"></i></button>
-                            </td>
-                            </tr>
-                            <?php
+                            if(isset($_GET['service']))
+                            {
+                                $service = $_GET['service'];
+                                $sql = "SELECT s.title,p.id,p.procedures,p.price FROM services s INNER JOIN procedures p ON s.id = p.service_id WHERE p.service_id = '$service' ";
+                                $query_run = mysqli_query($conn, $sql);
+                                
+                                if(mysqli_num_rows($query_run) > 0)
+                                {
+                                    foreach($query_run as $row)
+                                    {
+                                    ?>                                             
+                                    <tr>                       
+                                    <td><?=$row['title']?></td>
+                                    <td><?=$row['procedures']?></td>
+                                    <td>₱<?=number_format($row['price'])?></td>     
+                                    <td>
+                                        <button data-id="<?=$row['id']?>"  class="btn btn-sm btn-info editProcedurebtn"><i class="fas fa-edit"></i></button>
+                                        <button data-id="<?=$row['id']?>" class="btn btn-danger btn-sm deleteServicebtn"><i class="far fa-trash-alt"></i></button>
+                                    </td>
+                                    </tr>
+                                    <?php
+                                    }
+                                }
                             }
+                            else
+                            {
+                                $sql = "SELECT s.title,p.id,p.procedures,p.price FROM services s INNER JOIN procedures p ON s.id = p.service_id";
+                                $query_run = mysqli_query($conn, $sql);
+                                
+                                if(mysqli_num_rows($query_run) > 0)
+                                {
+                                    foreach($query_run as $row)
+                                    {
+                                    ?>                                             
+                                    <tr>                       
+                                    <td><?=$row['title']?></td>
+                                    <td><?=$row['procedures']?></td>
+                                    <td>₱<?=number_format($row['price'])?></td>     
+                                    <td>
+                                        <button data-id="<?=$row['id']?>"  class="btn btn-sm btn-info editProcedurebtn"><i class="fas fa-edit"></i></button>
+                                        <button data-id="<?=$row['id']?>" class="btn btn-danger btn-sm deleteServicebtn"><i class="far fa-trash-alt"></i></button>
+                                    </td>
+                                    </tr>
+                                    <?php
+                                    }
+                                }
+                            }                                                                   
                             ?>
                         </tbody>
                         </table>
@@ -248,6 +320,22 @@ include('config/dbconn.php');
         placeholder: "Select Dental Service",
         allowClear: true
         });
+
+        // $('#fetch_val').on('change', function () {
+        //     var serviceid = $(this).val();
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "procedures.php",
+        //         data:
+        //         {
+        //             'request':true,
+        //             'service_id':serviceid,
+        //         },
+        //         success: function (response) {
+        //             $('.table').html(response);
+        //         }
+        //     });
+        // });
 
         $(document).on('click', '.editProcedurebtn', function() {  
             var userid = $(this).data('id');
@@ -277,7 +365,7 @@ include('config/dbconn.php');
         $(document).on('click','.deleteServicebtn', function(){   
         var user_id = $(this).data('id');
         $('#delete_id').val(user_id);
-        $('#DeleteServiceModal').modal('show');
+        $('#DeleteProcedureModdal').modal('show');
         });
 
     });

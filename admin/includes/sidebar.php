@@ -6,8 +6,8 @@
     while($row = mysqli_fetch_array($result)){
   ?>
   <a href="feliztoothdistrict.com" class="brand-link">
-    <img src="../upload/logo/<?=$row['logo']?>" alt="Feliz Tooth District Logo" class="brand-image img-circle elevation-3">
-    <span class="brand-text font-weight-light text-md"><?=$row['title'];}?></span>
+    <img src="../upload/<?=$row['logo'];}?>" alt="Feliz Tooth District Logo" class="brand-image img-circle elevation-3">
+    <span class="brand-text font-weight-light">Feliz Tooth District</span>
   </a>
   <?php $page = substr($_SERVER['SCRIPT_NAME'],strrpos($_SERVER['SCRIPT_NAME'],"/")+1);?>
   <div class="sidebar">
@@ -20,9 +20,9 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="doctors.php" class="nav-link <?= $page == 'doctors.php' ? 'active':''?>">
+          <a href="dentist.php" class="nav-link <?= $page == 'dentist.php' ? 'active':''?>">
             <i class="nav-icon fa fa-users-medical"></i>
-            <p>Doctors</p>
+            <p>Dentist</p>
           </a>
         </li>          
         <li class="nav-item <?= $page == 'patients.php' || $page == 'documents.php' || $page == 'patient-details.php' ? 'menu-open' : '' ?>">
@@ -46,8 +46,8 @@
             </li>
           </ul>
         </li>
-        <li class="nav-item <?= $page == 'appointment.php' || $page == 'calendar.php' ? 'menu-open':''?>">
-          <a href="#" class="nav-link <?= $page == 'appointment.php' || $page == 'calendar.php' ? 'active':''?>">
+        <li class="nav-item <?= $page == 'appointment.php' || $page == 'calendar.php' || $page == 'online-request.php' ? 'menu-open':''?>">
+          <a href="#" class="nav-link <?= $page == 'appointment.php' || $page == 'calendar.php' || $page == 'online-request.php' ? 'active':''?>">
             <i class="nav-icon fas fa-calendar"></i>
             <p>
               Appointment
@@ -62,6 +62,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="online-request.php" class="nav-link <?= $page == 'online-request.php' ? 'active':''?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Online Request</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="calendar.php" class="nav-link <?= $page == 'calendar.php' ? 'active':''?>">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Calendar</p>
@@ -70,47 +76,24 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-teeth"></i>
-            <p>
-              Dental Chart
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="pages/charts/chartjs.html" class="nav-link">
-                <i class="far fa-list-alt nav-icon"></i>
-                <p>Treatment Plan</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/charts/flot.html" class="nav-link">
-                <i class="far fa-list-alt nav-icon"></i>
-                <p>Flot</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/charts/inline.html" class="nav-link">
-                <i class="far fa-list-alt nav-icon"></i>
-                <p>Inline</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="prescription.php" class="nav-link <?= $page == 'prescription.php' ? 'active':''?>">
+          <a href="prescription.php" class="nav-link <?= $page == 'prescription.php' || $page == 'add-prescription.php' || $page == 'view-prescription.php' || $page == 'edit-prescription.php' ? 'active':''?>">
             <i class="nav-icon fas fa-prescription"></i>
             <p>Prescription</p>
           </a>
         </li>
-        <li class="nav-item <?= $page == 'services.php' || $page == 'procedures.php' || $page == 'health-declaration.php' ? 'menu-open':''?>">
-          <a href="#" class="nav-link <?= $page == 'services.php' || $page == 'procedures.php' || $page == 'health-declaration.php' ? 'active':''?>">
+        <li class="nav-item <?= $page == 'about.php' || $page == 'services.php' || $page == 'procedures.php' || $page == 'health-declaration.php' || $page == 'review.php' || $page == 'gallery.php'|| $page == 'featured-dentist.php' || $page == 'settings.php' ? 'menu-open':''?>">
+          <a href="#" class="nav-link <?= $page == 'about.php' || $page == 'services.php' || $page == 'procedures.php' || $page == 'health-declaration.php' || $page == 'review.php' || $page == 'gallery.php'|| $page == 'featured-dentist.php' || $page == 'settings.php' ? 'active':''?>">
             <i class="nav-icon fas fa-globe"></i>
             <p>Website</p>
             <i class="fas fa-angle-left right"></i>
           </a>
           <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="about.php" class="nav-link <?= $page == 'about.php' ? 'active':''?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>About Us</p>
+              </a>
+            </li>
             <li class="nav-item">
               <a href="services.php" class="nav-link <?= $page == 'services.php' ? 'active':''?>">
                 <i class="far fa-circle nav-icon"></i>
@@ -120,7 +103,7 @@
             <li class="nav-item">
               <a href="procedures.php" class="nav-link <?= $page == 'procedures.php' ? 'active':''?>">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Procedures</p>
+                <p>Procedures and Prices</p>
               </a>
             </li>
             <li class="nav-item">
@@ -129,13 +112,31 @@
                 <p>Questionnaire</p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="review.php" class="nav-link <?= $page == 'review.php' ? 'active':''?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Review</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="gallery.php" class="nav-link <?= $page == 'gallery.php' ? 'active':''?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gallery</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="featured-dentist.php" class="nav-link <?= $page == 'featured-dentist.php' ? 'active':''?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Featured Dentist</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="settings.php" class="nav-link <?= $page == 'settings.php' ? 'active':''?>">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Website Settings</p>
+              </a>
+            </li>
           </ul>
-        </li>
-        <li class="nav-item">
-          <a href="settings.php" class="nav-link  <?= $page == 'settings.php' ? 'active':''?>">
-            <i class="nav-icon fa fa-cog"></i>
-            <p>Settings</p>
-          </a>
         </li>
         <li class="nav-item">
           <a href="profile.php" class="nav-link <?= $page == 'profile.php' ? 'active':''?>">

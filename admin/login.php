@@ -27,7 +27,7 @@ if(isset($_SESSION['auth']))
         ?>
         
         <div class="card card-outline card-primary">
-            <div class="card-body login-card-body text-center">
+            <div class="card-body login-card-body">
                 <div class="text-center">
                     <a href="https://feliztoothdistrict.com"><img src="assets/dist/img/betalogo.png" class="img-circle" width="120" alt=""></a>
                 </div>

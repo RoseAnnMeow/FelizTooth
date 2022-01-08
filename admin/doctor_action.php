@@ -1,6 +1,8 @@
 <?php
     include('authentication.php');
     include('config/dbconn.php');
+
+    date_default_timezone_set("Asia/Manila");
      
     if(isset($_POST['logout_btn']))
     {
@@ -35,12 +37,12 @@
         if ($query_run)
         {
             $_SESSION['success'] = "Dentist Status Change Successfully";
-            header('Location:doctors.php');
+            header('Location:dentist.php');
         }
         else
         {
             $_SESSION['error'] = "Dentist Status Change Unsuccessfully";
-            header('Location:doctors.php');
+            header('Location:dentist.php');
 
         }
     }
@@ -68,12 +70,12 @@
                 }
             }     
             $_SESSION['success'] = "Dentist Deleted Successfully";
-            header('Location:doctors.php');
+            header('Location:dentist.php');
         }
         else
         {
             $_SESSION['error'] = "Dentist Deleted Unsuccessfully";
-            header('Location:doctors.php');
+            header('Location:dentist.php');
         }        
     }
 
@@ -102,7 +104,7 @@
             if(mysqli_num_rows($checkemail_run) > 0)
             {     
                 $_SESSION['error'] = "Email Already Exist";
-                header('Location:doctors.php');      
+                header('Location:dentist.php');      
             }
             else
             {
@@ -118,12 +120,12 @@
                     if(!in_array($image_extension, $allowed_file_format))
                     {
                         $_SESSION['error'] = "Upload valiid file. jpg, png";
-                        header('Location:doctors.php');
+                        header('Location:dentist.php');
                     }
                     else if (($_FILES["edit_docimage"]["size"] > 5000000))
                     {
                         $_SESSION['error'] = "File size exceeds 5MB";
-                        header('Location:doctors.php');
+                        header('Location:dentist.php');
                     }
                     else 
                     {
@@ -151,12 +153,12 @@
                             move_uploaded_file($_FILES['edit_docimage']['tmp_name'], '../upload/doctors/'.$update_filename);
                         }     
                         $_SESSION['success'] = "Dentist Updated Successfully";
-                        header('Location:doctors.php');
+                        header('Location:dentist.php');
                     }
                     else
                     {
                         $_SESSION['error'] = "Dentist Updated Unsuccessfully";
-                        header('Location:doctors.php');
+                        header('Location:dentist.php');
                     }
                 }               
                
@@ -165,7 +167,7 @@
         else
         {
             $_SESSION['error'] = "Password does not match";
-            header('Location:doctors.php');
+            header('Location:dentist.php');
         }      
     }
 
@@ -252,6 +254,7 @@
         $role = '';
         $password = $_POST['password'];
         $confirmPassword = $_POST['confirmPassword'];
+        $regdate = date('Y-m-d H:i:s');
 
         $image = $_FILES['doc_image']['name'];
 
@@ -264,7 +267,7 @@
             if(mysqli_num_rows($checkemail_run) > 0)
             {     
                 $_SESSION['error'] = "Email Already Exist";
-                header('Location:doctors.php');      
+                header('Location:dentist.php');      
             }
             else
             {
@@ -278,12 +281,12 @@
                     if(!in_array($image_extension, $allowed_file_format))
                     {
                         $_SESSION['error'] = "Upload valid file. jpg, png";
-                        header('Location:doctors.php');
+                        header('Location:dentist.php');
                     }
-                    else if (($_FILES['doc_image']['size'] > 2000000))
+                    else if (($_FILES['doc_image']['size'] > 5000000))
                     {
-                        $_SESSION['error'] = "File size exceeds 2MB";
-                        header('Location:doctors.php');
+                        $_SESSION['error'] = "File size exceeds 5MB";
+                        header('Location:dentist.php');
                     }
                     else
                     {
@@ -309,19 +312,19 @@
 
                 if($_SESSION['error'] == '')
                 {
-                    $sql = "INSERT INTO tbldoctor (name,address,dob,gender,phone,email,degree,specialty,image,password,role)
-                    VALUES ('$doc_fname','$doc_address','$doc_dob','$doc_gender','$doc_phone','$doc_email','$doc_degree','$doc_specialty','$filename','$hash','2')";
+                    $sql = "INSERT INTO tbldoctor (name,address,dob,gender,phone,email,degree,specialty,image,password,role,created_at)
+                    VALUES ('$doc_fname','$doc_address','$doc_dob','$doc_gender','$doc_phone','$doc_email','$doc_degree','$doc_specialty','$filename','$hash','2','$regdate')";
                     $doctor_query_run = mysqli_query($conn,$sql);
                     if ($doctor_query_run)
                     {
                            
                         $_SESSION['success'] = "Adding Dentist Successfully";
-                        header('Location:doctors.php');
+                        header('Location:dentist.php');
                     }
                     else
                     {
                         $_SESSION['error'] = "Adding Dentist Failed";
-                        header('Location:doctors.php');
+                        header('Location:dentist.php');
                     }
                 }
               
@@ -330,7 +333,7 @@
         else
         {
             $_SESSION['error'] = "Password does not match";
-            header('Location:doctors.php');
+            header('Location:dentist.php');
         }
     }
 ?>  

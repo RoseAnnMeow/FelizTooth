@@ -9,7 +9,7 @@ include('config/dbconn.php');
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
   <div class="modal fade" id="AddDocumentrModal" >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Add Services</h5>
@@ -22,14 +22,20 @@ include('config/dbconn.php');
                 <div class="row">
                     <div class="col-sm-12">              
                         <div class="form-group">
-                            <label>Title</label><span class="text-danger">*</span>
+                            <label>Service Name</label><span class="text-danger">*</span>
                             <input type="text" name="title" class="form-control" required>
                         </div>
                     </div>     
                     <div class="col-sm-12">              
                         <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control" rows="4" name="description" placeholder="Enter description" required></textarea>
+                            <label>Article Title</label><span class="text-danger">*</span>
+                            <input type="text" name="art_title" class="form-control" required>
+                        </div>
+                    </div>     
+                    <div class="col-sm-12">              
+                        <div class="form-group">
+                            <label>Content</label>
+                            <textarea id="description" name="description" required></textarea>
                         </div>
                     </div>     
                     <div class="col-sm-6">
@@ -49,7 +55,7 @@ include('config/dbconn.php');
     </div>
 </div>
 <div class="modal fade" id="EditServiceModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">Edit Service</h5>
@@ -62,15 +68,21 @@ include('config/dbconn.php');
                 <div class="col-sm-12">
                     <input type="hidden" id="edit_id" name="edit_id">              
                     <div class="form-group">
-                        <label>Title</label><span class="text-danger">*</span>
+                        <label>Service Name</label><span class="text-danger">*</span>
                         <input type="text" name="title" id="edit_title" class="form-control" required>
                     </div>
-                </div>     
+                </div>
                 <div class="col-sm-12">              
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea class="form-control" rows="4" name="description" id="edit_description" placeholder="Enter description" required></textarea>
-                        </div>
+                        <label>Article Title</label><span class="text-danger">*</span>
+                        <input type="text" name="art_title" id="edit_art-title" class="form-control" required>
+                    </div>
+                </div>      
+                <div class="col-sm-12">              
+                    <div class="form-group">
+                        <label>Content</label>
+                        <textarea name="description" id="edit_description" required></textarea>
+                    </div>
                 </div>     
                 <div class="col-sm-6">
                     <div class="form-group">
@@ -145,8 +157,8 @@ include('config/dbconn.php');
                         <thead class="bg-light">
                             <tr>
                             <th width="30">Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
+                            <th>Services</th>
+                            <th>Content</th>
                             <th width="50">Action</th>
                             </tr>
                         </thead>
@@ -189,6 +201,42 @@ include('config/dbconn.php');
 <?php include('includes/scripts.php');?>
 <script>
     $(document).ready(function () {
+
+        $('#description').summernote({
+        height: 250,
+        toolbar: [
+                [ 'style', [ 'style' ] ],
+                [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                [ 'fontname', [ 'fontname' ] ],
+                [ 'fontsize', [ 'fontsize' ] ],
+                [ 'color', [ 'color' ] ],
+                [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                [ 'table', [ 'table' ] ],
+                [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+		    ],
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Open Sans', 'Raleway'],
+            fontNamesIgnoreCheck: [ 'Open Sans','Raleway'],
+    })
+        $('#edit_description').summernote({
+        height: 250,
+        toolbar: [
+                [ 'style', [ 'style' ] ],
+                [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                [ 'fontname', [ 'fontname' ] ],
+                [ 'fontsize', [ 'fontsize' ] ],
+                [ 'color', [ 'color' ] ],
+                [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                [ 'table', [ 'table' ] ],
+                [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+		    ],
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Open Sans', 'Raleway'],
+            fontNamesIgnoreCheck: [ 'Open Sans','Raleway'],
+    })
+    
+    $('#description').summernote('fontName', 'Open Sans');
+    $('#edit_description').summernote('fontName', 'Open Sans');
+
+
         $(document).on('click', '.editServicebtn', function() {  
             var userid = $(this).data('id');
 
@@ -204,7 +252,8 @@ include('config/dbconn.php');
                 $.each(response, function (key, value){
                     $('#edit_id').val(value['id']);
                     $('#edit_title').val(value['title']);
-                    $('#edit_description').val(value['description']);
+                    $('#edit_art-title').val(value['article_title']);
+                    $('#edit_description').summernote('code',value['description']);
                     $('#uploaded_image').html('<img src="../upload/service/'+value['image']+'" class="img-fluid img-thumbnail" width="200" />');
                     $('#old_image').val(value['image']);
                     $('#EditServiceModal').modal('show');

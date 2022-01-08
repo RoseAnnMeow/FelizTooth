@@ -19,17 +19,27 @@ if(isset($_POST['login_btn']))
             $user_fname = $row['name'];
             $user_email = $row['email'];
             $role_as = $row['role'];
+            $user_status = $row['status'];
 
             if(password_verify($password, $row['password']))
             {
-                $_SESSION['auth'] = true;
-                $_SESSION['auth_role'] = "$role_as";
-                $_SESSION['auth_user'] = [
-                'user_id'=>$user_id,
-                'user_fname'=>$user_fname,
-                'user_email'=>$user_email
-            ];
-                header('Location: index.php');                     
+                if($user_status == '1')
+                {
+                    $_SESSION['auth'] = true;
+                    $_SESSION['auth_role'] = "$role_as";
+                    $_SESSION['auth_user'] = [
+                    'user_id'=>$user_id,
+                    'user_fname'=>$user_fname,
+                    'user_email'=>$user_email
+                    ];
+    
+                    header('Location: index.php');   
+                }
+                else
+                {
+                    $_SESSION['danger'] = "Sorry your account is temporarily disabled. Please contact the admin.";
+                    header('Location: login.php');
+                }                                                               
             }
             else
             {

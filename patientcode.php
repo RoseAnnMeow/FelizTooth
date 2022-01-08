@@ -71,6 +71,8 @@ function sendmail_verify($fname,$email,$verify_token)
         $password =$_POST['password'];
         $confirmPassword = $_POST['confirmPassword'];
         $verify_token = md5(rand());
+
+        $image = $_FILES['patient_image']['name'];
         
         if($password == $confirmPassword)
         {
@@ -85,20 +87,63 @@ function sendmail_verify($fname,$email,$verify_token)
             }
             else
             {
-                $sql = "INSERT INTO tblpatient (fname,lname,address,dob,gender,phone,email,password,role,verify_token)
-                VALUES ('$fname','$lname','$address','$dob','$gender','$phone','$email','$hash','3','$verify_token')";
-                $patient_query_run = mysqli_query($conn,$sql);
-                if ($patient_query_run)
+                if($image!= NULL)
                 {
-                    sendmail_verify("$name","$email","$verify_token");      
-                    $_SESSION['info'] = "We've sent an email to <b>$email</b>. Check your email and click the link to verify.";
-                    header('Location:login.php');
+                    $allowed_file_format = array('jpg', 'png','jpeg');
+
+                    $image_extension = pathinfo($image, PATHINFO_EXTENSION);
+
+
+                    if(!in_array($image_extension, $allowed_file_format))
+                    {
+                        $_SESSION['error'] = "Upload valid file. jpg, png";
+                        header('Location:register.php');
+                    }
+                    else if (($_FILES['patient_image']['size'] > 5000000))
+                    {
+                        $_SESSION['error'] = "File size exceeds 5MB";
+                        header('Location:register.php');
+                    }
+                    else
+                    {
+                        $filename = time().'.'.$image_extension;
+                        move_uploaded_file($_FILES['patient_image']['tmp_name'], 'upload/patients/'.$filename);  
+                    }
                 }
                 else
                 {
-                    $_SESSION['warning'] = "Registration Failed";
-                    header('Location:register.php');
+                    $character = $_POST["fname"][0];
+                    $path = time() . ".png";
+                    $imagecreate = imagecreate(200, 200);
+                    $red = rand(0, 255);
+                    $green = rand(0, 255);
+                    $blue = rand(0, 255);
+                    imagecolorallocate($imagecreate, 230, 230, 230);  
+                    $textcolor = imagecolorallocate($imagecreate, $red, $green, $blue);
+                    imagettftext($imagecreate, 100, 0, 55, 150, $textcolor, 'admin/font/arial.ttf', $character);
+                    imagepng($imagecreate, 'upload/patients/'.$path);
+                    imagedestroy($imagecreate);
+                    $filename = $path;
                 }
+
+                if($_SESSION['error'] == '')
+                {
+                    $sql = "INSERT INTO tblpatient (fname,lname,address,dob,gender,phone,email,image,password,role,verify_token)
+                    VALUES ('$fname','$lname','$address','$dob','$gender','$phone','$email','$filename','$hash','3','$verify_token')";
+                    $patient_query_run = mysqli_query($conn,$sql);
+                    if ($patient_query_run)
+                    {
+                        sendmail_verify("$name","$email","$verify_token");      
+                        $_SESSION['info'] = "We've sent an email to <b>$email</b>. Check your email and click the link to verify.";
+                        header('Location:login.php');
+                    }
+                    else
+                    {
+                        $_SESSION['warning'] = "Registration Failed";
+                        header('Location:register.php');
+                    }
+                }
+                
             }           
             
         }

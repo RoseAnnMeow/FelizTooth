@@ -1,6 +1,8 @@
 <?php
     include('authentication.php');
     include('config/dbconn.php');
+
+    date_default_timezone_set("Asia/Manila");
     
     if(isset($_POST['logout_btn']))
     {
@@ -26,6 +28,7 @@
         $role ='';
         $password = $_POST['password'];
         $confirmPassword = $_POST['confirmPassword'];
+        $regdate = date('Y-m-d H:i:s');
 
         $image = $_FILES['patient_image']['name'];
         
@@ -83,8 +86,8 @@
 
                 if($_SESSION['error'] == '')
                 {
-                    $sql = "INSERT INTO tblpatient (fname,lname,address,dob,gender,phone,email,image,password,role)
-                    VALUES ('$fname','$lname','$address','$dob','$gender','$phone','$email','$filename','$hash','3')";
+                    $sql = "INSERT INTO tblpatient (fname,lname,address,dob,gender,phone,email,image,password,role,created_at)
+                    VALUES ('$fname','$lname','$address','$dob','$gender','$phone','$email','$filename','$hash','3','$regdate')";
                     $patient_query_run = mysqli_query($conn,$sql);
                     if ($patient_query_run)
                     {      

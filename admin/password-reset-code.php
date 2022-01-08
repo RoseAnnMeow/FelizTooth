@@ -58,6 +58,7 @@ if(isset($_POST['password_reset_link']))
         $row = mysqli_fetch_array($check_email_run);
         $get_name = $row['name'];
         $get_email = $row['email'];
+        $get_status = $row['status'];
 
         $update_token = "UPDATE tbldoctor SET verify_token='$token' WHERE email='$get_email' LIMIT 1";
         $update_token_run = mysqli_query($conn,$update_token);

@@ -70,9 +70,9 @@ include('config/dbconn.php');
             <div class="row">
               <div class="col-sm-6 mb-2">
                 <div class="form-group">
-                  <label>Phone</label>
+                  <label>Contact Number</label>
                   <span class="text-danger">*</span>
-                  <input type="phone" name="phone" class="form-control"  maxLength="11" minLength="11" required>
+                  <input type="tel" input id="phone" class="form-control" placeholder="+63 9XX XXX XXXX" name="phone" pattern="^(09|\+639)\d{9}$" required>
                 </div>
               </div>
               <div class="col-sm-6 mb-2 auto">
@@ -202,9 +202,9 @@ include('config/dbconn.php');
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label>Phone</label>
+                  <label>Contact Number</label>
                   <span class="text-danger">*</span>
-                  <input type="phone" name="phone" id="edit_phone" class="form-control"  maxLength="11" minLength="11" required>
+                  <input type="tel" id="edit_phone"  class="form-control" placeholder="+63 9XX XXX XXXX" name="phone" pattern="^(09|\+639)\d{9}$" required>
                 </div>
               </div>
               <div class="col-sm-6 mb-2">
@@ -307,7 +307,7 @@ include('config/dbconn.php');
                         <th class="text-center">Photo</th>
                         <th>Name</th>
                         <th>Reg. Date</th>
-                        <th>Mobile No.</th>
+                        <th>Contact No.</th>
                         <th>Email</th>
                         <th width="25px;">Verification Status</th>
                         <th>Action</th>

@@ -107,7 +107,7 @@
                     }           
                     else
                     {
-                        $_SESSION['error'] = "Enter a valid password and try again";
+                        $_SESSION['error'] = "Your current password does not match. Please try again.";
                         header("Location:profile.php");
                     }
                 }

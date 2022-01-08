@@ -35,7 +35,7 @@ include('config/dbconn.php');
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
                             <li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab">Edit Profile</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#pass" data-toggle="tab">Password</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#pass" data-toggle="tab">Change Password</a></li>
                             </ul>
                         </div>
                             <div class="card-body">
@@ -89,7 +89,7 @@ include('config/dbconn.php');
                                                 <div class="form-group col-md-2">
                                                     <label for="">Contact Number</label>
                                                     <span class="text-danger">*</span>
-                                                    <input type="tel" name="contact" class="form-control" value="<?=$row['phone']?>" placeholder="+63 917 1234 567" required>
+                                                    <input type="tel" id="phone"  class="form-control"  value="<?=$row['phone']?>" placeholder="+63 9XX XXX XXXX" name="contact" pattern="^(09|\+639)\d{9}$" required>
                                                 </div>
                                                 <div class="form-group col-md-4">
                                                     <label for="">Email</label>
@@ -138,8 +138,11 @@ include('config/dbconn.php');
                                             <div class="row">
                                                 <div class="form-group col-md-6">
                                                     <label>New Password</label>
-                                                    <input type="password" autocomplete="new-password" name="new_pass" class="form-control" id="password" required>
-                                                </div>
+                                                    <input type="password" autocomplete="new-password" name="new_pass" id="password" class="form-control" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}" title="Must contain at least one number and one uppercase and lowercase letter,at least one special character, and at least 8 or more characters" required>
+                                                        <div class="show_hide">
+                                                            <small>Password Strength: <span id="result"> </span></small>
+                                                        </div>
+                                                </div>  
                                             </div>                                        
                                             <div class="row">
                                                 <div class="form-group col-md-6">

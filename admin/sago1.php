@@ -1,137 +1,87 @@
 <?php
-session_start();
-include('includes/header.php');
-include('admin/config/dbconn.php');
-if(isset($_SESSION['auth']))
-{
-    $_SESSION['status'] = "You are already logged in";
-    header('Location: index.php');
-    exit(0);
+/* Monday - Sunday */
+$days1 = array(1, 2, 3, 4, 5, 6, 7);
+
+/* Monday - Wednesday and Sunday */
+$days2 = array(1, 2, 3, 7);
+
+/* Wednesday and Sunday */
+$days3 = array(3, 7);
+
+/* Monday - Wednesday and Friday - Sunday */
+$days4 = array(1, 2, 3, 5, 6, 7);
+
+/* Monday - Wednesday, Friday and Sunday */
+$days5 = array(1, 2, 3, 5, 7);
+
+/* Monday, Wednesday, Friday and Sunday */
+$days6 = array(1, 3, 5, 7);
+
+function displayDays($days = array()) {
+
+    // 1: Create periods and group them in arrays with starting and ending days
+    $periods = array();
+
+    $periodIndex = 0;
+
+    $previousDay = -1;
+    $nextDay = -1;
+
+    foreach($days as $placeInList => $currentDay) {     
+        // If previous day and next day (in $days list) exist, get them.
+        if ($placeInList > 0) {
+            $previousDay = $days[$placeInList-1];
+        }
+        if ($placeInList < sizeof($days)-1) {
+            $nextDay = $days[$placeInList+1];
+        }
+
+        if ($currentDay-1 != $previousDay) {
+        // Doesn't follow directly (in week) previous day seen (in our list) = starting a new period
+            $periodIndex++;
+            $periods[$periodIndex] = array($currentDay);
+        } elseif ($currentDay+1 != $nextDay) {
+        // Follows directly previous day, and isn't followed directly (in week) by next day (in our list) = ending the period       
+            $periods[$periodIndex][] = $currentDay;
+            $periodIndex++;
+        }
+    }
+    $periods = array_values($periods);
+
+
+    // Arrived here, your days are grouped differently in bidimentional array.
+    // print_r($periods); // If you want to see the new array's structure
+
+    // 2: Display periods as we want.
+    $text = '';
+    foreach($periods as $key => $period) {
+        if ($key > 0) {
+        // Not first period
+            if ($key < sizeof($periods)-1) {
+            // Not last period either
+                $text .= ', ';
+            } else {
+            // Last period
+                $text .= ' and ';
+            }
+        }
+
+        if (!empty($period[1])) {
+        // Period has starting and ending days
+            $text .= jddayofweek($period[0]-1, 1).' - '.jddayofweek($period[1]-1, 1);
+        } else {
+        // Period consists in only one day
+            $text .= jddayofweek($period[0]-1, 1);
+        }
+    }
+
+    echo $text.'<br />';
 }
+
+displayDays($days1);
+displayDays($days2);
+displayDays($days3);
+displayDays($days4);
+displayDays($days5);
+displayDays($days6);
 ?>
-
-<body class="hold-transition register-page data-login-register-auto-height="100"">
-<div class="register-box">
-  <?php
-      if(isset($_SESSION['auth_status']))
-      {
-          ?>
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-              <?php echo $_SESSION['auth_status'];?>
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true"></span>
-              </button>
-          </div> 
-          <?php
-          unset($_SESSION['auth_status']);
-      }
-      ?>     
-      <div class="card card-outline card-primary">
-      <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
-    </div>
-        <div class="card-body register-card-body">
-        <p class="login-box-msg">Register a new membership</p>
-        <?php
-      include('admin/message.php');
-    ?>
-          <form action="patientcode.php" method="post">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="fname" placeholder="First name" required>
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-user"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control" name="lname" placeholder="Last name" required>
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-user"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="input-group mb-3">
-                <input type="text" autocomplete="off" name="birthday" class="form-control" id="datepicker" placeholder="Birthday" required onkeypress="return false;">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fas fa-calendar"></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-6">
-                  <select class="form-control mb-3" name="gender" required>
-                  <option selected disabled value="">Gender</option>
-                      <option>Female</option>
-                      <option>Male</option>
-                      <option>Other</option>
-                  </select>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="address" placeholder="Address" required>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-map-marker-alt"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" name="phone" placeholder="Mobile number" maxLength="11" minLength="11" required>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-phone"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="email" class="form-control" name="email" placeholder="Email" required>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-envelope"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
-                </div>
-              </div>
-            </div>
-            <div class="input-group mb-3">
-              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-              <div class="input-group-append">
-                <div class="input-group-text">
-                  <span class="fas fa-lock"></span>
-                </div>
-              </div>
-            </div>
-              <div class="form-group">
-                  <button type="submit" name="register_btn" class="btn btn-block btn-primary">Register</button>
-              </div>
-              <!-- /.col -->
-          </form>
-
-          <a href="login.php" class="text-center">I already have an account</a>
-        </div>
-        <!-- /.form-box -->
-      </div><!-- /.card -->
-    </div>
-    <!-- /.register-box -->
-  </div>
-
-</body>
-</html>
-<?php include('includes/scripts.php'); ?>

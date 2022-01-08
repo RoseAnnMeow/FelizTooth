@@ -31,9 +31,10 @@ if(isset($_SESSION['auth']))
           }
           ?>    
           <div class="card-body register-card-body">
-            <h3 class="login-box-msg text-primary font-weight-bold">Sign Up</h3>
+            <h3 class="login-box-msg text-danger font-weight-bold">Feliz Tooth District <br><b class="text-secondary">Dental Clinic</b></h3>
+            <p class="login-box-msg">Create your account by filling the form below</p>
             <?php include('admin/message.php');?>
-            <form action="patientcode.php"  method="post" id="validateForm">
+            <form action="patientcode.php"  method="post" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-sm-6">
                   <div class="input-group mb-3">
@@ -68,7 +69,7 @@ if(isset($_SESSION['auth']))
                   </div>
                 </div>
                 <div class="col-sm-6">
-                    <select class="form-control mb-3" name="gender" required>
+                    <select class="custom-select mb-3" name="gender" required>
                     <option selected disabled value="">Gender</option>
                         <option>Female</option>
                         <option>Male</option>
@@ -88,7 +89,7 @@ if(isset($_SESSION['auth']))
               </div>
               <div class="row">
                 <div class="input-group col-sm-12 mb-3">
-                  <input type="text" input id="phone" class="form-control" placeholder="Mobile Number" name="phone" required>
+                  <input type="tel" input id="phone" class="form-control" placeholder="+63 9XX XXX XXXX" name="phone" pattern="^(09|\+639)\d{9}$" required>
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <span class="fas fa-phone"></span>
@@ -108,7 +109,7 @@ if(isset($_SESSION['auth']))
               </div>
               <div class="row">
                 <div class="input-group col-sm-12">
-                  <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                  <input type="password" class="form-control" id="password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}" title="Must contain at least one number and one uppercase and lowercase letter,at least one special character, and at least 8 or more characters" placeholder="Password" required>
                   <div class="input-group-append">
                     <div class="input-group-text">
                       <span class="fas fa-lock"></span>
@@ -124,10 +125,10 @@ if(isset($_SESSION['auth']))
                       </div>
                   </div>
                   <ul class="list-unstyled">
-                      <li class=""><span class="low-upper-case"><i class="fal fa-exclamation-triangle" aria-hidden="true"></i></span>&nbsp; 1 lowercase &amp; 1 uppercase</li>
-                      <li class=""><span class="one-number"><i class="fal fa-exclamation-triangle" aria-hidden="true"></i></span> &nbsp;1 number (0-9)</li>
-                      <li class=""><span class="one-special-char"><i class="fal fa-exclamation-triangle" aria-hidden="true"></i></span> &nbsp;1 Special Character (!@#$%^&*).</li>
-                      <li class=""><span class="eight-character"><i class="fal fa-exclamation-triangle" aria-hidden="true"></i></span>&nbsp; Atleast 8 Character</li>
+                    <li class=""><span class="low-upper-case"><i class="fal fa-exclamation-triangle" aria-hidden="true"></i></span>&nbsp; Contain lowercase &amp;  uppercase</li>
+                    <li class=""><span class="one-number"><i class="fal fa-exclamation-triangle" aria-hidden="true"></i></span> &nbsp;Contain number (0-9)</li>
+                    <li class=""><span class="one-special-char"><i class="fal fa-exclamation-triangle" aria-hidden="true"></i></span> &nbsp;Contain Special Character (!@#$%^&*).</li>
+                    <li class=""><span class="eight-character"><i class="fal fa-exclamation-triangle" aria-hidden="true"></i></span>&nbsp; Atleast 8 Character</li>
                   </ul>
                 </div>
               </div>
@@ -140,14 +141,16 @@ if(isset($_SESSION['auth']))
                     </div>
                   </div>
                 </div>
-                <div class="form-group col-sm-12">
-                  <button type="submit" name="register_btn" id="sign-up" class="btn btn-block btn-primary">Register</button>
-                </div>
               </div>
-            
-            
-            
-              
+              <div class="row">
+                <div class="form-group col-sm-6 mb-3">
+                  <label for="">Profile Picture</label>
+                  <input type="file" name="patient_image">
+                </div>
+                <div class="form-group col-sm-12">
+                  <button type="submit" name="register_btn" id="register" class="btn btn-block btn-primary">Register</button>
+                </div>
+              </div>         
             </form>
             <a href="login.php" class="text-center">I already have an account</a>
           </div>
@@ -157,156 +160,6 @@ if(isset($_SESSION['auth']))
   </div>
 </div>
  
-
 </body>
 </html>
 <?php include('includes/scripts.php'); ?>
-<script>
-  $(document).ready(function() {
-
-$("#phone").inputmask({"mask": "(+99) 999-9999-999"});
-
-        $('#email').blur(function() {
-            var email = $('#email').val();
-            if (IsEmail(email) == false) {
-                $('#sign-up').attr('disabled', true);
-                $('#popover-email').removeClass('hide');
-            } else {
-                $('#popover-email').addClass('hide');
-            }
-        });
-        $('#password').keyup(function() {
-            var password = $('#password').val();
-            if (checkStrength(password) == false) {
-                $('#sign-up').attr('disabled', true);
-            }
-        });
-        $('#confirm-password').blur(function() {
-            if ($('#password').val() !== $('#confirm-password').val()) {
-                $('#popover-cpassword').removeClass('hide');
-                $('#sign-up').attr('disabled', true);
-            } else {
-                $('#popover-cpassword').addClass('hide');
-            }
-        });
-        $('#contact-number').blur(function() {
-            if ($('#contact-number').val().length != 10) {
-                $('#popover-cnumber').removeClass('hide');
-                $('#sign-up').attr('disabled', true);
-            } else {
-                $('#popover-cnumber').addClass('hide');
-                $('#sign-up').attr('disabled', false);
-            }
-        });
-        $('#sign-up').hover(function() {
-            if ($('#sign-up').prop('disabled')) {
-                $('#sign-up').popover({
-                    html: true,
-                    trigger: 'hover',
-                    placement: 'below',
-                    offset: 20,
-                    content: function() {
-                        return $('#sign-up-popover').html();
-                    }
-                });
-            }
-        });
-
-        function IsEmail(email) {
-            var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-            if (!regex.test(email)) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        function checkStrength(password) {
-            var strength = 0;
-
-
-            //If password contains both lower and uppercase characters, increase strength value.
-            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
-                strength += 1;
-                $('.low-upper-case').addClass('text-success');
-                $('.low-upper-case i').removeClass('fa-exclamation-triangle').addClass('fa-check');
-                $('#popover-password-top').addClass('hide');
-
-
-            } else {
-                $('.low-upper-case').removeClass('text-success');
-                $('.low-upper-case i').addClass('fa-exclamation-triangle').removeClass('fa-check');
-                $('#popover-password-top').removeClass('hide');
-            }
-
-            //If it has numbers and characters, increase strength value.
-            if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) {
-                strength += 1;
-                $('.one-number').addClass('text-success');
-                $('.one-number i').removeClass('fa-exclamation-triangle').addClass('fa-check');
-                $('#popover-password-top').addClass('hide');
-
-            } else {
-                $('.one-number').removeClass('text-success');
-                $('.one-number i').addClass('fa-exclamation-triangle').removeClass('fa-check');
-                $('#popover-password-top').removeClass('hide');
-            }
-
-            //If it has one special character, increase strength value.
-            if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
-                strength += 1;
-                $('.one-special-char').addClass('text-success');
-                $('.one-special-char i').removeClass('fa-exclamation-triangle').addClass('fa-check');
-                $('#popover-password-top').addClass('hide');
-
-            } else {
-                $('.one-special-char').removeClass('text-success');
-                $('.one-special-char i').addClass('fa-exclamation-triangle').removeClass('fa-check');
-                $('#popover-password-top').removeClass('hide');
-            }
-
-            if (password.length > 7) {
-                strength += 1;
-                $('.eight-character').addClass('text-success');
-                $('.eight-character i').removeClass('fa-exclamation-triangle').addClass('fa-check');
-                $('#popover-password-top').addClass('hide');
-
-            } else {
-                $('.eight-character').removeClass('text-success');
-                $('.eight-character i').addClass('fa-exclamation-triangle').removeClass('fa-check');
-                $('#popover-password-top').removeClass('hide');
-            }
-
-
-
-
-            // If value is less than 2
-
-            if (strength < 2) {
-                $('#result').removeClass()
-                $('#password-strength').addClass('bg-danger');
-
-                $('#result').addClass('text-danger').text('Very Weak');
-                $('#password-strength').css('width', '10%');
-            } else if (strength == 2) {
-                $('#result').addClass('good');
-                $('#password-strength').removeClass('bg-danger');
-                $('#password-strength').addClass('bg-warning');
-                $('#result').addClass('text-warning').text('Weak')
-                $('#password-strength').css('width', '60%');
-                return 'Weak'
-            } else if (strength == 4) {
-                $('#result').removeClass()
-                $('#result').addClass('strong');
-                $('#password-strength').removeClass('bg-warning');
-                $('#password-strength').addClass('bg-success');
-                $('#result').addClass('text-success').text('Very Strong');
-                $('#password-strength').css('width', '100%');
-
-                return 'Strong'
-            }
-
-        }
-
-    });
-</script>

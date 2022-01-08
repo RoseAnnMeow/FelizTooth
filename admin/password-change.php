@@ -25,15 +25,20 @@ include('includes/header.php');
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" name="newPassword"class="form-control" placeholder="New Password" required>
+                    <div class="input-group">
+                        <input type="password" name="newPassword" id="password" class="form-control" placeholder="New Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}" title="Must contain at least one number and one uppercase and lowercase letter,at least one special character, and at least 8 or more characters" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="input-group mb-3">
+                    <div class="row show_hide">
+                        <div class="col-md-12">
+                            <small>Password Strength: <span id="result"> </span></small>
+                        </div>
+                    </div>
+                    <div class="input-group mt-3 mb-3">
                         <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm Password" required>
                         <div class="input-group-append">
                             <div class="input-group-text">

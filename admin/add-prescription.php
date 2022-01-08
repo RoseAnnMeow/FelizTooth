@@ -72,16 +72,16 @@ include('config/dbconn.php');
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Select Doctor</label>
+                                    <label>Select Dentist</label>
                                     <span class="text-danger">*</span>
                                     <select class="form-control select2 doctor" name="select_doctor" style="width: 100%;" required>
-                                    <option selected disabled value="">Select Doctor</option>
+                                    <option selected disabled value="">Select Dentist</option>
                                     <?php
                                         if(isset($_GET['id']))
                                         {
                                             echo $id = $_GET['id'];
                                         } 
-                                        $sql = "SELECT * FROM tbldoctor";
+                                        $sql = "SELECT * FROM tbldoctor WHERE status='1'";
                                         $query_run = mysqli_query($conn,$sql);
                                         if(mysqli_num_rows($query_run) > 0)
                                         {
@@ -158,7 +158,7 @@ include('config/dbconn.php');
       });
 
       $(".doctor").select2({
-      placeholder: "Select Doctor",
+      placeholder: "Select Dentist",
       allowClear: true
       });
 

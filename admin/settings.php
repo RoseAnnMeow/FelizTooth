@@ -46,36 +46,97 @@ include('config/dbconn.php');
                                 ?>
                                 <div class="row">
                                     <div class="form-group col-md-6">
-                                        <label for="">System Name</label>
-                                        <input type="text" name="sysname" class="form-control" value="<?=$row['sysname']?>" required>
+                                        <label>Opening Hours</label>
+                                        <span class="text-danger">*</span><br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="mon" name="day[]" type="checkbox" value="1"<?php echo isset($row['days']) && in_array("1",explode(",",$row['days'])) ? "checked" : ''  ?>>
+                                            <label class="form-check-label">Monday</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="tue" name="day[]" type="checkbox" value="2"<?php echo isset($row['days']) && in_array("2",explode(",",$row['days'])) ? "checked" : ''  ?>>
+                                            <label class="form-check-label">Tuesday</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="wed" name="day[]" type="checkbox" value="3"<?php echo isset($row['days']) && in_array("3",explode(",",$row['days'])) ? "checked" : ''  ?>>
+                                            <label class="form-check-label">Wednesday</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="thur" name="day[]" type="checkbox" value="4"<?php echo isset($row['days']) && in_array("4",explode(",",$row['days'])) ? "checked" : ''  ?>>
+                                            <label class="form-check-label">Thursday</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="fri" name="day[]" type="checkbox" value="5"<?php echo isset($row['days']) && in_array("5",explode(",",$row['days'])) ? "checked" : ''  ?>>
+                                            <label class="form-check-label">Friday</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="sat" name="day[]" type="checkbox" value="6"<?php echo isset($row['days']) && in_array("6",explode(",",$row['days'])) ? "checked" : ''  ?>>
+                                            <label class="form-check-label">Saturday</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" id="sun" name="day[]" type="checkbox" value="7"<?php echo isset($row['days']) && in_array("7",explode(",",$row['days'])) ? "checked" : ''  ?>>
+                                            <label class="form-check-label">Sunday</label>
+                                        </div>
+                                    </div>     
+                                    <div class="form-group col-md-3">
+                                        <label>Opening Hours</label>
+                                        <span class="text-danger">*</span>
+                                            <div class="input-group date" id="open_hours" data-target-input="nearest">
+                                            <input type="text" autocomplete="off" name="opening_hours" value="<?=$row['openhr']?>" class="form-control datetimepicker-input" required data-target="#open_hours"/>
+                                            <div class="input-group-append" data-target="#open_hours" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="">Title</label>
-                                        <input type="text" name="title" class="form-control" value="<?=$row['title']?>" required>
+                                    <div class="form-group col-md-3">
+                                    <label for="">Closing Hours</label>
+                                        <span class="text-danger">*</span>
+                                        <div class="input-group date" id="close_hours" data-target-input="nearest">
+                                        <input type="text" autocomplete="off" name="closing_hours" value="<?=$row['closehr']?>"  class="form-control datetimepicker-input" required data-target="#close_hours"/>
+                                        <div class="input-group-append" data-target="#close_hours" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="">Address</label>
-                                        <input type="text" name="address" class="form-control" value="<?=$row['address']?>"required>
+                                        <input type="text" name="address" class="form-control" value="<?=$row['address']?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="">Telephone No.</label>
-                                        <input type="text" name="telephone" class="form-control" value="<?=$row['telno']?>"required>
+                                        <input type="text" name="telephone" class="form-control" value="<?=$row['telno']?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label for="">Email</label>
-                                        <input type="email" name="email" class="form-control" value="<?=$row['email']?>"required>
+                                        <input type="email" name="email" class="form-control" value="<?=$row['email']?>" required>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="">Mobile No</label>
-                                        <input type="text" name="mobile" class="form-control" value="<?=$row['mobile']?>" required>
+                                        <label for="">Contact No</label>
+                                        <input type="tel" id="phone"  class="form-control"  value="<?=$row['mobile']?>" placeholder="+63 9XX XXX XXXX" name="mobile" pattern="^(09|\+639)\d{9}$" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="">Facebook Link</label>
+                                        <input type="text" name="fblink" class="form-control" value="<?=$row['facebook']?>" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="">Google Map Address</label>
+                                        <input type="text" name="map" class="form-control" value="<?=$row['map']?>" required>
                                     </div>
                                     <div class="form-group col-md-3">
-                                        <label for="">System Logo</label>
+                                        <label for="">System Icon</label>
                                         <input type="file" name="img_url" placeholder="">
                                         <input type="hidden" name="old_image" value="<?=$row['logo']?>"/>
+                                        <span class="direct-chat-timestamp text-sm">Recommended Size : 180x180</span>
+                                        <div id="uploaded_image">
+                                            <img src="../upload/<?= $row['logo']?>" class="img-thumbnail img-fluid" width="120" alt="Icon Image">
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="">Brand</label>
+                                        <input type="file" name="img_brand" placeholder="">
+                                        <input type="hidden" name="old_image_brand" value="<?=$row['brand']?>"/>
                                         <span class="direct-chat-timestamp text-sm">Recommended Size : 200x100</span>
                                         <div id="uploaded_image">
-                                            <img src="../upload/logo/<?= $row['logo']?>" class="img-thumbnail img-fluid" width="120" alt="Logo Image">
+                                            <img src="../upload/<?= $row['brand']?>" class="img-thumbnail img-fluid" width="200" alt="Brand Image">
                                         </div>
                                     </div>
                                 </div>
@@ -97,5 +158,13 @@ include('config/dbconn.php');
 </div>
 <?php include('includes/scripts.php');?>
 <script>
+    $('#open_hours').datetimepicker({
+          format: 'LT'
+    });
+    $('#close_hours').datetimepicker({
+          format: 'LT'
+    });
+
+
 </script>
 <?php include('includes/footer.php');?>
